@@ -1,0 +1,6 @@
+{
+    "require": {
+        "pug-php/pug": "^3.4",
+        "phug/phug": "^1.8"
+    }
+}
