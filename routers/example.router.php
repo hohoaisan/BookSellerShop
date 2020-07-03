@@ -1,6 +1,4 @@
 <?php
-// Lấy url của router và xử lí để tránh lỗi, url sẽ được đưa vào các thẻ a, form, ... liên quan đến router hiện tại
-
 // Đưa các hàm trong controller vào router
 include_once('../controllers/example.controller.php');
 
