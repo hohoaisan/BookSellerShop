@@ -5,10 +5,10 @@
 1. Clone repository này về tại thư mục htdocs
 2. Config cho httpd.conf của Apache:
 ```
-DocumentRoot "C:/xampp/htdocs/public"
-<Directory "C:/xampp/htdocs/public">
+DocumentRoot "C:/xampp/htdocs/BookSellerShop/public"
+<Directory "C:/xampp/htdocs/BookSellerShop/public">
 ```
-> Lưu ý: có thể thay C:/xampp bằng địa chỉ cài đặt xampp khác
+> Lưu ý: Có thể thay C:/xampp bằng địa chỉ cài đặt xampp khác để không bị lỗi khi chạy project khác
 3. Restart apache
 ### MySQL
 Chưa test
