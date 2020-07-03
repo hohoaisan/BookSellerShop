@@ -1,11 +1,10 @@
 <?php
 include_once('vendor/autoload.php');
-
+$_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
 use Pug\Facade as PugFacade;
 
 
 $router = new \Bramus\Router\Router();
-
 $router->get('/', function () {
   echo PugFacade::displayFile(__DIR__ . '/views/index.pug');
 });

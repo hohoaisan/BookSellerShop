@@ -43,4 +43,5 @@ $subadmin = function () {
   if (isset($_GET["key"])) {
     echo "Success get request" . $_GET["key"];
   } else echo "Success Subadmin";
+  echo PugFacade::displayFile('../views/index.pug');
 };
