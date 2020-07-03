@@ -1,6 +1,7 @@
 {
     "require": {
         "pug-php/pug": "^3.4",
-        "phug/phug": "^1.8"
+        "phug/phug": "^1.8",
+        "pecee/simple-router": "4.2.0.6"
     }
 }

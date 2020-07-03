@@ -8,6 +8,12 @@ $baseDir = dirname($vendorDir);
 return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Phug\\' => array($vendorDir . '/phug/phug/src/Phug/Ast', $vendorDir . '/phug/phug/src/Phug/Compiler', $vendorDir . '/phug/phug/src/Phug/DependencyInjection', $vendorDir . '/phug/phug/src/Phug/Event', $vendorDir . '/phug/phug/src/Phug/Formatter', $vendorDir . '/phug/phug/src/Phug/Invoker', $vendorDir . '/phug/phug/src/Phug/Lexer', $vendorDir . '/phug/phug/src/Phug/Parser', $vendorDir . '/phug/phug/src/Phug/Reader', $vendorDir . '/phug/phug/src/Phug/Renderer', $vendorDir . '/phug/phug/src/Phug/Util'),
+    'PhpDocReader\\' => array($vendorDir . '/php-di/phpdoc-reader/src/PhpDocReader'),
+    'Pecee\\' => array($vendorDir . '/pecee/simple-router/src/Pecee'),
+    'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
+    'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
+    'DI\\' => array($vendorDir . '/php-di/php-di/src'),
     '' => array($vendorDir . '/js-transformer/js-transformer/src', $vendorDir . '/pug-php/pug/src'),
 );
