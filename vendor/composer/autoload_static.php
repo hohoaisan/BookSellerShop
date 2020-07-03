@@ -9,8 +9,6 @@ class ComposerStaticInitf0c67cff9b5af8ff140d21dc2c27c8bd
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
-        'b33e3d135e5d9e47d845c576147bda89' => __DIR__ . '/..' . '/php-di/php-di/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -21,22 +19,7 @@ class ComposerStaticInitf0c67cff9b5af8ff140d21dc2c27c8bd
         ),
         'P' => 
         array (
-            'Psr\\Container\\' => 14,
             'Phug\\' => 5,
-            'PhpDocReader\\' => 13,
-            'Pecee\\' => 6,
-        ),
-        'O' => 
-        array (
-            'Opis\\Closure\\' => 13,
-        ),
-        'I' => 
-        array (
-            'Invoker\\' => 8,
-        ),
-        'D' => 
-        array (
-            'DI\\' => 3,
         ),
     );
 
@@ -48,10 +31,6 @@ class ComposerStaticInitf0c67cff9b5af8ff140d21dc2c27c8bd
         'Symfony\\Component\\VarDumper\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
-        ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
         ),
         'Phug\\' => 
         array (
@@ -66,26 +45,6 @@ class ComposerStaticInitf0c67cff9b5af8ff140d21dc2c27c8bd
             8 => __DIR__ . '/..' . '/phug/phug/src/Phug/Reader',
             9 => __DIR__ . '/..' . '/phug/phug/src/Phug/Renderer',
             10 => __DIR__ . '/..' . '/phug/phug/src/Phug/Util',
-        ),
-        'PhpDocReader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src/PhpDocReader',
-        ),
-        'Pecee\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/pecee/simple-router/src/Pecee',
-        ),
-        'Opis\\Closure\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/opis/closure/src',
-        ),
-        'Invoker\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-di/invoker/src',
-        ),
-        'DI\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-di/php-di/src',
         ),
     );
 
@@ -123,6 +82,13 @@ class ComposerStaticInitf0c67cff9b5af8ff140d21dc2c27c8bd
             'Jade\\' => 
             array (
                 0 => __DIR__ . '/..' . '/pug-php/pug/src',
+            ),
+        ),
+        'B' => 
+        array (
+            'Bramus' => 
+            array (
+                0 => __DIR__ . '/..' . '/bramus/router/src',
             ),
         ),
     );

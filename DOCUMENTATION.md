@@ -1,6 +1,7 @@
 # Documentations
 ## Hướng dẫn chạy server
 ### 
+0. PHP 5.3 trở lên
 1. Clone repository này về tại thư mục htdocs
 2. Config cho httpd.conf của Apache:
 ```
@@ -18,5 +19,7 @@ Chưa test
 Là một html preproccessor nhằm hỗ trợ cho việc render html và giúp người phát triển viết code nhanh hơn, cấu trúc rõ ràng hơn và dễ bảo trì code hơn
 
 
-## Simple Router
-[Github](https://github.com/skipperbent/simple-php-router)
+## Bramus Router
+[Github](https://github.com/bramus/router)
+
+Tạo router đơn giản cho PHP

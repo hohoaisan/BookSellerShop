@@ -11,5 +11,6 @@ return array(
     'NodejsPhpFallback\\' => array($vendorDir . '/nodejs-php-fallback/nodejs-php-fallback/src'),
     'JsPhpize' => array($vendorDir . '/js-phpize/js-phpize/src', $vendorDir . '/js-phpize/js-phpize-phug/src'),
     'Jade\\' => array($vendorDir . '/pug-php/pug/src'),
+    'Bramus' => array($vendorDir . '/bramus/router/src'),
     '' => array($vendorDir . '/phug/phug/src/Phug/Phug'),
 );
