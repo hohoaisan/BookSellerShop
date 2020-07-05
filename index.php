@@ -20,7 +20,7 @@ $router->mount('/auth', function () use($router) {
   include('routers/auth.router.php');
 });
 
-$router->mount('/auth', function () use($router) {
+$router->mount('/register', function () use($router) {
   include('routers/register.router.php');
 });
 

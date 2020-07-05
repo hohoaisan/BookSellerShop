@@ -1,5 +1,5 @@
 <?php
-include_once('../models/connect.php');
+include('../models/connect.php');
 
 use Pug\Facade as PugFacade;
 

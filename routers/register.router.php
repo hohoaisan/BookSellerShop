@@ -6,6 +6,5 @@ include_once('../controllers/register.controller.php');
 
 // $router chính là $router từ index.php truyền sang bằng use($router),
 //nhằm tiếp nhận những đưỡng dẫn phía sau /admin/... thông qua hàm mount
-$router->get('/register', $register);
-$router->post('/register', $postRegister);
-$router->all('/logout', $logout);
+$router->get('/', $register);
+$router->post('/', $postRegister);
