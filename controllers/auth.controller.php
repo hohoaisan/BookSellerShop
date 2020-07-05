@@ -44,10 +44,9 @@ $postLogin = function () use ($postLoginRequiredField, $conn) {
   $stmt->execute(array($_POST["username"]));
   $result = $stmt->fetch();
   if ($result && $result["password"] == $_POST["password"]) {
-    echo "Đã đăng nhập thành công";
-    setcookie("userid", $result["userid"], time() + (180 * 30), "/"); //cookie tồn tại 3 phút (180)
-    setcookie("admin", $result["admin"], time() + (180 * 30), "/");
-    exit();
+    setcookie("userid", $result["userid"], time() + (300), "/"); //cookie tồn tại 3 phút (180)
+    setcookie("admin", $result["admin"], time() + (300), "/");
+    header('location: /auth/login');
   }
   $errors = ["Tên tài khoản hoặc mật khẩu không đúng"];
   echo PugFacade::displayFile('../views/auth/login.pug', ['errors' => $errors]);
