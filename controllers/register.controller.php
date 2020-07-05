@@ -8,23 +8,24 @@ $register = function () {
 };
 
 $postRegisterRequiredField = function() use($conn){
-    // if(!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['email'])){
-    //     echo PugFacade::displayFile('../views/register/register.pug');
-    //     exit();
-    // }
+    if(!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['email'])){
+        echo PugFacade::displayFile('../views/register/register.pug');
+        exit();
+    }
     //array chứa error
-    $errors = [];
+    $errorsUser = [];
+    $errorsEmail = [];
     if (!$_POST["username"]) {
-        array_push($errors, "Tên đăng nhập không được để trống");
+        array_push($errorsUser, "Tên đăng nhập không được để trống");
     };
     if (strlen($_POST["username"]) >= 30) {
-        array_push($errors, "Tên đăng nhập không được vượt quá 30 ký tự");
+        array_push($errorsUser, "Tên đăng nhập không được vượt quá 30 ký tự");
     };
     if (!$_POST["password"]) {
-        array_push($errors, "Mật khẩu không được để trống");
+        $errorPass = "Mật khẩu không được để trống";
     };
     if (!$_POST["email"]) {
-        array_push($errors, "Email không được để trống");
+        array_push($errorsEmail, "Email không được để trống");
     };
         
     //check username và email tồn tại chưa
@@ -36,16 +37,16 @@ $postRegisterRequiredField = function() use($conn){
     $result = $stmt->fetch();
     if ($result) { // if user exists
         if ($result['username'] === $username) {
-            array_push($errors, "Username already exists");
+            array_push($errorsUser, "Username already exists");
         }
     
         if ($result['email'] === $email) {
-            array_push($errors, "Email already exists");
+            array_push($errorsEmail, "Email already exists");
         }
     }
-
-    if (count($errors)) {
-        echo PugFacade::displayFile('../views/register/register.pug', ['errors' => $errors]);
+    
+    if (count($errorsUser) || count($errorsEmail) || $errorPass) {
+        echo PugFacade::displayFile('../views/register/register.pug', ['errorPass' => $errorPass, 'errorsUser' => $errorsUser, 'errorsEmail' => $errorsEmail]);
         exit();
     }
 };
