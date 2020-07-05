@@ -1,0 +1,20 @@
+extends ../base
+block body
+    h1 Register
+    if errors
+        each error in errors    
+            .alert.alert-danger= error
+    if succ
+        .alert.alert-success= succ
+    form(action="", method="POST")
+        .form-group
+            label(for='InputUserName') UserName
+            input#InputUserName.form-control(name='username',type='text')
+        .form-group
+            label(for='InputPassword') Password
+            input#InputPassword.form-control(name='password', type='password')
+        .form-group
+            label(for='InputEmail') Email address
+            input#InputEmail.form-control(name="email",type='email', aria-describedby='emailHelp')
+            small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
+        button.btn.btn-primary Submit
