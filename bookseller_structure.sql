@@ -82,12 +82,12 @@ CREATE TABLE `comments`  (
   `commentid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `timestamp` datetime(0) NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `usersid` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `bookid` int(6) UNSIGNED ZEROFILL NOT NULL,
   PRIMARY KEY (`commentid`) USING BTREE,
-  INDEX `fkIdx_48`(`usersid`) USING BTREE,
+  INDEX `fkIdx_48`(`userid`) USING BTREE,
   INDEX `fkIdx_51`(`bookid`) USING BTREE,
-  CONSTRAINT `FK_48` FOREIGN KEY (`usersid`) REFERENCES `users` (`usersid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_48` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_51` FOREIGN KEY (`bookid`) REFERENCES `books` (`bookid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
@@ -110,16 +110,16 @@ CREATE TABLE `district`  (
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`  (
   `orderid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-  `usersid` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `orderstatus` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'p',
   `timestamp` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `addressid` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `addresstext` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `totalmoney` double NOT NULL DEFAULT 0,
   PRIMARY KEY (`orderid`) USING BTREE,
-  INDEX `fkIdx_58`(`usersid`) USING BTREE,
+  INDEX `fkIdx_58`(`userid`) USING BTREE,
   INDEX `fk_orders_ward_1`(`addressid`) USING BTREE,
-  CONSTRAINT `FK_58` FOREIGN KEY (`usersid`) REFERENCES `users` (`usersid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_58` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_orders_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
@@ -154,7 +154,7 @@ CREATE TABLE `province`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `usersid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `userid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `isadmin` tinyint NOT NULL DEFAULT 0,
@@ -166,7 +166,7 @@ CREATE TABLE `users`  (
   `addressid` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `addresstext` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `dob` date NULL DEFAULT NULL,
-  PRIMARY KEY (`usersid`) USING BTREE,
+  PRIMARY KEY (`userid`) USING BTREE,
   INDEX `fk_users_ward_1`(`addressid`) USING BTREE,
   CONSTRAINT `fk_users_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
