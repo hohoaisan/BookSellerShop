@@ -18,29 +18,31 @@ block content
               span.input-group-text
                 i.fa.fa-lock
             input.form-control(name='password', placeholder='Nhập mật khẩu', type='password')
-          // form-group//
           .form-group.input-group
             .input-group-prepend
               span.input-group-text
                 i.fa.fa-lock
             input.form-control(name='password-repeat', placeholder='Xác nhận mật khẩu', type='password')
-          // form-group//
+          .form-group.input-group
+            .input-group-prepend
+              span.input-group-text
+                i.fa.fa-user
+            input.form-control(name='fullname', placeholder='Họ tên', type='text' value=fullname?fullname:"")
           .form-group.input-group
             .input-group-prepend
               span.input-group-text
                 i.fa.fa-envelope
             input.form-control(name='email', placeholder='Email', type='email')
-          // form-group//
           .form-group.input-group
             .input-group-prepend
               span.input-group-text Giới tính
-            select.form-control(name='isMale')
-              option(selected) Nam
-              option Nữ
+            select.form-control(name='male')
+              option(selected,value='1') Nam
+              option(value='0') Nữ
           .form-group.input-group
             .input-group-prepend
               span.input-group-text Ngày sinh
-            input(type="date").form-control
+            input(name='dob',type="date").form-control
           .form-group.input-group
             .input-group-prepend
               span.input-group-text

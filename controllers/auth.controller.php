@@ -34,6 +34,9 @@ $postRegisterRequiredField = function(){
   if (strlen($_POST["username"]) >= 30) {
       array_push($errors, "Tên đăng nhập không được vượt quá 30 ký tự");
   };
+  if ($_POST["password"] !== $_POST["password-repeat"]) {
+    array_push($errors, "Sai mật khẩu xác nhận");
+  };
   if (!$_POST["password"]) {
       array_push($errors, "Mật khẩu không được để trống");
   };
@@ -63,15 +66,15 @@ $postRegisterRequiredField = function(){
 $postRegister = function() use($postRegisterRequiredField){
   $postRegisterRequiredField();
 
-  $user = [$_POST["username"], $_POST["password"], $_POST["email"]];
-  $result = Database::queryExecute("insert INTO users(username, password, email) VALUES (?, ?, ?)", $user);
+  $user = [$_POST["username"], $_POST["password"], $_POST["email"], $_POST["fullname"], $_POST["male"], $_POST["phone"], $_POST["dob"]];
+  $result = Database::queryExecute("insert INTO users(username, password, email, fullname, male, phone, dob) VALUES (?, ?, ?, ?, ?, ?, ?)", $user);
   if($result){
     $succ = "Tạo tài khoản thành công";
-    echo PugFacade::displayFile('../views/auth/register.jade', ['succ' => $succ]);
+    echo PugFacade::displayFile('../views/auth/login.jade', ['succ' => $succ]);
     exit();
   }else{
     $errors = ["Tạo tài khoản thất bại"];
-    echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors]);
+    echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors, 'username' => $_POST["username"], 'fullname' => $_POST["fullname"]]);
     exit();
   }
 };
