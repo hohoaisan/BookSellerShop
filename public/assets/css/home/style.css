@@ -1,7 +1,3 @@
-/* * {
-    font-family: 'Roboto', sans-serif;
-} */
-
 /*NavBar*/
 nav.navbar.navbar-default {
     margin-bottom: 0px;
@@ -103,7 +99,12 @@ i {
 
 .fa-fire {
     font-size: 1.7rem;
-    color: red;
+    color: white;
+}
+
+.fa-heart {
+    font-size: 1.7rem;
+    color: white;
 }
 
 /*Change color of Carousel*/
