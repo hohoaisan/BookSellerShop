@@ -7,7 +7,7 @@ block content
     .col-md-6
       article.card-body
         h4.card-title.text-center.mb-3 Tạo tài khoản mớI
-        form
+        form(method='post')
           .form-group.input-group
             .input-group-prepend
               span.input-group-text
@@ -24,11 +24,6 @@ block content
               span.input-group-text
                 i.fa.fa-lock
             input.form-control(name='password-repeat', placeholder='Xác nhận mật khẩu', type='password')
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-user
-            input.form-control(name='username', placeholder='Họ Tên', type='text')
           // form-group//
           .form-group.input-group
             .input-group-prepend

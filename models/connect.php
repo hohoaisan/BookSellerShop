@@ -50,6 +50,18 @@ class Database
     $conn = null;
     return $result;
   }
+
+  //input value vào 
+  public static function queryExecute($sql, $params)
+  {
+    $conn = self::connect();
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($params);
+    $conn = null;
+    //return true nếu insert thành công và ngược lại: false
+    return $stmt->execute($params);
+  }
+
   public static function verifyCredential($username, $password)
   {
     try {
@@ -74,4 +86,6 @@ class Database
       ];
     }
   }
+
 }
+?>

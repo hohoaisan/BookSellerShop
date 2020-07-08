@@ -9,4 +9,5 @@ include_once('../controllers/auth.controller.php');
 $router->get('/login', $login);
 $router->get('/register', $register);
 $router->post('/login', $postLogin);
+$router->post('/register', $postRegister);
 $router->all('/logout', $logout);
