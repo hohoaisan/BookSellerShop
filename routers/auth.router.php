@@ -7,5 +7,6 @@ include_once('../controllers/auth.controller.php');
 // $router chính là $router từ index.php truyền sang bằng use($router),
 //nhằm tiếp nhận những đưỡng dẫn phía sau /admin/... thông qua hàm mount
 $router->get('/login', $login);
+$router->get('/register', $register);
 $router->post('/login', $postLogin);
 $router->all('/logout', $logout);

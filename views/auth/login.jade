@@ -1,0 +1,23 @@
+extends ../home/base
+block content
+  .alert.alert-warning Có lỗi xảy ra xin vui lòng thử lại
+  if (errors)
+    each error in errors
+      .alert.alert-warning= error
+  .row.justify-content-center
+    .col-md-6
+      article.card-body
+        h4.card-title.text-center.mb-3 Đăng nhập
+        form(action="", method="POST")
+          .form-group.input-group
+            .input-group-prepend
+              span.input-group-text
+                i.fa.fa-user
+            input.form-control(name='username', placeholder='Tên đăng nhập', type='text' value=username?username:"")
+          .form-group.input-group
+            .input-group-prepend
+              span.input-group-text
+                i.fa.fa-lock
+            input.form-control(name='password', placeholder='Nhập mật khẩu', type='password')
+          .form-group
+            button.btn.btn-success.btn-block(type='submit') Đăng nhập

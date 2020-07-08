@@ -11,7 +11,18 @@ $login = function () {
       header('location: /');
     }
   }
-  echo PugFacade::displayFile('../views/auth/index.jade');
+  echo PugFacade::displayFile('../views/auth/login.jade');
+};
+
+$register = function () {
+  if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {
+    if ($_COOKIE['admin'] == "1") {
+      header('location: /admin');
+    } else {
+      header('location: /');
+    }
+  }
+  echo PugFacade::displayFile('../views/auth/register.jade');
 };
 
 $postLoginRequiredField = function () {

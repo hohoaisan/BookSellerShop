@@ -7,22 +7,6 @@ block content
   .row.justify-content-center
     .col-md-6
       article.card-body
-        h4.card-title.text-center.mb-3 Đăng nhập
-        form(action="", method="POST")
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-user
-            input.form-control(name='username', placeholder='Tên đăng nhập', type='text' value=username?username:"")
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-lock
-            input.form-control(name='password', placeholder='Nhập mật khẩu', type='password')
-          .form-group
-            button.btn.btn-success.btn-block(type='submit') Đăng nhập
-    .col-md-6
-      article.card-body
         h4.card-title.text-center.mb-3 Tạo tài khoản mớI
         form
           .form-group.input-group
@@ -55,21 +39,18 @@ block content
           // form-group//
           .form-group.input-group
             .input-group-prepend
-              span.input-group-text
-                i.fa.fa-phone
-            input.form-control(name='phone', placeholder='Số điện thoại', type='text')
-          // form-group//
+              span.input-group-text Giới tính
+            select.form-control(name='isMale')
+              option(selected) Nam
+              option Nữ
+          .form-group.input-group
+            .input-group-prepend
+              span.input-group-text Ngày sinh
+            input(type="date").form-control
           .form-group.input-group
             .input-group-prepend
               span.input-group-text
-                i.fa.fa-building
-            select.form-control(name='isMale')
-              option(selected='') Giới tính
-              option Nam
-              option Nữ
-          // form-group end.//
-
-          // form-group//
+                i.fa.fa-phone
+            input.form-control(name='phone', placeholder='Số điện thoại', type='text')
           .form-group
             button.btn.btn-primary.btn-block(type='submit') Tạo tài khoản mới
-          // form-group//
