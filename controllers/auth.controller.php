@@ -1,6 +1,5 @@
 <?php
-include_once('../models/connect.php');
-
+use Database\Database as Database;
 use Pug\Facade as PugFacade;
 
 $login = function () {
@@ -34,23 +33,21 @@ $postLoginRequiredField = function () {
 };
 
 
-$postLogin = function () use ($postLoginRequiredField, $conn) {
+$postLogin = function () use ($postLoginRequiredField) {
   $postLoginRequiredField();
-
-  // https://www.php.net/manual/en/pdo.prepared-statements.php và tài liệu của thầy
-  $sql = "select userid, username, password, admin from auth where username=?";
-  $stmt = $conn->prepare($sql);
-  $stmt->setFetchMode(PDO::FETCH_ASSOC);
-  $stmt->execute(array($_POST["username"]));
-  $result = $stmt->fetch();
-  if ($result && $result["password"] == $_POST["password"]) {
+  $username = $_POST["username"];
+  $password = $_POST["password"];
+  $result = Database::verifyCredential($username,$password);
+  if ($result["status"] == 1) {
     setcookie("userid", $result["userid"], time() + (300), "/"); //cookie tồn tại 3 phút (180)
-    setcookie("admin", $result["admin"], time() + (300), "/");
+    setcookie("admin", $result["isadmin"], time() + (300), "/");
     header('location: /auth/login');
   }
-  $errors = ["Tên tài khoản hoặc mật khẩu không đúng"];
-  echo PugFacade::displayFile('../views/auth/login.pug', ['errors' => $errors]);
-  exit();
+  else {
+    $errors = [$result["message"]];
+    echo PugFacade::displayFile('../views/auth/login.pug', ['errors' => $errors]);
+    exit();
+  }
 };
 
 

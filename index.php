@@ -1,5 +1,7 @@
 <?php
 include_once('vendor/autoload.php');
+include_once('models/connect.php');
+
 $_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
 use Pug\Facade as PugFacade;
 
