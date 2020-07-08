@@ -48,7 +48,7 @@
 
 <script>
   function renderOptions(container, json) {
-    container.innerHTML = "";
+    
     result = json.map((item, index) => {
       option = document.createElement('option');
       option.setAttribute('value', item.id);
@@ -72,10 +72,12 @@
     loadContent('/api/locals/', province);
   });
   province.addEventListener('change', function () {
-    console.log("hmmm");
+    district.innerHTML = "";
+    wardSelect.innerHTML = "";
     loadContent(`/api/locals/${province.value}`, district);
   })
   district.addEventListener('change', function () {
+    wardSelect.innerHTML = "";
     loadContent(`/api/locals/${province.value}/${district.value}`, wardSelect);
   })
 </script>
