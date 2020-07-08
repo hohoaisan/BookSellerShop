@@ -6,7 +6,7 @@ include_once('../controllers/admin.controller.php');
 // $router chính là $router từ index.php truyền sang bằng use($router),
 //nhằm tiếp nhận những đưỡng dẫn phía sau /admin/... thông qua hàm mount
 
-$router->before('GET|POST', '*', function() {
+$router->before('GET|POST', '/.*', function() {
   if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'] ) && $_COOKIE['admin']=="1") {
     //Tiếp tục chạy các hàm bên dưới
   }
