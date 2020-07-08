@@ -1,7 +1,8 @@
 extends ../home/base
 block content
-  if (succ)
-    .alert.alert-success= succ
+  if (messages)
+    each message in messages
+      .alert.alert-success= message
   if (errors)
     each error in errors
       .alert.alert-warning= error

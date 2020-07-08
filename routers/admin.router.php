@@ -16,3 +16,27 @@ $router->before('GET|POST', '*', function() {
   }
 });
 $router->get('/', $index);
+
+$router->get('/orders', $orders);
+$router->get('/orders/{orderid}', $orderJSON);
+$router->post('/orders/{orderid}/reject', $orderReject);
+$router->post('/orders/{orderid}/accept', $orderAccept);
+$router->post('/orders/{orderid}/complete', $orderComplete);
+$router->post('/orders/{orderid}/error', $orderReject);
+
+$router->get('/users', $users);
+$router->post('/users/{userid}/disable', $usersDisable);
+$router->post('/users/{userid}/delete', $usersDelete);
+$router->post('/users/{userid}/makeadmin', $usersAdmin);
+
+$router->get('/categories', $categories);
+$router->get('/books', $books);
+$router->get('/books/add', $bookAdd);
+$router->post('/books/add', $postBookAdd);
+$router->get('/books/edit/{bookid}', $bookEdit);
+$router->post('/books/edit/{bookid}', $postBookEdit);
+
+$router->get('/authors', $authors);
+$router->post('/authors/add', $authorAdd);
+$router->post('/authors/{authorid}/edit', $authorEdit);
+$router->post('/authors/{authorid}/delete', $authorDelete);

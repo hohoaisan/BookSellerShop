@@ -1,24 +1,23 @@
 extends base
 block content
-  
   #commonModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='commonModal', aria-hidden='true')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          h5#commonModalLabel.modal-title Thêm tác giả mới
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-        .modal-body
-          form#commonModalForm(action="/admin/authors/add", method="POST")
+    form#commonModalForm(action="/admin/authors/add", method="POST")
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#commonModalLabel.modal-title Thêm tác giả mới
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body
             .form-group
               label Tên tác giả
               input.form-control(placeholder="Tên tác giả", name="name")
             .form-group
               label Giới thiệu về tác giả
-              textarea.form-control(placeholder="Giới thiệu", name="name")
-        .modal-footer 
-          button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
-          button.btn.btn-primary(type='button') Lưu
+              textarea.form-control(placeholder="Giới thiệu", name="description")
+          .modal-footer 
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-primary(type='submit') Lưu
 
   h3.mt-4.mb-4 Quản lí tác giả
   .d-flex.justify-content-between.align-items-center.mb-2
@@ -27,41 +26,57 @@ block content
       input.form-control.mr-1(type='search', placeholder='Nhập tên', aria-label='Search')
       button.btn.btn-outline-success.w-25(type='submit')
         .fas.fa-search
-  .mb-4
-      table.table.table-sm
-        thead
-          tr
-            th Mã tác giả
-            th Tên tác giả
-            th Thao tác
-        tbody
-          tr
-            td Chờ duyệt
-            td Text
-            td.tablecell-action
-              .btn-group
-                button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                  | Action
-                .dropdown-menu
-                  a.dropdown-item(href='#') Xem sách
-                  button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#commonModal', data-id='id', data-name="name") Sửa
-                  .dropdown-divider 
-                  a.dropdown-item.text-danger(href='#') Xoá danh mục
+  .mb-4.mt-4
+      if (messages)
+        each message in messages
+          .alert.alert-success= message
+      if (errors)
+        each error in errors
+          .alert.alert-warning= error
+      if (authors)
+        table.table.table-sm
+          thead
+            tr
+              th Mã tác giả
+              th Tên tác giả
+              th Giới thiệu
+              th Thao tác
+          tbody
+            each author in authors
+              tr 
+                td= author.authorid
+                td= author.authorname
+                td.text-truncate(style="max-width: 200px")= author.authordescription
+                td.tablecell-action
+                  .btn-group
+                    button.btn.btn-sm.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                      | Chọn
+                    .dropdown-menu
+                      a.dropdown-item(href='/admin/books?author='+author.authorid) Xem sách của tác giả
+                      button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#commonModal', data-id=author.authorid, data-name=author.authorname, data-description=author.authordescription) Xem và sửa thông tin chi tiết
+                      .dropdown-divider 
+                      form(action="/admin/authors/"+author.authorid+"/delete", method="POST")
+                        button(type="submit").dropdown-item.text-danger Xoá tác giả
+      else
+        .alert.alert-warning Không có tác giả nào trong cơ sở dữ liệu
 append external
   script.
     $('#commonModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var id = button.data('id');
     var name = button.data('name');
+    var description = button.data('description');
     var modal = $(this);
     if (id) {
       modal.find('.modal-title').text('Sửa tác giả');
-      modal.find('.modal-body input').val(name);
+      modal.find('.modal-body input[name="name"]').val(name);
+      modal.find('.modal-body textarea[name="description"]').val(description);
       modal.find('#commonModalForm').attr('action', `/admin/authors/${id}/edit`);
     }
     else {
       modal.find('.modal-title').text('Thêm tác giả');
       modal.find('.modal-body input').val("");
+      modal.find('.modal-body textarea[name="description"]').val("");
       modal.find('#commonModalForm').attr('action', `/admin/authors/add`);
     }
     })
