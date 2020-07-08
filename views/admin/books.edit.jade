@@ -1,0 +1,56 @@
+extends base
+block content
+  h3.mt-4.mb-4 Quản lí sách
+  h4.mb-4 Xem và sửa thông tin sách
+  .alert.alert-danger Lỗi không thể sửa vào cơ sở dữ liệu, hãy thử lại
+  .alert.alert-success Đã sửa thành công
+  .alert.alert-warning 
+    | Bạn phải nhập tên sách
+  form(action="")
+    .d-flex.flex-sm-row.flex-column
+      .col-md-4
+        .form-group
+          label Tên sách
+          input(type="text", name="bookname").form-control.form-control-sm
+        .form-group
+          label Số trang
+          input(type="text", name="bookname").form-control.form-control-sm
+        .form-group
+          label Trọng lượng (gram)
+          input(type="text", name="bookname").form-control.form-control-sm
+        .form-group
+          label Tác giả
+          select.form-control.custom-select-sm
+            option Chika Umino
+            option UrihaRushia
+        .form-group
+          label Danh mục
+          .d-flex
+            select.form-control.custom-select-sm
+              option Chika Umino
+              option UrihaRushia
+            a(href="/admin/authors",target="blank").ml-2
+              button.btn.btn-outline-success.btn-sm 
+                .fas.fa-search
+          
+        .form-group
+          label Thời gian phát hành
+          input(type="date").form-control.form-control-sm
+
+      .col-md-8
+        .form-group.d-flex.justify-content-center
+            img(src="https://via.placeholder.com/150x300").img-thumbnail.edit-img
+        .input-group.mb-3.input-group-sm.form-control-sm
+          .input-group-prepend
+            .input-group-text
+              input(type='checkbox', aria-label='Checkbox for following text input')
+          .custom-file
+            input#inputGroupFile01.custom-file-input(type='file')
+            label.custom-file-label(for='inputGroupFile01') Chọn ảnh thay thế
+        .form-group
+          label Mô tả cho sách
+          textarea.form-control.form-control-sm
+    .form-group.col
+      button(type="submit").btn.btn-primary.btn-block Sửa
+
+      

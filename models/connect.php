@@ -30,7 +30,7 @@ class Database
   }
   // select from tblX where id=? and usrname=? 
   // $params là 1 array chứa các giá trị tương ứng với số dấu ? trong string sql
-  public static function queryResult($sql, $params)
+  public static function querySingleResult($sql, $params)
   {
     $conn = self::connect();
     $stmt = $conn->prepare($sql);
@@ -40,12 +40,22 @@ class Database
     $conn = null;
     return $result;
   }
+  public static function queryResults($sql, $params)
+  {
+    $conn = self::connect();
+    $stmt = $conn->prepare($sql);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt->execute($params);
+    $result = $stmt->fetchAll();
+    $conn = null;
+    return $result;
+  }
   public static function verifyCredential($username, $password)
   {
     try {
-      $sql = "select userid, username, password, isadmin from users where username=?";
-      $result = self::queryResult($sql, array($username));
-      if ($result && $result["password"] == $password) {
+      $sql = "select userid, username, password, isadmin, isdisable from users where username=?";
+      $result = self::querySingleResult($sql, array($username));
+      if ($result && $result["isdisable"] == 0 && $result["password"] == $password) {
         return [
           'status' => 1, //success
           'userid' => $result["userid"],

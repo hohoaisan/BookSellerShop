@@ -1,0 +1,126 @@
+extends base
+block content
+
+  #orderModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='orderModal', aria-hidden='true')
+    .modal-dialog.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          h5#orderModalLabel.modal-title Xem thông tin đơn hàng
+            span.ml-2 ID
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          div
+            p.detail-title.mb-0 Địa chỉ
+            p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur laudantium illum itaque, magnam nemo est dolorum aut minus impedit! Facere consequatur blanditiis nisi. Temporibus dolorum esse ea magni expedita soluta.
+          p.detail-title.mb-2 Tổng số lượng
+            span.ml-1 43
+          table.table.table-sm.table-bordered.mt-0.table-striped
+            tr
+              th Mã sách
+              th Tên sách
+              th Số lượng
+              th Tổng tiền
+            tr
+              td S001
+              td Acer aspire
+              td 23
+              td 1300000
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+          //- button.btn.btn-primary(type='button') Lưu
+
+  h3.mt-4.mb-4 Quản lí đơn hàng
+  ul.nav.nav-tabs.mb-4
+    li.nav-item
+      a.nav-link.active(href='#') Tất cả
+    li.nav-item
+      a.nav-link(href='#') Chờ xác nhận
+    li.nav-item
+      a.nav-link(href='#') Chờ thanh toán
+    li.nav-item
+      a.nav-link(href='#') Lịch sử
+  .alert.alert-danger Lỗi không thể thêm vào cơ sở dữ liệu, hãy thử lại
+  .alert.alert-success Đã tiếp nhận thành công
+  .d-flex.justify-content-between.align-items-center.mb-2.flex-sm-row.flex-column
+    h4.ml-2 Tất cả đơn hàng
+    .d-flex.justify-content-between.align-items-center.mb-2
+      form.d-flex
+        input.form-control.mr-1(type='search', placeholder='Nhập tên', aria-label='Search')
+        button.btn.btn-outline-success.w-25(type='submit')
+          .fas.fa-search
+
+  .mb-4
+    table.table.table-sm
+      thead
+        tr
+          th Tình trạng
+          th Mã đơn hàng
+          th Mã người dùng
+          th Tên người dùng
+          th Ngày đặt
+          th Tổng giá trị
+          th Thao tác
+      tbody
+        tr
+          td Chờ duyệt
+          td Text
+          td Text
+          td Cell 2
+          td Cell 2
+          td Cell 2
+          td.tablecell-action
+            .btn-group
+              button.btn.btn-sm.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | Action
+              .dropdown-menu
+                button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#orderModal', data-id='id', data-name="name") Xem thông tin chi tiết đơn hàng
+                a.dropdown-item(href='#') Tiếp nhận
+                .dropdown-divider
+                a.dropdown-item.text-danger(href='#') Từ chối
+        tr
+          td Chờ xác nhận
+          td Text
+          td Text
+          td Cell 2
+          td Cell 2
+          td Cell 2
+          td.tablecell-action
+            .btn-group
+              button.btn.btn-sm.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | Action
+              .dropdown-menu
+                a.dropdown-item(href='#') Tiếp nhận
+                .dropdown-divider
+                a.dropdown-item.text-danger(href='#') Từ chối
+        tr
+          td Chờ thanh toán
+          td Text
+          td Text
+          td Cell 2
+          td Cell 2
+          td Cell 2
+          td.tablecell-action
+            .btn-group
+              button.btn.btn-sm.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | Action
+              .dropdown-menu
+                a.dropdown-item(href='#') Đã giao hàng
+                .dropdown-divider
+                a.dropdown-item.text-danger(href='#') Lỗi
+        tr
+          td Đã thanh toán
+          td Text
+          td Text
+          td Cell 2
+          td Cell 2
+          td Cell 2
+          td.tablecell-action
+append external
+  script.
+    $('#orderModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    //ajax
+    var modal = $(this);
+    })          

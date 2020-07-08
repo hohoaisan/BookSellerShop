@@ -1,0 +1,67 @@
+extends base
+block content
+  
+  #commonModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='commonModal', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#commonModalLabel.modal-title Thêm tác giả mới
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          form#commonModalForm(action="/admin/authors/add", method="POST")
+            .form-group
+              label Tên tác giả
+              input.form-control(placeholder="Tên tác giả", name="name")
+            .form-group
+              label Giới thiệu về tác giả
+              textarea.form-control(placeholder="Giới thiệu", name="name")
+        .modal-footer 
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+          button.btn.btn-primary(type='button') Lưu
+
+  h3.mt-4.mb-4 Quản lí tác giả
+  .d-flex.justify-content-between.align-items-center.mb-2
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#commonModal') Thêm tác giả mới
+    form.d-flex
+      input.form-control.mr-1(type='search', placeholder='Nhập tên', aria-label='Search')
+      button.btn.btn-outline-success.w-25(type='submit')
+        .fas.fa-search
+  .mb-4
+      table.table.table-sm
+        thead
+          tr
+            th Mã tác giả
+            th Tên tác giả
+            th Thao tác
+        tbody
+          tr
+            td Chờ duyệt
+            td Text
+            td.tablecell-action
+              .btn-group
+                button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                  | Action
+                .dropdown-menu
+                  a.dropdown-item(href='#') Xem sách
+                  button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#commonModal', data-id='id', data-name="name") Sửa
+                  .dropdown-divider 
+                  a.dropdown-item.text-danger(href='#') Xoá danh mục
+append external
+  script.
+    $('#commonModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    var name = button.data('name');
+    var modal = $(this);
+    if (id) {
+      modal.find('.modal-title').text('Sửa tác giả');
+      modal.find('.modal-body input').val(name);
+      modal.find('#commonModalForm').attr('action', `/admin/authors/${id}/edit`);
+    }
+    else {
+      modal.find('.modal-title').text('Thêm tác giả');
+      modal.find('.modal-body input').val("");
+      modal.find('#commonModalForm').attr('action', `/admin/authors/add`);
+    }
+    })

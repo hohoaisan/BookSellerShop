@@ -2,6 +2,6 @@
 
 use Pug\Facade as PugFacade;
 $index = function() {
-  echo "OK";
+  echo PugFacade::displayFile('../views/admin/index.jade');
 }
 ?>

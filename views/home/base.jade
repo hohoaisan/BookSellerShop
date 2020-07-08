@@ -1,0 +1,171 @@
+extends ../base
+block head
+  link(rel='stylesheet', href="/assets/css/home/style.css")
+  link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap", rel="stylesheet")
+block body
+  .navbar.navbar-light.navbar-expand-md
+    .container-fluid
+      div
+        a.navbar-brand.navbar-brand-centered(href='/')
+          img(style='max-height:50px;', src="/assets/img/BS.png")
+        button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
+          span.sr-only Toggle navigation
+          span.navbar-toggler-icon
+      #navcol-1.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li.nav-item(role='presentation')
+            a.nav-link(href='#') Lorem 
+          li.nav-item(role='presentation')
+            a.nav-link(href='#') Ipsum 
+        form.form-inline.mb-0
+          input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+          button.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
+            .fas.fa-search
+        ul.nav.navbar-nav.ml-auto
+          li.nav-item(role='presentation')
+            a.nav-link(href='/auth/login?login=false') Đăng ký
+          li.nav-item(role='presentation')
+            a.nav-link(href='/auth/login') Đăng nhập
+  div.mb-4
+    header
+      a(href='/').web-title
+        h1 Chronicle Book
+    nav
+      ul
+        a(href='/')
+          li
+            i.fa.fa-home.mr-1
+            | Trang chủ
+        a(href='/books')
+          li
+            i.fa.fa-book.mr-1
+            | Sách
+        a(href='/authors')
+          li
+            i.fas.fa-user-circle.mr-1
+            | Tác giả
+        a(href='')
+          li
+            i.far.fa-newspaper.mr-1
+            | Hentai          
+      .handle Menu
+
+  //content
+  .container.min-vh-100
+    block content
+
+  //footer
+  footer.footer
+    .container.bottom_border
+      .row
+        .col-sm-4.col-md.col-sm-4.col-12.col
+          h5.headin5_amrc.col_white_amrc.pt2 Find us
+          // headin5_amrc
+          p.mb10
+            | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          p
+            i.fa.fa-location-arrow
+            |  9878/25 sec 9 rohini 35
+          p
+            i.fa.fa-phone
+            |  +91-9999878398
+          p
+            i.fa.fa.fa-envelope
+            |  info@example.com
+        .col-sm-4.col-md.col-6.col
+          h5.headin5_amrc.col_white_amrc.pt2 Quick links
+          // headin5_amrc
+          ul.footer_ul_amrc
+            li
+              a(href='http://webenlance.com') Image Rectoucing
+            li
+              a(href='http://webenlance.com') Clipping Path
+            li
+              a(href='http://webenlance.com') Hollow Man Montage
+            li
+              a(href='http://webenlance.com') Ebay & Amazon
+            li
+              a(href='http://webenlance.com') Hair Masking/Clipping
+            li
+              a(href='http://webenlance.com') Image Cropping
+          // footer_ul_amrc ends here
+        .col-sm-4.col-md.col-6.col
+          h5.headin5_amrc.col_white_amrc.pt2 Quick links
+          // headin5_amrc
+          ul.footer_ul_amrc
+            li
+              a(href='http://webenlance.com') Remove Background
+            li
+              a(href='http://webenlance.com') Shadows & Mirror Reflection
+            li
+              a(href='http://webenlance.com') Logo Design
+            li
+              a(href='http://webenlance.com') Vectorization
+            li
+              a(href='http://webenlance.com') Hair Masking/Clipping
+            li
+              a(href='http://webenlance.com') Image Cropping
+          // footer_ul_amrc ends here
+        .col-sm-4.col-md.col-12.col
+          h5.headin5_amrc.col_white_amrc.pt2 Follow us
+          // headin5_amrc ends here
+          ul.footer_ul2_amrc
+            li
+              a(href='#')
+                i.fab.fa-twitter.fleft.padding-right
+              p
+                | Lorem Ipsum is simply dummy text of the printing...
+                a(href='#') https://www.lipsum.com/
+            li
+              a(href='#')
+                i.fab.fa-twitter.fleft.padding-right
+              p
+                | Lorem Ipsum is simply dummy text of the printing...
+                a(href='#') https://www.lipsum.com/
+            li
+              a(href='#')
+                i.fab.fa-twitter.fleft.padding-right
+              p
+                | Lorem Ipsum is simply dummy text of the printing...
+                a(href='#') https://www.lipsum.com/
+          // footer_ul2_amrc ends here
+    .container-fluid
+      ul.foote_bottom_ul_amrc
+        li
+          a(href='http://webenlance.com') Home
+        li
+          a(href='http://webenlance.com') About
+        li
+          a(href='http://webenlance.com') Services
+        li
+          a(href='http://webenlance.com') Pricing
+        li
+          a(href='http://webenlance.com') Blog
+        li
+          a(href='http://webenlance.com') Contact
+      // foote_bottom_ul_amrc ends here
+      p.text-center
+        | Copyright @2017 | Designed With by 
+        a(href='#') Your Company Name
+      ul.social_footer_ul
+        li
+          a(href='http://webenlance.com')
+            i.fab.fa-facebook-f
+        li
+          a(href='http://webenlance.com')
+            i.fab.fa-twitter
+        li
+          a(href='http://webenlance.com')
+            i.fab.fa-linkedin
+        li
+          a(href='http://webenlance.com')
+            i.fab.fa-instagram
+        li
+          a(href='http://webenlance.com')
+            i.fab.fa-reddit
+      // social_footer_ul ends here
+
+
+  script(src="../assets/js/jquery.min.js")
+  script(src="../assets/bootstrap/js/bootstrap.min.js")
+    

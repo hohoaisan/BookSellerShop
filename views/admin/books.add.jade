@@ -1,0 +1,49 @@
+extends base
+block content
+  h3.mt-4.mb-4 Quản lí sách
+  h4.mb-4 Thêm sách mới
+  .alert.alert-danger Lỗi không thể thêm vào cơ sở dữ liệu, hãy thử lại
+  .alert.alert-success Đã thêm thành công
+  .alert.alert-warning 
+    | Bạn phải nhập tên sách
+  form(action="")
+    .d-flex.flex-sm-row.flex-column
+      .col-md-4
+        .form-group
+          label Tên sách
+          input(type="text", name="bookname").form-control.form-control-sm
+        .form-group
+          label Số trang
+          input(type="text", name="bookname").form-control.form-control-sm
+        .form-group
+          label Trọng lượng (gram)
+          input(type="text", name="bookname").form-control.form-control-sm
+        .form-group
+          label Tác giả
+          select.form-control.custom-select-sm
+            option Chika Umino
+            option UrihaRushia
+        .form-group
+          label Danh mục
+          .d-flex
+            select.form-control.custom-select-sm
+              option Chika Umino
+              option UrihaRushia
+            a(href="/admin/authors",target="blank").ml-2
+              button.btn.btn-outline-success.btn-sm 
+                .fas.fa-search
+          
+        .form-group
+          label Thời gian phát hành
+          input(type="date").form-control.form-control-sm
+
+      .col-md-8
+        .form-group
+          label Hình ảnh sách
+          input(type="file").form-control-file.form-control-sm
+        .form-group
+          label Mô tả cho sách
+          textarea.form-control.form-control-sm
+    .form-group.col
+      button(type="submit").btn.btn-success.btn-block Thêm
+      
