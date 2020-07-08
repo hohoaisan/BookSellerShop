@@ -56,10 +56,9 @@ class Database
   {
     $conn = self::connect();
     $stmt = $conn->prepare($sql);
-    $stmt->execute($params);
+    $result = $stmt->execute($params);
     $conn = null;
-    //return true nếu insert thành công và ngược lại: false
-    return $stmt->execute($params);
+    return $result;
   }
 
   public static function verifyCredential($username, $password)
