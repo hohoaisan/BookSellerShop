@@ -26,25 +26,28 @@ block content
     if (errors)
       each error in errors
         .alert.alert-warning= error
-    table.table.table-sm
-      thead
-        tr
-          th Mã danh mục
-          th Tên danh mục
-          th Thao tác
-      tbody
-        each category in categories
+    if(categories)
+      table.table.table-sm
+        thead
           tr
-            td= category.categoryid
-            td= category.categoryname
-            td.tablecell-action
-              .btn-group
-                button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                  | Action
-                .dropdown-menu
-                  button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal', data-id='id', data-name="name") Sửa
-                  .dropdown-divider 
-                  a.dropdown-item.text-danger(href='#') Xoá danh mục
+            th Mã danh mục
+            th Tên danh mục
+            th Thao tác
+        tbody
+          each category in categories
+            tr
+              td= category.categoryid
+              td= category.categoryname
+              td.tablecell-action
+                .btn-group
+                  button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Action
+                  .dropdown-menu
+                    button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal', data-id='id', data-name="name") Sửa
+                    .dropdown-divider 
+                    a.dropdown-item.text-danger(href='#') Xoá danh mục
+    else
+      .alert.alert-warning Không có danh mục nào trong cơ sở dữ liệu
 append external
   script.
     $('#categoryModal').on('show.bs.modal', function (event) {
