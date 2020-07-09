@@ -2,33 +2,41 @@ extends base
 block content
   
   #categoryModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='categoryModal', aria-hidden='true')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          h5#categoryModalLabel.modal-title Thêm danh mục mới
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-        .modal-body
-          form#categoryModalForm(action="/admin/categories/add", method="POST")
+    form#categoryModalForm(action="/admin/categories/add", method="POST")
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#categoryModalLabel.modal-title Thêm danh mục mới
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body
+            label Tên tác giả
             input.form-control(placeholder="Tên danh mục", name="name")
-        .modal-footer
-          button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
-          button.btn.btn-primary(type='button') Lưu
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-primary(type='submit') Lưu
 
   h3.mt-4.mb-4 Quản lí danh mục
   .d-flex.justify-content-between.align-items-center.mb-2
     button.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal') Thêm danh mục mới
   .mb-4
-      table.table.table-sm
-        thead
+    if (messages)
+      each message in messages
+        .alert.alert-success= message
+    if (errors)
+      each error in errors
+        .alert.alert-warning= error
+    table.table.table-sm
+      thead
+        tr
+          th Mã danh mục
+          th Tên danh mục
+          th Thao tác
+      tbody
+        each category in categories
           tr
-            th Mã danh mục
-            th Tên danh mục
-            th Thao tác
-        tbody
-          tr
-            td Chờ duyệt
-            td Text
+            td= category.categoryid
+            td= category.categoryname
             td.tablecell-action
               .btn-group
                 button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')

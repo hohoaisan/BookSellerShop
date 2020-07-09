@@ -75,6 +75,7 @@ $categories = function () {
 
 $authors = function () {
   $result = AdminModel::getAuthors();
+  //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   if ($result) {
@@ -153,5 +154,84 @@ $authorDelete = function ($authorid) {
     Status::addError("Có lỗi xảy ra, xin thử lại");
   }
   header('location: /admin/authors');
+  exit();
+};
+
+//For Categories
+$categories = function () {
+  $result = AdminModel::getCategories();
+  //Khởi tạo session
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  if ($result) {
+    echo PugFacade::displayFile('../views/admin/categories.jade', [
+      'categories' => $result,
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  }
+  else {
+    array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
+    echo PugFacade::displayFile('../views/admin/categories.jade', [
+      'categories' => [],
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  }
+  exit();
+};
+
+$categoryFieldRequired = function () use($categories){
+  if (!isset($_POST["name"]) || !isset($_POST["description"])) {
+    //Nếu có post request gửi tới nhưng không có 2 trường
+    //cần thiết thì quay về 
+    header('location: /admin/categories');
+  }
+  if ($_POST["name"] === ""){
+    Status::addErrors(['Tên danh mục không được để trống']);
+    header('location: /admin/categories');
+    exit();
+  }
+
+};
+
+$categoryAdd = function () use ($categoryFieldRequired) {
+  $categoryFieldRequired();
+  $name = $_POST["name"];
+  $result = AdminModel::addCategories($name);
+  if ($result) {
+    Status::addMessage("Đã thêm vào cơ sở dữ liệu");
+  }
+  else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/categories');
+  exit();
+};
+
+$categoryEdit = function ($categoryid) use ($categoryFieldRequired) {
+  $categoryFieldRequired();
+  $name = $_POST["name"];
+
+  $result = AdminModel::editCategories($categoryid, $name);
+  if ($result) {
+    Status::addMessage("Đã sửa danh mục ID: ".$categoryid." vào cơ sở dữ liệu");
+  }
+  else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/categories');
+  exit();
+};
+
+$categoryDelete = function ($categoryid) {
+  $result = AdminModel::removeAuthor($categoryid);
+  if ($result) {
+    Status::addMessage("Đã xoá danh mục ID: ".$categoryid." khỏi cơ sở dữ liệu");
+  }
+  else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/categories');
   exit();
 };
