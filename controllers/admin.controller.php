@@ -1,4 +1,6 @@
 <?php
+include('../models/admin.model.php');
+use AdminModel\AdminModel as AdminModel;
 
 use Database\Database as Database;
 use Pug\Facade as PugFacade;
@@ -70,13 +72,23 @@ $categories = function () {
 
 
 $authors = function ($errors = [], $messages = []) {
-  $sql = "select authorid, authorname, authordescription from `authors`";
-  $result = Database::queryResults($sql, array());
-  echo PugFacade::displayFile('../views/admin/authors.jade', [
-    'authors' => $result,
-    'errors' => $errors,
-    'messages' => $messages
-  ]);
+  $result = AdminModel::getAuthors();
+  if ($result) {
+    echo PugFacade::displayFile('../views/admin/authors.jade', [
+      'authors' => $result,
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  }
+  else {
+    array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
+    echo PugFacade::displayFile('../views/admin/authors.jade', [
+      'authors' => [],
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  }
+  exit();
 };
 
 $authorFieldRequired = function () use ($authors) {
@@ -102,28 +114,26 @@ $authorAdd = function () use ($authorFieldRequired, $authors) {
   $authorFieldRequired();
   $name = $_POST["name"];
   $description = $_POST["description"];
-  $sql = "insert into authors (authorname,authordescription) value (?,?)";
-  try {
-    Database::queryExecute($sql, array($name, $description));
+  $result = AdminModel::addAuthors($name, $description);
+  if ($result) {
     $authors([], ["Đã thêm vào cơ sở dữ liệu"]);
   }
-  catch (PDOException $e) {
-    $authors(["Có lỗi xảy ra ".$e->getMessage()]);
+  else {
+    $authors(["Có lỗi xảy ra, xin thử lại"], []);
   }
-
 };
 $authorEdit = function ($authorid) use ($authorFieldRequired,$authors) {
   $authorFieldRequired();
   $name = $_POST["name"];
   $description = $_POST["description"];
-  $sql = "update authors set authorname=?,authordescription=? where authorid=?";
-  try {
-    Database::queryExecute($sql, array($name, $description, $authorid));
+
+  $result = AdminModel::editAuthors($authorid, $name, $description);
+  if ($result) {
     $authors([], ["Đã sửa tác giả có id ".$authorid." vào cơ sở dữ liệu"]);
   }
-  catch (PDOException $e) {
-    $authors(["Có lỗi xảy ra ".$e->getMessage()]);
-  }
+  else {
+    $authors(["Có lỗi xảy ra "]);
+  };
 };
 $authorDelete = function ($authorid) use ($authors) {
   $sql = "delete from authors where authorid=?";

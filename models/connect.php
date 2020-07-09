@@ -61,30 +61,7 @@ class Database
     return $result;
   }
 
-  public static function verifyCredential($username, $password)
-  {
-    try {
-      $sql = "select userid, username, password, isadmin, isdisable from users where username=?";
-      $result = self::querySingleResult($sql, array($username));
-      if ($result && $result["isdisable"] == 0 && $result["password"] == $password) {
-        return [
-          'status' => 1, //success
-          'userid' => $result["userid"],
-          'isadmin' => $result["isadmin"],
-        ];
-      } else {
-        return [
-          'status' => 0, //wrong
-          'message' => 'Tên tài khoản hoặc mật khẩu không đúng'
-        ];
-      }
-    } catch (PDOException $e) {
-      return [
-        'status' => -1, //error
-        'message' => $e->getMessage()
-      ];
-    }
-  }
+  
 
 }
 ?>

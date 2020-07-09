@@ -1,6 +1,6 @@
 <?php
-
-use Database\Database as Database;
+include('../models/auth.model.php');
+use AuthModel\AuthModel as AuthModel;
 use Pug\Facade as PugFacade;
 
 $login = function () {
@@ -45,15 +45,16 @@ $postRegisterRequiredField = function(){
   };
       
   //check username và email tồn tại chưa
-  $user =[$_POST["username"], $_POST["email"]];
-  $result = Database::querySingleResult("select * from users WHERE username=? OR email=? LIMIT 1",$user);
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $result = AuthModel::checkUserExists($username,$email);
   if ($result) { // if user exists
       if ($result['username'] === $_POST["username"]) {
-          array_push($errors, "Username already exists");
+          array_push($errors, "Tên người dùng đã tồn tại, xin chọn tên khác");
       }
   
       if ($result['email'] === $_POST["email"]) {
-          array_push($errors, "Email already exists");
+          array_push($errors, "Email này đã được đăng kí");
       }
   }
   
@@ -65,12 +66,17 @@ $postRegisterRequiredField = function(){
 
 $postRegister = function() use($postRegisterRequiredField){
   $postRegisterRequiredField();
-
-  $user = [$_POST["username"], $_POST["password"], $_POST["email"], $_POST["fullname"], $_POST["male"], $_POST["phone"], $_POST["dob"]];
-  $result = Database::queryExecute("insert INTO users(username, password, email, fullname, male, phone, dob) VALUES (?, ?, ?, ?, ?, ?, ?)", $user);
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+  $fullname = $_POST["fullname"];
+  $male = $_POST["male"];
+  $phone = $_POST["phone"];
+  $dob = $_POST["dob"];
+  $result = AuthModel::regiserNewUser($username, $password, $email, $fullname, $male, $phone, $dob);
   if($result){
-    $succ = "Tạo tài khoản thành công";
-    echo PugFacade::displayFile('../views/auth/login.jade', ['succ' => $succ]);
+    $messages = ["Tạo tài khoản thành công"];
+    echo PugFacade::displayFile('../views/auth/login.jade', ['messages' => $messages]);
     exit();
   }else{
     $errors = ["Tạo tài khoản thất bại"];
@@ -81,7 +87,7 @@ $postRegister = function() use($postRegisterRequiredField){
 
 $postLoginRequiredField = function () {
   if (!isset($_POST["username"]) || !isset($_POST["password"])) {
-    echo PugFacade::displayFile('../views/auth/index.jade');
+    echo PugFacade::displayFile('../views/auth/login.jade');
     exit();
   }
   $errors = [];
@@ -92,7 +98,7 @@ $postLoginRequiredField = function () {
     array_push($errors, "Mật khẩu không được để trống");
   };
   if (count($errors)) {
-    echo PugFacade::displayFile('../views/auth/index.jade', ['errors' => $errors]);
+    echo PugFacade::displayFile('../views/auth/login.jade', ['errors' => $errors]);
     exit();
   }
 };
@@ -102,14 +108,14 @@ $postLogin = function () use ($postLoginRequiredField) {
   $postLoginRequiredField();
   $username = $_POST["username"];
   $password = $_POST["password"];
-  $result = Database::verifyCredential($username, $password);
+  $result = AuthModel::verifyCredential($username, $password);
   if ($result["status"] == 1) {
     setcookie("userid", $result["userid"], time() + (300), "/"); //cookie tồn tại 3 phút (180)
     setcookie("admin", $result["isadmin"], time() + (300), "/");
     header('location: /auth/login');
   } else {
     $errors = [$result["message"]];
-    echo PugFacade::displayFile('../views/auth/index.jade', ['errors' => $errors, 'username' => $username]);
+    echo PugFacade::displayFile('../views/auth/login.jade', ['errors' => $errors, 'username' => $username]);
     exit();
   }
 };

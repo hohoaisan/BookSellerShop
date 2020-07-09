@@ -8,6 +8,9 @@ $_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
 use Pug\Facade as PugFacade;
 
 
+
+
+
 $router->get('/', $index);
 $router->get('/users', function () use($router) {include('routers/user.router.php');});
 $router->mount('/auth', function () use($router) {include('routers/auth.router.php');});
