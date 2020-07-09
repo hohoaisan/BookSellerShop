@@ -43,7 +43,7 @@ class AuthModel {
     try {
       $user =[$username, $email];
       $result = Database::querySingleResult("select * from users WHERE username=? OR email=? LIMIT 1",$user);
-      return $result;
+      return !!$result;
     }
     catch(PDOException $e) {
       return false;

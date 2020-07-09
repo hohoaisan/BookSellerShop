@@ -1,5 +1,6 @@
 <?php
 include('../models/auth.model.php');
+
 use AuthModel\AuthModel as AuthModel;
 use Pug\Facade as PugFacade;
 
@@ -25,61 +26,53 @@ $register = function () {
   echo PugFacade::displayFile('../views/auth/register.jade');
 };
 
-$postRegisterRequiredField = function(){
+$postRegisterRequiredField = function () {
   //array chứa error
   $errors = [];
   if (!$_POST["username"]) {
-      array_push($errors, "Tên đăng nhập không được để trống");
+    array_push($errors, "Tên đăng nhập không được để trống");
   };
   if (strlen($_POST["username"]) >= 30) {
-      array_push($errors, "Tên đăng nhập không được vượt quá 30 ký tự");
+    array_push($errors, "Tên đăng nhập không được vượt quá 30 ký tự");
   };
   if ($_POST["password"] !== $_POST["password-repeat"]) {
     array_push($errors, "Sai mật khẩu xác nhận");
   };
   if (!$_POST["password"]) {
-      array_push($errors, "Mật khẩu không được để trống");
+    array_push($errors, "Mật khẩu không được để trống");
   };
   if (!$_POST["email"]) {
-      array_push($errors, "Email không được để trống");
+    array_push($errors, "Email không được để trống");
   };
-      
-  //check username và email tồn tại chưa
-  $username = $_POST["username"];
-  $email = $_POST["email"];
-  $result = AuthModel::checkUserExists($username,$email);
-  if ($result) { // if user exists
-      if ($result['username'] === $_POST["username"]) {
-          array_push($errors, "Tên người dùng đã tồn tại, xin chọn tên khác");
-      }
-  
-      if ($result['email'] === $_POST["email"]) {
-          array_push($errors, "Email này đã được đăng kí");
-      }
-  }
-  
   if (count($errors)) {
-      echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors]);
-      exit();
+    echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors]);
+    exit();
   }
 };
 
-$postRegister = function() use($postRegisterRequiredField){
+$postRegister = function () use ($postRegisterRequiredField) {
   $postRegisterRequiredField();
   $username = $_POST["username"];
   $email = $_POST["email"];
-  $password = $_POST["password"];
-  $fullname = $_POST["fullname"];
-  $male = $_POST["male"];
-  $phone = $_POST["phone"];
-  $dob = $_POST["dob"];
-  $result = AuthModel::regiserNewUser($username, $password, $email, $fullname, $male, $phone, $dob);
-  if($result){
-    $messages = ["Tạo tài khoản thành công"];
-    echo PugFacade::displayFile('../views/auth/login.jade', ['messages' => $messages]);
-    exit();
-  }else{
-    $errors = ["Tạo tài khoản thất bại"];
+  $checkExists = AuthModel::checkUserExists($username, $email);
+  if (!$checkExists) {
+    $password = $_POST["password"];
+    $fullname = $_POST["fullname"];
+    $male = $_POST["male"];
+    $phone = $_POST["phone"];
+    $dob = $_POST["dob"];
+    $result = AuthModel::regiserNewUser($username, $password, $email, $fullname, $male, $phone, $dob);
+    if ($result) {
+      $messages = ["Tạo tài khoản thành công"];
+      echo PugFacade::displayFile('../views/auth/login.jade', ['messages' => $messages]);
+      exit();
+    } else {
+      $errors = ["Tạo tài khoản thất bại"];
+      echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors, 'username' => $_POST["username"], 'fullname' => $_POST["fullname"]]);
+      exit();
+    }
+  } else {
+    $errors = ["Tên người dùng hoặc email đã được đăng kí"];
     echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors, 'username' => $_POST["username"], 'fullname' => $_POST["fullname"]]);
     exit();
   }
