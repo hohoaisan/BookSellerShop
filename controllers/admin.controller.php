@@ -225,7 +225,7 @@ $categoryEdit = function ($categoryid) use ($categoryFieldRequired) {
 };
 
 $categoryDelete = function ($categoryid) {
-  $result = AdminModel::removeAuthor($categoryid);
+  $result = AdminModel::removeCategories($categoryid);
   if ($result) {
     Status::addMessage("Đã xoá danh mục ID: ".$categoryid." khỏi cơ sở dữ liệu");
   }

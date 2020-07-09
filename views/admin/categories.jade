@@ -10,7 +10,7 @@ block content
             button.close(type='button', data-dismiss='modal', aria-label='Close')
               span(aria-hidden='true') ×
           .modal-body
-            label Tên tác giả
+            label Tên danh mục
             input.form-control(placeholder="Tên danh mục", name="name")
           .modal-footer
             button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
@@ -43,9 +43,10 @@ block content
                   button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | Action
                   .dropdown-menu
-                    button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal', data-id='id', data-name="name") Sửa
+                    button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal', data-id= category.categoryid, data-name= category.categoryname) Sửa danh mục
                     .dropdown-divider 
-                    a.dropdown-item.text-danger(href='#') Xoá danh mục
+                    form(action="/admin/categories/" + category.categoryid + "/delete", method="POST")
+                        button(type="submit").dropdown-item.text-danger Xoá danh mục
     else
       .alert.alert-warning Không có danh mục nào trong cơ sở dữ liệu
 append external
@@ -57,7 +58,7 @@ append external
     var modal = $(this);
     if (id) {
       modal.find('.modal-title').text('Sửa danh mục');
-      modal.find('.modal-body input').val(name);
+      modal.find('.modal-body input[name="name"]').val(name);
       modal.find('#categoryModalForm').attr('action', `/admin/categories/${id}/edit`);
     }
     else {
