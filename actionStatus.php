@@ -1,5 +1,5 @@
 <?php namespace Status;
-//Dùng để tạo ra thông báo
+//Dùng để tạo ra thông báo, khi lấy được thông báo sẽ làm rỗng session chứa thông báo 
 class Status {
   public static function initalizeSession() {
     if (!isset($_SESSION["messages"])) {

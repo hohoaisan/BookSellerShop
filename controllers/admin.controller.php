@@ -1,8 +1,10 @@
 <?php
-include('../models/admin.model.php');
-use AdminModel\AdminModel as AdminModel;
+session_start();
 
-use Database\Database as Database;
+include('../models/admin.model.php');
+include('../actionStatus.php');
+use AdminModel\AdminModel as AdminModel;
+use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
 $index = function () {
@@ -71,8 +73,10 @@ $categories = function () {
 };
 
 
-$authors = function ($errors = [], $messages = []) {
+$authors = function () {
   $result = AdminModel::getAuthors();
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
   if ($result) {
     echo PugFacade::displayFile('../views/admin/authors.jade', [
       'authors' => $result,
@@ -95,7 +99,7 @@ $authorFieldRequired = function () use ($authors) {
   if (!isset($_POST["name"]) || !isset($_POST["description"])) {
     //Nếu có post request gửi tới nhưng không có 2 trường
     //cần thiết thì quay về 
-    header('location: /authors');
+    header('location: /admin/authors');
   }
   $errors = [];
   if ($_POST["name"]=="") {
@@ -105,43 +109,49 @@ $authorFieldRequired = function () use ($authors) {
     array_push($errors, "Giới thiệu tác giả không được để trống");
   }
   if (count($errors)) {
-    $authors($errors);
+    Status::addErrors($errors);
+    header('location: /admin/authors');
     exit();
   }
 };
 
-$authorAdd = function () use ($authorFieldRequired, $authors) {
+$authorAdd = function () use ($authorFieldRequired) {
   $authorFieldRequired();
   $name = $_POST["name"];
   $description = $_POST["description"];
-  $result = AdminModel::addAuthors($name, $description);
+  $result = AdminModel::addAuthor($name, $description);
   if ($result) {
-    $authors([], ["Đã thêm vào cơ sở dữ liệu"]);
+    Status::addMessage("Đã thêm vào cơ sở dữ liệu");
   }
   else {
-    $authors(["Có lỗi xảy ra, xin thử lại"], []);
+    Status::addError("Có lỗi xảy ra, xin thử lại");
   }
+  header('location: /admin/authors');
+  exit();
 };
-$authorEdit = function ($authorid) use ($authorFieldRequired,$authors) {
+$authorEdit = function ($authorid) use ($authorFieldRequired) {
   $authorFieldRequired();
   $name = $_POST["name"];
   $description = $_POST["description"];
 
-  $result = AdminModel::editAuthors($authorid, $name, $description);
+  $result = AdminModel::editAuthor($authorid, $name, $description);
   if ($result) {
-    $authors([], ["Đã sửa tác giả có id ".$authorid." vào cơ sở dữ liệu"]);
+    Status::addMessage("Đã sửa tác giả có id ".$authorid." vào cơ sở dữ liệu");
   }
   else {
-    $authors(["Có lỗi xảy ra "]);
-  };
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/authors');
+  exit();
 };
-$authorDelete = function ($authorid) use ($authors) {
-  $sql = "delete from authors where authorid=?";
-  try {
-    Database::queryExecute($sql, array($authorid));
-    $authors([], ["Đã xoá tác giả có id ".$authorid." khỏi cơ sở dữ liệu"]);
+$authorDelete = function ($authorid) {
+  $result = AdminModel::removeAuthor($authorid);
+  if ($result) {
+    Status::addMessage("Đã xoá tác giả có id ".$authorid." khỏi cơ sở dữ liệu");
   }
-  catch (PDOException $e) {
-    $authors(["Có lỗi xảy ra ".$e->getMessage()]);
+  else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
   }
+  header('location: /admin/authors');
+  exit();
 };
