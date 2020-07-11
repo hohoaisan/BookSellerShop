@@ -1,4 +1,5 @@
 <?php
 
 $router->get('*', $index);
+
 ?>

@@ -15,6 +15,9 @@ $index = function() {
       'mostSeller'=> $mostSeller,
       'mostPopular'=> $mostPopular
     ]);
-}
+};
 
+$cart = function() {
+  echo PugFacade::displayFile('../views/home/cart.jade');
+};
 ?>
