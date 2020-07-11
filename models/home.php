@@ -28,7 +28,7 @@
         }
         public static function mostSeller(){
             try {
-                $sql = "select * from books ORDER BY purchasedcount DESC limit 1,12";
+                $sql = "select * from books ORDER BY purchasedcount DESC limit 1,18";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {
@@ -37,7 +37,7 @@
         }
         public static function mostPopular(){
             try {
-                $sql = "select * from books ORDER BY viewcount DESC limit 1,12";
+                $sql = "select * from books ORDER BY viewcount DESC limit 1,18";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {

@@ -46,15 +46,15 @@ block content
                 .list-group.d-flex.justify-content-center.mb-2
                     li.list-group-item.list-group-item-primary(style='background-color: #7952b3;color:white;')
                         div.d-flex.justify-content-center.align-items-center.mr-1
-                            span(style='font-size: 1.1rem')
-                                i(style='font-size: 1.1rem').fa.fa-fire.mr-2
-                                | Bán chạy nhất
+                            i.fa.fa-fire 
+                                span &nbsp;
+                                span Bán chạy nhất
                 //slide point
                 #MostSeller.carousel.slide(data-ride='carousel')
                     ol.carousel-indicators
                         li.active(data-target='#MostSeller', data-slide-to='0')
                         li(data-target='#MostSeller', data-slide-to='1')
-                        li(data-target='#MostSseller', data-slide-to='2')
+                        li(data-target='#MostSeller', data-slide-to='2')
                     // Carousel items
                     .carousel-inner.mt-4
                         .carousel-item.active
@@ -109,43 +109,43 @@ block content
                         li(data-target='#MostPopular', data-slide-to='1')
                         li(data-target='#MostPopular', data-slide-to='2')
                     // Carousel items
-                    .carousel-inner
+                    .carousel-inner.mt-4
                         .carousel-item.active
                             .row.mb-2.ml-1.mr-1
-                                - for(i = 0; i < 4; i++){
-                                    .col-6.col-md-3.mt-4
+                                - for(i = 0; i < 6; i++){
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
                                             img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostPopular[i].bookname
+                                                .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm BUY       
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
-                                - for(i = 4; i < 8; i++){
-                                    .col-6.col-md-3.mt-4
+                                - for(i = 6; i < 12; i++){
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
                                             img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostPopular[i].bookname
+                                                .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm BUY                                    
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
-                                - for(i = 8; i < 12; i++){
-                                    .col-6.col-md-3.mt-4
+                                - for(i = 12; i < 18; i++){
+                                    .col-6.col-md-2.pl-1.pr-1
                                         .card.card-inverse.card-info 
                                             img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostPopular[i].bookname
+                                                .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY       
-                                -}
+                                                button.btn.btn-primary.float-right.btn-sm BUY    
+                                -}          
     //book Show
     .container
         if (listBooks) 
@@ -159,7 +159,7 @@ block content
                                     span Dành cho bạn                                 
                     .row.mb-2.ml-1.mr-1
                         each book in listBooks
-                            .col-6.col-md-3.mt-4
+                            .col-6.col-md-2.pl-1.pr-1.mb-4
                                 .card.card-inverse.card-info 
                                     img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
                                     .card-block(style="height: 4em; overflow:hidden;")
