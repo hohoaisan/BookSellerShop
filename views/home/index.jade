@@ -4,15 +4,9 @@ block content
         .row
             .col-md-3.pr-1.pt-4
                 .list-group
-                    li.list-group-item.list-group-item-primary Danh mục sản phẩm
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
-                    a.list-group-item.list-group-item-action.list-group-item-light A list group item
+                    li.list-group-item.list-group-item-primary.text-center Danh mục sản phẩm
+                    each category in listCategories
+                        a.list-group-item.list-group-item-action.list-group-item-light.text-center.font-weight-bold(href="/categories/" + category.categoryid)= category.categoryname
             .col-md-9.pl-1
                 #carouselExampleIndicators.carousel.slide.mt-4.mb-4(data-ride='carousel')
                     ol.carousel-indicators
@@ -48,12 +42,14 @@ block content
     .container
         .row.blog.mt-4.mb-5
             .col-md-12
+                //banner
                 .list-group.d-flex.justify-content-center.mb-2
                     li.list-group-item.list-group-item-primary(style='background-color: #7952b3;color:white;')
                         div.d-flex.justify-content-center.align-items-center.mr-1
                             i.fa.fa-fire 
                                 span &nbsp;
                                 span Bán chạy nhất
+                //slide point
                 #MostSeller.carousel.slide(data-ride='carousel')
                     ol.carousel-indicators
                         li.active(data-target='#MostSeller', data-slide-to='0')
@@ -62,53 +58,26 @@ block content
                     // Carousel items
                     .carousel-inner
                         .carousel-item.active
-                            .row 
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
+                            .row
+                                - for(i = 0; i < 4; i++){
+                                    .col-3
+                                        a(href='/books/' + mostSeller[i].bookid)
+                                            img(src='/assets/img/books/' + mostSeller[i].bookimageurl, alt='Image', style='width:100%;height:20rem;object-fit: cover;')
+                                -}
                         .carousel-item
                             .row
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
+                                - for(i = 4; i < 8; i++){
+                                    .col-3
+                                        a(href='/books/' + mostSeller[i].bookid)
+                                            img(src='/assets/img/books/' + mostSeller[i].bookimageurl, alt='Image', style='width:100%;height:20rem;object-fit: cover;')
+                                -}
                         .carousel-item
                             .row
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p3.jpg', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                    a.carousel-control-prev(href='#MostSeller', role='button', data-slide='prev')
-                        span.carousel-control-prev-icon(aria-hidden='true')
-                        span.sr-only Previous
-                    a.carousel-control-next(href='#MostSeller', role='button', data-slide='next')
-                        span.carousel-control-next-icon(aria-hidden='true')
-                        span.sr-only Next
+                                - for(i = 8; i < 12; i++){
+                                    .col-3
+                                        a(href='/books/' + mostSeller[i].bookid)
+                                            img(src='/assets/img/books/' + mostSeller[i].bookimageurl, alt='Image', style='width:100%;height:20rem;object-fit: cover;')
+                                -}                        
     //Popular banner
     .container
         .row.blog.mt-5.mb-5
@@ -127,162 +96,44 @@ block content
                     // Carousel items
                     .carousel-inner
                         .carousel-item.active
-                            .row 
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
+                            .row
+                                - for(i = 0; i < 4; i++){
+                                    .col-3
+                                        a(href='/books/' + mostPopular[i].bookid)
+                                            img(src='/assets/img/books/' + mostPopular[i].bookimageurl, alt='Image', style='width:100%;height:20rem;object-fit: cover;')
+                                -}
                         .carousel-item
                             .row
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
+                                - for(i = 4; i < 8; i++){
+                                    .col-3
+                                        a(href='/books/' + mostPopular[i].bookid)
+                                            img(src='/assets/img/books/' + mostPopular[i].bookimageurl, alt='Image', style='width:100%;height:20rem;object-fit: cover;')
+                                -}
                         .carousel-item
                             .row
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                                .col-3
-                                    a(href='#')
-                                        img(src='/assets/img/p4.png', alt='Image', style='width:100%;height:15rem;object-fit: cover;')
-                    a.carousel-control-prev(href='#MostPopular', role='button', data-slide='prev')
-                        span.carousel-control-prev-icon(aria-hidden='true')
-                        span.sr-only Previous
-                    a.carousel-control-next(href='#MostPopular', role='button', data-slide='next')
-                        span.carousel-control-next-icon(aria-hidden='true')
-                        span.sr-only Next
+                                - for(i = 8; i < 12; i++){
+                                    .col-3
+                                        a(href='/books/' + mostPopular[i].bookid)
+                                            img(src='/assets/img/books/' + mostPopular[i].bookimageurl, alt='Image', style='width:100%;height:20rem;object-fit: cover;')
+                                -}
     //book Show
     .container
-        .row.mt-4
-            .col-12
-                .list-group.d-flex.justify-content-center.mb-2
-                    li.list-group-item.list-group-item-primary(style='background-color: #7952b3;color:white;')
-                        div.d-flex.justify-content-center.align-items-center.mr-1
-                            i.fa.fa-heart
-                                span &nbsp;
-                                span Dành cho bạn
-        .row.mb-2
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info 
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ 
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-        .row.mb-2
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info 
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ 
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-        .row.mb-2
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info 
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ 
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-            .col-6.col-md-4.col-lg-3.mt-4
-                .card.card-inverse.card-info
-                    img.card-img-top(src='/assets/img/p3.jpg')
-                    .card-block
-                        h5.card-title Sword Art Online
-                    .card-footer
-                        small 98.000 VNĐ
-                        button.btn.btn-primary.float-right.btn-sm BUY
-
-
-
+        if (listBooks) 
+            .row.mt-4
+                .col-12
+                    .list-group.d-flex.justify-content-center.mb-2
+                        li.list-group-item.list-group-item-primary(style='background-color: #7952b3;color:white;')
+                            div.d-flex.justify-content-center.align-items-center.mr-1
+                                i.fa.fa-heart
+                                    span &nbsp;
+                                    span Dành cho bạn                                 
+                    .row.mb-2.ml-1.mr-1
+                        each book in listBooks
+                            .col-6.col-md-3.mt-4
+                                .card.card-inverse.card-info 
+                                    img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
+                                    .card-block
+                                        h5.card-title= book.bookname
+                                    .card-footer
+                                        small= book.price + ' VNĐ'
+                                        button.btn.btn-primary.float-right.btn-sm BUY 

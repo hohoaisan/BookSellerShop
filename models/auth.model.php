@@ -1,4 +1,5 @@
-<?php namespace AuthModel;
+<?php 
+namespace AuthModel;
 use Database\Database as Database;  
 use PDOException;
 
