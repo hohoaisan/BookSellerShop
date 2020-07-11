@@ -31,10 +31,15 @@ $router->post('/users/{userid}/makeadmin', $usersAdmin);
 
 
 $router->get('/books', $books);
+// $router->get('/books?q=', $books);
+// $router->get('/books?author=id', $books);
+// $router->get('/books?category=id', $books);
 $router->get('/books/add', $bookAdd);
 $router->post('/books/add', $postBookAdd);
-$router->get('/books/edit/{bookid}', $bookEdit);
-$router->post('/books/edit/{bookid}', $postBookEdit);
+$router->get('/books/{bookid}/edit', $bookEdit);
+$router->post('/books/{bookid}/edit', $postBookEdit);
+$router->post('/books/{bookid}/delete', $bookDelete);
+$router->post('/books/{bookid}/quantity', $postBookEditQuantity);
 
 $router->get('/authors', $authors);
 $router->post('/authors/add', $authorAdd);

@@ -2,11 +2,13 @@ extends base
 block content
   h3.mt-4.mb-4 Quản lí sách
   h4.mb-4 Thêm sách mới
-  .alert.alert-danger Lỗi không thể thêm vào cơ sở dữ liệu, hãy thử lại
-  .alert.alert-success Đã thêm thành công
-  .alert.alert-warning 
-    | Bạn phải nhập tên sách
-  form(action="")
+  if (messages)
+      each message in messages
+        .alert.alert-success= message
+  if (errors)
+    each error in errors
+      .alert.alert-warning= error
+  form(action="/admin/books/add", method="POST", enctype="multipart/form-data")
     .d-flex.flex-sm-row.flex-column
       .col-md-4
         .form-group
@@ -14,36 +16,42 @@ block content
           input(type="text", name="bookname").form-control.form-control-sm
         .form-group
           label Số trang
-          input(type="text", name="bookname").form-control.form-control-sm
+          input(type="text", name="bookpages").form-control.form-control-sm
         .form-group
           label Trọng lượng (gram)
-          input(type="text", name="bookname").form-control.form-control-sm
-        .form-group
-          label Tác giả
-          select.form-control.custom-select-sm
-            option Chika Umino
-            option UrihaRushia
+          input(type="text", name="bookweight").form-control.form-control-sm
         .form-group
           label Danh mục
+          select.form-control.custom-select-sm(name="categoryid")
+            each category in categories
+              option(value=category.categoryid)= category.categoryname
+        .form-group
+          label Tác giả
           .d-flex
-            select.form-control.custom-select-sm
-              option Chika Umino
-              option UrihaRushia
+            select.form-control.custom-select-sm(name="authorid")
+              each author in authors
+                option(value=author.authorid)= author.authorname
             a(href="/admin/authors",target="blank").ml-2
-              button.btn.btn-outline-success.btn-sm 
+              button.btn.btn-outline-success.btn-sm(type="button")
                 .fas.fa-search
           
         .form-group
           label Thời gian phát hành
-          input(type="date").form-control.form-control-sm
+          input(type="date", name="releasedate").form-control.form-control-sm
 
       .col-md-8
         .form-group
           label Hình ảnh sách
-          input(type="file").form-control-file.form-control-sm
+          input(type="file", name="picture").form-control-file.form-control-sm
+        .form-group
+          label Giá tiền
+          input(type="number", name="bookprice", value=0).form-control.form-control-sm
+        .form-group
+          label Số lượng
+          input(type="number", name="quantity", value=0).form-control.form-control-sm
         .form-group
           label Mô tả cho sách
-          textarea.form-control.form-control-sm
+          textarea.form-control.form-control-sm(name="description")
     .form-group.col
       button(type="submit").btn.btn-success.btn-block Thêm
       
