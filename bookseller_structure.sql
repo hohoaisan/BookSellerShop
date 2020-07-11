@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 08/07/2020 20:21:58
+ Date: 11/07/2020 10:32:35
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `authors`  (
   `authorname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `authordescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`authorid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for banner
@@ -49,7 +49,7 @@ CREATE TABLE `books`  (
   `bookname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bookimageurl` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bookdescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bookpages` tinyint NOT NULL DEFAULT 0,
+  `bookpages` int NOT NULL DEFAULT 0,
   `bookweight` float NOT NULL DEFAULT 0,
   `releasedate` date NOT NULL,
   `viewcount` mediumint NOT NULL DEFAULT 0,
@@ -57,12 +57,14 @@ CREATE TABLE `books`  (
   `authorid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL,
   `quantity` int NOT NULL DEFAULT 0,
+  `price` decimal(10, 2) UNSIGNED NULL DEFAULT 0,
+  `timestamp` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`bookid`) USING BTREE,
   INDEX `fkIdx_37`(`authorid`) USING BTREE,
   INDEX `fkIdx_40`(`categoryid`) USING BTREE,
   CONSTRAINT `FK_37` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_40` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for categories
@@ -72,7 +74,7 @@ CREATE TABLE `categories`  (
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `categoryname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`categoryid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for comments
@@ -111,7 +113,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`  (
   `orderid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `orderstatus` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'p',
+  `orderstatus` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'p' COMMENT 'orderstatus=\'p\' OR  orderstatus=\'r\' OR  orderstatus=\'a\' OR  orderstatus=\'c\' OR  orderstatus=\'e\'',
   `timestamp` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `addressid` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `addresstext` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -169,7 +171,7 @@ CREATE TABLE `users`  (
   PRIMARY KEY (`userid`) USING BTREE,
   INDEX `fk_users_ward_1`(`addressid`) USING BTREE,
   CONSTRAINT `fk_users_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for ward

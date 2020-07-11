@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 08/07/2020 20:21:47
+ Date: 11/07/2020 10:32:26
 */
 
 SET NAMES utf8mb4;
@@ -26,11 +26,17 @@ CREATE TABLE `authors`  (
   `authorname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `authordescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`authorid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of authors
 -- ----------------------------
+INSERT INTO `authors` VALUES (000001, 'Chika Umino', 'Umino Chica là Chica Umino');
+INSERT INTO `authors` VALUES (000002, 'Yoshitoki Oima', 'Yoshitoki Ōima (大今 良時, Ōima Yoshitoki, born March 15, 1989) is a Japanese manga artist and writer, best known for her manga series A Silent Voice.');
+INSERT INTO `authors` VALUES (000004, 'Nguyễn Ánh', 'Nguyễn Ánh là một nhà văn thu hút được hầu hết sự chú ý của giới trẻ Việt Nam');
+INSERT INTO `authors` VALUES (000005, 'Tố Hữu', 'Tố Hữu là nhà văn lỗi lạc thời cách mạng Việt Nam');
+INSERT INTO `authors` VALUES (000006, 'Bộ Giáo dục', '');
+INSERT INTO `authors` VALUES (000015, 'Shinkai Makoto', '');
 
 -- ----------------------------
 -- Table structure for banner
@@ -57,7 +63,7 @@ CREATE TABLE `books`  (
   `bookname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bookimageurl` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bookdescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bookpages` tinyint NOT NULL DEFAULT 0,
+  `bookpages` int NOT NULL DEFAULT 0,
   `bookweight` float NOT NULL DEFAULT 0,
   `releasedate` date NOT NULL,
   `viewcount` mediumint NOT NULL DEFAULT 0,
@@ -65,16 +71,27 @@ CREATE TABLE `books`  (
   `authorid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL,
   `quantity` int NOT NULL DEFAULT 0,
+  `price` decimal(10, 2) UNSIGNED NULL DEFAULT 0,
+  `timestamp` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`bookid`) USING BTREE,
   INDEX `fkIdx_37`(`authorid`) USING BTREE,
   INDEX `fkIdx_40`(`categoryid`) USING BTREE,
   CONSTRAINT `FK_37` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_40` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of books
 -- ----------------------------
+INSERT INTO `books` VALUES (000001, '5 Centimet Trên Giây', '2019_10_24_15_33_17_1.jpg', '5cm/s không chỉ là vận tốc của những cánh anh đào rơi, mà còn là vận tốc khi chúng ta lặng lẽ bước qua đời nhau, đánh mất bao cảm xúc thiết tha nhất của tình yêu.\r\n\r\nBằng giọng văn tinh tế, truyền cảm, Năm centimet trên giây mang đến những khắc họa mới về tâm hồn và khả năng tồn tại của cảm xúc, bắt đầu từ tình yêu trong sáng, ngọt ngào của một cô bé và cậu bé. Ba giai đoạn, ba mảnh ghép, ba ngôi kể chuyện khác nhau nhưng đều xoay quanh nhân vật nam chính, người luôn bị ám ảnh bởi kí ức và những điều đã qua…\r\n\r\nKhác với những câu chuyện cuốn bạn chạy một mạch, truyện này khó mà đọc nhanh. Ngón tay bạn hẳn sẽ ngừng lại cả trăm lần trên mỗi trang sách. Chỉ vì một cử động rất khẽ, một câu thoại, hay một xúc cảm bất chợt có thể sẽ đánh thức những điều tưởng chừng đã ngủ quên trong tiềm thức, như ngọn đèn vừa được bật sáng trong tâm trí bạn. Và rồi có lúc nó vượt quá giới hạn chịu đựng, bạn quyết định gấp cuốn sách lại chỉ để tận hưởng chút ánh sáng từ ngọn đèn, hay đơn giản là để vết thương trong lòng mình có thời gian tự tìm xoa dịu. ', 127, 300, '2014-12-01', 32333, 42342, 000015, 01, 345, 80000.00, '2020-07-11 10:31:34');
+INSERT INTO `books` VALUES (000002, 'Khu Vườn Ngôn Từ', '2019_09_20_11_55_53_1.jpg', 'Khu vườn ngôn từ kể về một tình yêu còn xa xưa hơn cả tình yêu.\r\nKhái niệm tình yêu trong tiếng Nhật hiện đại là luyến hoặc ái, nhưng vào thời xưa nó được viết là cô bi, nghĩa là nỗi buồn một mình. Shinkai Makoto đã cấu tứ Khu vườn ngôn từ theo ý nghĩa cổ điển này, miêu tả tình yêu theo khái niệm ban sơ của nó, tức là cô bi - nỗi buồn khi một mình thương nhớ một người.\r\n\r\nNhững ngày mưa triền miên....\r\nNơi hàng hiên ngập tràn màu xanh của một khu vườn Nhật Bản...\r\nCó một cảm xúc êm dịu đến không thốt nên lời cứ thế manh nha, tựu hình và lửng lơ tồn tại.\r\nTrong lúc dòng đời cuồn cuộn chảy trôi, tất cả hối hả tiến về phía trước, thì cậu và cô lại dừng chân, chìm xuống trong tĩnh lặng riêng mình, và ở cái vũng tĩnh lặng đó, họ tìm thấy nhau. Dần dần và mạo hiểm, quên đi cả các chênh lệch về tuổi tác và vị trí, họ thả hồn mình trôi về nhau hòa điệu.\r\nLàm nền cho tất cả là mưa rơi không ngừng, là lá mướt mát rung rinh. Nhưng khi mưa tạnh và trời quang trở lại, mọi đường nét của hiện thực trở nên rõ rệt đến khắc nghiệt, thì những êm dịu và lửng lơ kia liệu còn khả năng tồn tại?', 231, 450, '2015-09-01', 431, 231, 000015, 01, 212, 92000.00, '2020-07-11 10:31:31');
+INSERT INTO `books` VALUES (000003, '5 Centimet Trên Giây - One More Side', 'image_195509_1_39879.jpg', '5 Centimet Trên Giây - One More Side\r\n\r\nNếu coi tiểu thuyết 5 CENTIMET TRÊN GIÂY là một bức tranh ghép hình, khắc họa chuyện đời, chuyện tình của Tono Takaki, thì 5 CENTIMET TRÊN GIÂY ONE MORE SIDE giống như phần mở rộng và hoàn thiện của bức tranh ấy.\r\n\r\nNhững mảnh ghép vốn có được thay mới cả về nội dung và cách thể hiện. Những mảnh ghép ẩn được hé lộ đầy đủ và sáng tỏ. Bức tranh tổng thể vì thế mà toàn vẹn hơn, đa chiều hơn.\r\n\r\nĐược chắp bút bởi tác giả quen thuộc Kanoh Arata, 5 CENTIMET TRÊN GIÂY ONE MORE SIDE sẽ đưa độc giả tiếp cận câu chuyện đượm buồn nhưng tuyệt đẹp của Shinkai Makoto một lần nữa, qua “một góc nhìn khác”.', 361, 250, '2020-05-01', 21, 2, 000015, 01, 323, 123000.00, '2020-07-11 10:31:41');
+INSERT INTO `books` VALUES (000004, 'Ba Ngày Hạnh Phúc', 'bia_1_3_ngay_hp.jpg', 'Thật vô vọng khi thích một người không còn trên thế gian này.\r\n\r\nXem ra từ nay về sau chẳng có một điều tốt lành nào đến với cuộc đời tôi. Chính vì thế mà mỗi năm sinh mệnh của tôi chỉ đáng giá 10.000 yên. Quá bi quan về tương lai, tôi đã bán đi gần hết sinh mệnh của mình. Dù có cố làm gì để được hạnh phúc trong quãng đời ngắn ngủi còn lại, thì tôi cũng chỉ nhận được kết quả trái ngược. Trong khi tôi đang tiếp tục sống vô định thì “người giám sát” Miyagi vẫn đăm đăm nhìn tôi với ánh mắt điềm tĩnh.\r\n\r\nTôi đã mất thêm hai tháng cuộc đời để nhận ra rằng tôi hạnh phúc nhất khi sống vì cô ấy.\r\n\r\nTập truyện nổi tiếng trên web này, cuối cùng cũng được xuất bản!\r\n\r\n(Tên ban đầu của nó là Tôi đã bán sinh mệnh của mình. Mỗi năm 10.000 yên.)', 127, 300, '2019-04-12', 34, 12, 000006, 01, 21, 83000.00, '2020-07-11 10:31:44');
+INSERT INTO `books` VALUES (000005, 'Sư Tử Tháng 3 - Tập 4', 'su_tu_thang_3___tap_4_1_2018_09_29_11_03_35.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu. Rei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 123, 200, '2017-06-23', 13, 2, 000001, 01, 34, 20000.00, '2020-07-11 10:31:46');
+INSERT INTO `books` VALUES (000006, 'Sư Tử Tháng 3 - Tập 2', 'su_tu_thang_3___tap_2_1_2018_09_29_11_03_20.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu.\r\n\r\nRei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 154, 200, '2017-04-18', 55, 1, 000001, 01, 212, 20000.00, '2020-07-11 10:31:49');
+INSERT INTO `books` VALUES (000007, 'Sư Tử Tháng 3 - Tập 3', 'su_tu_thang_3___tap_3_1_2018_09_29_10_59_18.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu.\r\n\r\nRei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 124, 200, '2017-05-12', 4, 3, 000001, 01, 32, 20000.00, '2020-07-11 10:31:51');
+INSERT INTO `books` VALUES (000008, 'Gửi Em Người Bất Tử 04', 'nxbtre_full_17152019_021532_1.jpg', 'Một \"thực thể\" bất tử được gửi đến trái đất, có thể bắt chước hình dạng của mọi sinh vật đã chết. Thế rồi, trong khi lần mò tìm hiểu mọi thứ xung quanh mình, \"nó\" tìm thấy một cậu bé... Điều gì sẽ xảy đến với \"nó\", \"nó\" sẽ đối mặt với những trải nghiệm gì, khi mà cuộc đời của \"nó\" kéo dài vĩnh viễn.', 186, 200, '2019-03-28', 34, 4, 000002, 01, 234, 17000.00, '2020-07-11 10:31:53');
+INSERT INTO `books` VALUES (000009, 'Gửi Em Người Bất Tử 02', 'nxbtre_full_19012019_020149_1.jpg', 'Một \"thực thể\" bất tử được gửi đến trái đất, có thể bắt chước hình dạng của mọi sinh vật đã chết. Thế rồi, trong khi lần mò tìm hiểu mọi thứ xung quanh mình, \"nó\" tìm thấy một cậu bé... Điều gì sẽ xảy đến với \"nó\", \"nó\" sẽ đối mặt với những trải nghiệm gì, khi mà cuộc đời của \"nó\" kéo dài vĩnh viễn.', 186, 200, '2019-01-03', 22, 6, 000002, 01, 213, 19000.00, '2020-07-11 10:31:55');
 
 -- ----------------------------
 -- Table structure for categories
@@ -84,11 +101,18 @@ CREATE TABLE `categories`  (
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `categoryname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`categoryid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
+INSERT INTO `categories` VALUES (01, 'Sách văn học');
+INSERT INTO `categories` VALUES (02, 'Sách giáo khoa - tham khảo');
+INSERT INTO `categories` VALUES (03, 'Sức khoẻ & đời sống');
+INSERT INTO `categories` VALUES (04, 'Sách Khoa học');
+INSERT INTO `categories` VALUES (05, 'Sách thiếu nhi');
+INSERT INTO `categories` VALUES (06, 'Sách lịch sử');
+INSERT INTO `categories` VALUES (07, 'Sách ngoại văn');
 
 -- ----------------------------
 -- Table structure for comments
@@ -842,7 +866,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`  (
   `orderid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `orderstatus` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'p',
+  `orderstatus` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'p' COMMENT 'orderstatus=\'p\' OR  orderstatus=\'r\' OR  orderstatus=\'a\' OR  orderstatus=\'c\' OR  orderstatus=\'e\'',
   `timestamp` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `addressid` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `addresstext` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -975,13 +999,16 @@ CREATE TABLE `users`  (
   PRIMARY KEY (`userid`) USING BTREE,
   INDEX `fk_users_ward_1`(`addressid`) USING BTREE,
   CONSTRAINT `fk_users_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (000001, 'admin', 'admin', 1, 0, 'Administator', '', '', 1, NULL, NULL, NULL);
 INSERT INTO `users` VALUES (000002, 'hoaisan', 'hoaisan', 0, 1, 'Ho Hoai San', '', '', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000003, 'hoaisan', 'hohoaisan2', 0, 0, '', '', 'hohoaisan@gmail.com', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000004, 'hoaisan', 'hohoaisan', 0, 0, '', '', 'hohoaisan@gmail.com', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000005, '1-101-1021san', 'fayakuonage', 0, 0, 'Hoai San', '0397556214', 'hohoaisan@outlook.com', 1, NULL, NULL, '2020-07-23');
 
 -- ----------------------------
 -- Table structure for ward
