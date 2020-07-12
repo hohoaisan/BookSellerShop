@@ -8,11 +8,21 @@ class Status {
     if (!isset($_SESSION["errors"])) {
       $_SESSION["errors"] = [];
     };
+    if (!$_SESSION["shopping_cart"]) {
+      $_SESSION["shopping_cart"] = [];
+    };
   }
   public static function getErrors() {
     self::initalizeSession(); //Khởi tạo nếu session chưa có
     $errors = $_SESSION["errors"]; //Đặt vào biến tạm
     $_SESSION["errors"] = []; // Làm rỗng
+    return $errors;
+  }
+
+  public static function getItemsCart() {
+    self::initalizeSession(); //Khởi tạo nếu session chưa có
+    $errors = $_SESSION["shopping_cart"]; //Đặt vào biến tạm
+    $_SESSION["shopping_cart"] = []; // Làm rỗng
     return $errors;
   }
 

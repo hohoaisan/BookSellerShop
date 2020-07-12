@@ -1,6 +1,8 @@
 <?php
 include('../models/home.php');
+
 use HomePage\HomePage as HomePage;
+use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
 
@@ -18,6 +20,9 @@ $index = function() {
 };
 
 $cart = function() {
-  echo PugFacade::displayFile('../views/home/cart.jade');
+  $cartItems = Status::getItemsCart();
+  echo PugFacade::displayFile('../views/home/cart.jade',[
+    'cartItems' => $cartItems
+  ]);
 };
 ?>

@@ -2,21 +2,32 @@ extends ../base
 block head
   link(rel='stylesheet', href="/assets/css/home/style.css")
   link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap", rel="stylesheet")
+  
+
 block body
-  .navbar.navbar-light.navbar-expand-md
+  //- nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top
+  //-     a.navbar-brand(href='/')
+  //-       img(style='max-height:30px;', src="/assets/img/BS.png") 
+  //-       span Cronicle Book 
+  //-     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+  //-         span.navbar-toggler-icon
+  //-     #navbarSupportedContent.collapse.navbar-collapse
+  //-         ul.navbar-nav.mr-auto.p-0
+  //-             li.nav-item(role='presentation')
+  //-                 a.nav-link(href='#')
+  //-                     | Home 
+  //-         form.form-inline.my-2.my-lg-0
+  //-             input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+  //-             button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+  .navbar.navbar-light.navbar-expand-md.sticky-top(style="background-color: #f7f7f7;")
     .container-fluid
       div
-        a.navbar-brand.navbar-brand-centered(href='/')
-          img(style='max-height:50px;', src="/assets/img/BS.png")
-        button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
-          span.sr-only Toggle navigation
+        a.navbar-brand(href='/')
+          img(style='max-height:30px;', src="/assets/img/BS.png") 
+          span Cronicle Book 
+        button.navbar-toggler.justify-content-end(data-toggle='collapse', data-target='#navcol-1', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
           span.navbar-toggler-icon
       #navcol-1.collapse.navbar-collapse
-        ul.nav.navbar-nav
-          li.nav-item(role='presentation')
-            a.nav-link(href='#') Lorem 
-          li.nav-item(role='presentation')
-            a.nav-link(href='#') Ipsum 
         form.form-inline.mb-0
           input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
           button.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
@@ -26,6 +37,9 @@ block body
             a.nav-link(href='/auth/register') Đăng ký
           li.nav-item(role='presentation')
             a.nav-link(href='/auth/login') Đăng nhập
+          li.nav-item(role='presentation')
+            a.nav-link(href='/cart') 
+              i.fas.fa-shopping-cart         
   div.mb-4
     header
       a(href='/').web-title
@@ -166,6 +180,40 @@ block body
       // social_footer_ul ends here
 
 
-  script(src="../assets/js/jquery.min.js")
-  script(src="../assets/bootstrap/js/bootstrap.min.js")
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+  script.
+    $(document).ready(function() {
+    $('#add_to_cart').click(function() {
+    var bookid = [];
+    var bookname = [];
+    var price = [];
+    var bookimageurl = [];
+    var action = "add";
+    $('.select_product').each(function() {
+    if ($(this).prop('checked') == true) {
+    bookid.push($(this).data('bookid'));
+    bookname.push($(this).data('bookname'));
+    price.push($(this).data('price'));
+    bookimageurl.push($(this).data('bookimageurl'));
+    }
+    });
+    if (bookid.length > 0) {
+    $.ajax({
+    url: "/models/actionCart.php",
+    method: "POST",
+    data: {
+    bookid: bookid,
+    bookname: bookname,
+    price: price,
+    bookimageurl: bookimageurl,
+    action: action
+    },
+    success: function(data) {
+    load_cart_data();
+    alert("Item has been Added into Cart");
+    }
+    });
+    }
+    });
+    });
     

@@ -19,78 +19,79 @@ block content
                                             th.border-0.bg-dark.text-light(scope='col')
                                                 .py-2.text-uppercase Xóa
                                     tbody
-                                        tr
-                                            th.border-0(scope='row')
-                                                .p-2
-                                                    img.img-fluid.rounded.shadow-sm(src='https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg', alt='', width='70')
-                                                    .ml-3.d-inline-block.align-middle
-                                                        h5.mb-0
-                                                            a.text-dark.d-inline-block.align-middle(href='#') Timex Unisex Originals
-                                                        span.text-muted.font-weight-normal.font-italic.d-block Category: Watches
-                                            td.border-0.align-middle
-                                                strong 79.000 VNĐ
-                                            td.border-0.align-middle
-                                                .row(style='width: 50%')
-                                                    .col-xs-3.col-xs-offset-3
-                                                    .input-group.number-spinner
-                                                        span.input-group-btn
-                                                            button.btn.btn-default(data-dir='dwn')
-                                                                i.fas.fa-minus
-                                                        input.form-control.text-center(type='text', value='1')
-                                                        span.input-group-btn
-                                                            button.btn.btn-default(data-dir='up')
-                                                                i.fas.fa-plus
-                                            td.border-0.align-middle
-                                                a.text-danger(href='#', style='font-size: 1.5rem;')
-                                                    i.fa.fa-trash
-                                    tr
-                                        th.border-0(scope='row')
-                                            .p-2
-                                                img.img-fluid.rounded.shadow-sm(src='https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg', alt='', width='70')
-                                                .ml-3.d-inline-block.align-middle
-                                                    h5.mb-0
-                                                        a.text-dark.d-inline-block.align-middle(href='#') Timex Unisex Originals
-                                                    span.text-muted.font-weight-normal.font-italic.d-block Category: Watches
-                                        td.border-0.align-middle
-                                            strong 79.000 VNĐ
-                                        td.border-0.align-middle
-                                            .row(style='width: 50%')
-                                                .col-xs-3.col-xs-offset-3
-                                                    .input-group.number-spinner
-                                                        span.input-group-btn
-                                                            button.btn.btn-default(data-dir='dwn')
-                                                                i.fas.fa-minus
-                                                        input.form-control.text-center(type='text', value='1')
-                                                        span.input-group-btn
-                                                            button.btn.btn-default(data-dir='up')
-                                                                i.fas.fa-plus
-                                        td.border-0.align-middle
-                                            a.text-danger(href='#', style='font-size: 1.5rem;')
-                                                i.fa.fa-trash
-                                    tr
-                                        th.border-0(scope='row')
-                                            .p-2
-                                                img.img-fluid.rounded.shadow-sm(src='https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg', alt='', width='70')
-                                                .ml-3.d-inline-block.align-middle
-                                                    h5.mb-0
-                                                        a.text-dark.d-inline-block.align-middle(href='#') Timex Unisex Originals
-                                                    span.text-muted.font-weight-normal.font-italic.d-block Category: Watches
-                                        td.border-0.align-middle
-                                            strong 79.000 VNĐ
-                                        td.border-0.align-middle
-                                            .row(style='width: 50%')
-                                                .col-xs-3.col-xs-offset-3
-                                                    .input-group.number-spinner
-                                                        span.input-group-btn
-                                                            button.btn.btn-default(data-dir='dwn')
-                                                                i.fas.fa-minus
-                                                        input.form-control.text-center(type='text', value='1')
-                                                        span.input-group-btn
-                                                            button.btn.btn-default(data-dir='up')
-                                                                i.fas.fa-plus
-                                        td.border-0.align-middle
-                                            a.text-danger(href='#', style='font-size: 1.5rem;')
-                                                i.fa.fa-trash
+                                        each item in cartItems
+                                            tr
+                                                th.border-0(scope='row')
+                                                    .p-2
+                                                        img.img-fluid.rounded.shadow-sm(src='/public/assets/img/books' + item.bookimgurl, alt='', width='70')
+                                                        .ml-3.d-inline-block.align-middle
+                                                            h5.mb-0
+                                                                a.text-dark.d-inline-block.align-middle(href='#')= item.bookname
+                                                            span.text-muted.font-weight-normal.font-italic.d-block= 'CategoryID:' + item.bookname
+                                                td.border-0.align-middle
+                                                    strong= item.price + 'VNĐ'
+                                                td.border-0.align-middle
+                                                    .row(style='width: 50%')
+                                                        .col-xs-3.col-xs-offset-3
+                                                        .input-group.number-spinner
+                                                            span.input-group-btn
+                                                                button.btn.btn-default(data-dir='dwn')
+                                                                    i.fas.fa-minus
+                                                            input.form-control.text-center(type='text', value='1')
+                                                            span.input-group-btn
+                                                                button.btn.btn-default(data-dir='up')
+                                                                    i.fas.fa-plus
+                                                td.border-0.align-middle
+                                                    a.text-danger(href='#', style='font-size: 1.5rem;')
+                                                        i.fa.fa-trash
+                                        //- tr
+                                        //-     th.border-0(scope='row')
+                                        //-         .p-2
+                                        //-             img.img-fluid.rounded.shadow-sm(src='https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg', alt='', width='70')
+                                        //-             .ml-3.d-inline-block.align-middle
+                                        //-                 h5.mb-0
+                                        //-                     a.text-dark.d-inline-block.align-middle(href='#') Timex Unisex Originals
+                                        //-                 span.text-muted.font-weight-normal.font-italic.d-block Category: Watches
+                                        //-     td.border-0.align-middle
+                                        //-         strong 79.000 VNĐ
+                                        //-     td.border-0.align-middle
+                                        //-         .row(style='width: 50%')
+                                        //-             .col-xs-3.col-xs-offset-3
+                                        //-                 .input-group.number-spinner
+                                        //-                     span.input-group-btn
+                                        //-                         button.btn.btn-default(data-dir='dwn')
+                                        //-                             i.fas.fa-minus
+                                        //-                     input.form-control.text-center(type='text', value='1')
+                                        //-                     span.input-group-btn
+                                        //-                         button.btn.btn-default(data-dir='up')
+                                        //-                             i.fas.fa-plus
+                                        //-     td.border-0.align-middle
+                                        //-         a.text-danger(href='#', style='font-size: 1.5rem;')
+                                        //-             i.fa.fa-trash
+                                        //- tr
+                                        //-     th.border-0(scope='row')
+                                        //-         .p-2
+                                        //-             img.img-fluid.rounded.shadow-sm(src='https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg', alt='', width='70')
+                                        //-             .ml-3.d-inline-block.align-middle
+                                        //-                 h5.mb-0
+                                        //-                     a.text-dark.d-inline-block.align-middle(href='#') Timex Unisex Originals
+                                        //-                 span.text-muted.font-weight-normal.font-italic.d-block Category: Watches
+                                        //-     td.border-0.align-middle
+                                        //-         strong 79.000 VNĐ
+                                        //-     td.border-0.align-middle
+                                        //-         .row(style='width: 50%')
+                                        //-             .col-xs-3.col-xs-offset-3
+                                        //-                 .input-group.number-spinner
+                                        //-                     span.input-group-btn
+                                        //-                         button.btn.btn-default(data-dir='dwn')
+                                        //-                             i.fas.fa-minus
+                                        //-                     input.form-control.text-center(type='text', value='1')
+                                        //-                     span.input-group-btn
+                                        //-                         button.btn.btn-default(data-dir='up')
+                                        //-                             i.fas.fa-plus
+                                        //-     td.border-0.align-middle
+                                        //-         a.text-danger(href='#', style='font-size: 1.5rem;')
+                                        //-             i.fa.fa-trash
                 .row.py-5.p-4.bg-white.rounded.shadow-sm
                     .col-lg-6
                         .bg-dark.text-light.rounded-pill.px-4.py-3.text-uppercase.font-weight-bold
