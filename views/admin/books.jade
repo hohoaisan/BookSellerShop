@@ -5,14 +5,18 @@ block content
       .modal-dialog(role='document')
         .modal-content
           .modal-header
-            h5#bookQuantityLabel.modal-title Chỉnh sửa số lượng cho sách
+            h5#bookQuantityLabel.modal-title Chỉnh sửa số lượng và giá cho sách
               span(#bookid)
               span(#bookname)
             button.close(type='button', data-dismiss='modal', aria-label='Close')
               span(aria-hidden='true') ×
           .modal-body
-            label Số lượng
-            input.form-control(placeholder="Nhập số lượng", name="quantity", type="number")
+            .form-group
+              label Số lượng
+              input.form-control(placeholder="Nhập số lượng", name="quantity", type="number")
+            .form-group
+              label Giá
+              input.form-control(placeholder="Nhập giá", name="price", type="number")
           .modal-footer
             button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
             button.btn.btn-primary(type='submit') Lưu
@@ -43,6 +47,7 @@ block content
             th Số lượt mua
             th Số lượt xem
             th Số lượng
+            th Giá
             th Thao tác
         tbody
           each book in books
@@ -57,13 +62,14 @@ block content
               td= book.purchasedcount
               td= book.viewcount
               td= book.quantity
+              td= book.price
               td.tablecell-action
                 .btn-group
                   button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | Action
                   .dropdown-menu
-                    a.dropdown-item(href='#') Xem và chỉnh sửa
-                    button.btn.dropdown-item(type='button', data-toggle='modal', data-target='#bookQuantity' data-bookname=book.bookname data-bookid=book.bookid, data-quantity=book.quantity) Sửa số lượng
+                    a.dropdown-item(href="/admin/books/" + book.bookid + "/edit") Xem và chỉnh sửa
+                    button.btn.dropdown-item(type='button', data-toggle='modal', data-target='#bookQuantity' data-bookname=book.bookname, data-price=book.price, data-bookid=book.bookid, data-quantity=book.quantity) Sửa số lượng và giá
                     //- a.dropdown-item(href='#') Thêm hoặc bớt số lượng
                     .dropdown-divider
                     form(action="/admin/books/" + book.bookid + "/delete", method="POST")
@@ -75,9 +81,11 @@ append external
     var button = $(event.relatedTarget); // Button that triggered the modal
     var id = button.data('bookid');
     var quantity = button.data('quantity');
+    var price = button.data('price');
     var bookname = button.data('bookname');
     var modal = $(this);
-    modal.find('.modal-title').text(`Chỉnh sửa số lượng cho sách ${bookname}  (ID ${id})`);
+    modal.find('.modal-title').text(`Chỉnh sửa số lượng và giá cho sách ${bookname}  (ID ${id})`);
     modal.find('.modal-body input[name="quantity"]').val(quantity);
-    modal.find('#bookQuantityForm').attr('action', `/admin/books/${id}/quantity`);
+    modal.find('.modal-body input[name="price"]').val(price);
+    modal.find('#bookQuantityForm').attr('action', `/admin/books/${id}/smpedit`);
     })            

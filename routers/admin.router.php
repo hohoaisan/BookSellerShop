@@ -39,7 +39,7 @@ $router->post('/books/add', $postBookAdd);
 $router->get('/books/{bookid}/edit', $bookEdit);
 $router->post('/books/{bookid}/edit', $postBookEdit);
 $router->post('/books/{bookid}/delete', $bookDelete);
-$router->post('/books/{bookid}/quantity', $postBookEditQuantity);
+$router->post('/books/{bookid}/smpedit', $postBookEditSimple);
 
 $router->get('/authors', $authors);
 $router->post('/authors/add', $authorAdd);

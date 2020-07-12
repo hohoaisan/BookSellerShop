@@ -96,10 +96,11 @@ class AdminModel
 
   public static function getBooks() {
     try {
-      $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid
+      $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price
       from books,`authors`,categories
       WHERE books.authorid = `authors`.authorid
       and books.categoryid = categories.categoryid
+      order by bookid asc
       ";
       $result = Database::queryResults($sql,array());
       return $result;
@@ -121,11 +122,36 @@ class AdminModel
     }
   }
   public static function getBook($bookid) {
-
+    try {
+      $sql = "select bookid, bookname,bookdescription,bookpages,bookweight,releasedate,authorid,categoryid, price,quantity,bookimageurl, timestamp from books where bookid = ?";
+      $result = Database::querySingleResult($sql, array($bookid));
+      return $result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
   }
   
-  public static function editBook($bookid) {
-
+  public static function editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl) {
+    try {
+      if ($bookimageurl) {
+        $sql = "update books 
+      set bookname=?, bookdescription=?, bookpages=?, bookweight=?, releasedate=?, authorid=?, categoryid=?, price=?, quantity=?, bookimageurl=?
+      where bookid = ?";
+      $result = Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $bookid));
+      return $result;
+    }
+    else {
+      $sql = "update books 
+    set bookname=?, bookdescription=?, bookpages=?, bookweight=?, releasedate=?, authorid=?, categoryid=?, price=?, quantity=?
+    where bookid = ?";
+    $result = Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookid));
+      return $result;
+      }
+    }
+    catch (PDOException $e) {
+      return false;
+    }
   }
 
   public static function removeBook($bookid) {
@@ -137,10 +163,10 @@ class AdminModel
       return false;
     }
   }
-  public static function editBookQuantiry($bookid,$quantity) {
-    $sql = "update books set quantity=? where bookid=?";
+  public static function editBookSimple($bookid,$quantity, $price) {
+    $sql = "update books set quantity=?, price=? where bookid=?";
     try {
-      $result = Database::queryExecute($sql, array($quantity,$bookid));
+      $result = Database::queryExecute($sql, array($quantity,$price, $bookid));
       return !!$result;
     } catch (PDOException $e) {
       return false;

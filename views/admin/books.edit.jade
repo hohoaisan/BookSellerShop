@@ -2,55 +2,76 @@ extends base
 block content
   h3.mt-4.mb-4 Quản lí sách
   h4.mb-4 Xem và sửa thông tin sách
-  .alert.alert-danger Lỗi không thể sửa vào cơ sở dữ liệu, hãy thử lại
-  .alert.alert-success Đã sửa thành công
-  .alert.alert-warning 
-    | Bạn phải nhập tên sách
-  form(action="")
+  if (messages)
+      each message in messages
+        .alert.alert-success= message
+  if (errors)
+    each error in errors
+      .alert.alert-warning= error
+  form(action="/admin/books/"+book.bookid+"/edit", method="POST", enctype="multipart/form-data")
     .d-flex.flex-sm-row.flex-column
       .col-md-4
         .form-group
           label Tên sách
-          input(type="text", name="bookname").form-control.form-control-sm
+          input(type="text", name="bookname", value=book.bookname).form-control.form-control-sm
         .form-group
           label Số trang
-          input(type="text", name="bookname").form-control.form-control-sm
+          input(type="number", name="bookpages", value=book.bookpages).form-control.form-control-sm
         .form-group
           label Trọng lượng (gram)
-          input(type="text", name="bookname").form-control.form-control-sm
-        .form-group
-          label Tác giả
-          select.form-control.custom-select-sm
-            option Chika Umino
-            option UrihaRushia
+          input(type="number", name="bookweight",value=book.bookweight).form-control.form-control-sm
         .form-group
           label Danh mục
+          select.form-control.custom-select-sm(name="categoryid")
+            each category in categories
+              if (book.categoryid == category.categoryid)
+                option(value=category.categoryid, selected)= category.categoryname
+              else
+                option(value=category.categoryid)= category.categoryname
+        .form-group
+          label Tác giả
           .d-flex
-            select.form-control.custom-select-sm
-              option Chika Umino
-              option UrihaRushia
+            select.form-control.custom-select-sm(name="authorid")
+              each author in authors
+                if (author.authorid == book.authorid)
+                  option(value=author.authorid, selected)= author.authorname
+                else
+                  option(value=author.authorid)= author.authorname
             a(href="/admin/authors",target="blank").ml-2
-              button.btn.btn-outline-success.btn-sm 
+              button.btn.btn-outline-success.btn-sm(type="button")
                 .fas.fa-search
           
         .form-group
           label Thời gian phát hành
-          input(type="date").form-control.form-control-sm
+          input(type="date", name="releasedate", value=book.releasedate).form-control.form-control-sm
 
       .col-md-8
         .form-group.d-flex.justify-content-center
-            img(src="https://via.placeholder.com/150x300").img-thumbnail.edit-img
+            img(src="/assets/img/books/"+book.bookimageurl).img-thumbnail.edit-img
         .input-group.mb-3.input-group-sm.form-control-sm
           .input-group-prepend
             .input-group-text
-              input(type='checkbox', aria-label='Checkbox for following text input')
+              input#replaceImage(type='checkbox', aria-label='Checkbox for following text input', name="replaceimage")
           .custom-file
-            input#inputGroupFile01.custom-file-input(type='file')
+            input#replaceImageInput.custom-file-input(type='file', name ="picture", disabled)
             label.custom-file-label(for='inputGroupFile01') Chọn ảnh thay thế
         .form-group
+          label Giá tiền
+          input(type="number", name="bookprice", value=book.price).form-control.form-control-sm
+        .form-group
+          label Số lượng
+          input(type="number", name="quantity", value=book.quantity).form-control.form-control-sm
+        .form-group
           label Mô tả cho sách
-          textarea.form-control.form-control-sm
+          textarea.form-control.form-control-sm(name="description")= book.bookdescription 
+
+          //- ,,,,bookimageurl, timestamp,authorid,categoryid,
     .form-group.col
       button(type="submit").btn.btn-primary.btn-block Sửa
 
       
+block external
+  script.
+    document.querySelector("#replaceImage").addEventListener('change', (e) => {
+      document.querySelector("#replaceImageInput").disabled = !document.querySelector("#replaceImage").checked;
+    })
