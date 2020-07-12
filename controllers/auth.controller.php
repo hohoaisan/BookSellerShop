@@ -103,8 +103,8 @@ $postLogin = function () use ($postLoginRequiredField) {
   $password = $_POST["password"];
   $result = AuthModel::verifyCredential($username, $password);
   if ($result["status"] == 1) {
-    setcookie("userid", $result["userid"], time() + (300), "/"); //cookie tồn tại 3 phút (180)
-    setcookie("admin", $result["isadmin"], time() + (300), "/");
+    setcookie("userid", $result["userid"], time() + (1800), "/"); //cookie tồn tại 3 phút (180)
+    setcookie("admin", $result["isadmin"], time() + (1800), "/");
     header('location: /auth/login');
   } else {
     $errors = [$result["message"]];
