@@ -2,8 +2,6 @@ extends ../base
 block head
   link(rel='stylesheet', href="/assets/css/home/style.css")
   link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap", rel="stylesheet")
-  
-
 block body
   //- nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top
   //-     a.navbar-brand(href='/')
@@ -180,39 +178,5 @@ block body
       // social_footer_ul ends here
 
   //script
-  script.
-    $(document).ready(function() {
-    $('#add_to_cart').click(function() {
-    var bookid = [];
-    var bookname = [];
-    var price = [];
-    var bookimageurl = [];
-    var action = "add";
-    $('.select_product').each(function() {
-    if ($(this).prop('checked') == true) {
-    bookid.push($(this).data('bookid'));
-    bookname.push($(this).data('bookname'));
-    price.push($(this).data('price'));
-    bookimageurl.push($(this).data('bookimageurl'));
-    }
-    });
-    if (bookid.length > 0) {
-    $.ajax({
-    url: "/models/actionCart.php",
-    method: "POST",
-    data: {
-    bookid: bookid,
-    bookname: bookname,
-    price: price,
-    bookimageurl: bookimageurl,
-    action: action
-    },
-    success: function(data) {
-    load_cart_data();
-    alert("Item has been Added into Cart");
-    }
-    });
-    }
-    });
-    });
+  script(src="/public/assets/js/script.js")
     

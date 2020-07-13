@@ -166,4 +166,4 @@ block content
                                         h5.card-title= book.bookname
                                     .card-footer
                                         small= book.price + ' VNĐ'
-                                        button#add_to_cart.btn.btn-primary.float-right.btn-sm.select_product(data-bookid= "'" + book.bookid + "'",data-bookname= "'" + book.bookname + "'",data-price= "'" + book.price + "'",data-bookimageurl= "'" + book.bookimageurl + "'") BUY 
+                                        button#add_to_cart.btn.btn-primary.float-right.btn-sm.select_product(name="add_to_cart",data-bookid= "'" + book.bookid + "'",data-bookname= "'" + book.bookname + "'",data-price= "'" + book.price + "'",data-bookimageurl= "'" + book.bookimageurl + "'") BUY 
