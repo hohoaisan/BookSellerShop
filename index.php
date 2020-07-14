@@ -13,7 +13,8 @@ use Pug\Facade as PugFacade;
 
 $router->get('/', $index);
 $router->get('/cart', $cart);
-$router->get('/users', function () use($router) {include('routers/user.router.php');});
+// $router->mount('/users', function () use($router) {include('routers/user.router.php');});
+$router->mount('/books', function () use($router) {include('routers/books.router.php');});
 $router->mount('/auth', function () use($router) {include('routers/auth.router.php');});
 $router->mount('/admin', function () use($router) {include('routers/admin.router.php');});
 $router->mount('/api', function () use($router) {include('routers/api.router.php');});
