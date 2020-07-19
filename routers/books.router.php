@@ -4,8 +4,5 @@ $index = function() {
 };
 
 
-$router->get('/', $index);
-$router->get('/abcxyz', function() {
-  echo "funk you";
-});
+$router->get('/{bookid}', $index);
 ?>
