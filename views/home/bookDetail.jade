@@ -16,7 +16,7 @@ block content
                                     li.breadcrumb-item
                                         a(href='#') Books
                                     li.breadcrumb-item.active= book.categoryname
-                            .product_name= book.bookname;
+                            div.product_name= book.bookname;
                             div
                                 span.product_price= book.price + " VNĐ"
                             hr.singleline
@@ -33,25 +33,16 @@ block content
                                     | Hình thức bìa: 
                                     strong bìa mềm
                                 br
-                                span.product_info
-                                    | Chính sách đổi trả : 
-                                    strong
-                                        | Đổi trả sản phẩm trong 30 ngày
-                                br
                             hr.singleline
                             .order_info.d-flex.flex-row
                                 form(action='#')
                                     .row
                                         .col-xs-6.d-flex(style='margin-left: 13px;')
-                                            .product_quantity.mb-0
-                                                span QTY: 
-                                                input#quantity_input(type='text', pattern='[0-9]*', value='1')
-                                                .quantity_buttons
-                                                    #quantity_inc_button.quantity_inc.quantity_control
-                                                        i.fas.fa-chevron-up
-                                                    #quantity_dec_button.quantity_dec.quantity_control
-                                                        i.fas.fa-chevron-down
-                                            button.btn.btn-primary.shop-button(type='button') Add to Cart
+                                            .input-group.mb-0.col-6.pl-0
+                                                .input-group-prepend.mb-2
+                                                    span#inputQty.input-group-text QTY
+                                                input.form-control(type='number',min = 1, value="1",aria-describedby='inputQty')
+                                            button.btn.btn-primary.shop-button.mb-2(type='button') Add to Cart
                 .row.row-underline
                     .col-md-6
                         span.deal-text Thông tin sách
