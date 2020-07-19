@@ -20,3 +20,5 @@ block content
                 - for (i=1; i<=pagination_pages; i++)
                     li.page-item(class=(i==pagination_current_page)?"active":"")
                         a.page-link(href=pagination_url+'page='+i)=i
+    else
+        .alert.alert-warning Không tìm thấy sách
