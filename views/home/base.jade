@@ -12,8 +12,8 @@ block body
         button.navbar-toggler.justify-content-end(data-toggle='collapse', data-target='#navcol-1', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
           span.navbar-toggler-icon
       #navcol-1.collapse.navbar-collapse
-        form.form-inline.mb-0
-          input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+        form(action="", method="get").form-inline.mb-0
+          input.form-control.mr-sm-2(type='search', placeholder='Nhập từ khoá', aria-label='Search', name="query", value= search)
           button.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
             .fas.fa-search
         ul.nav.navbar-nav.ml-auto

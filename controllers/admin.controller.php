@@ -44,8 +44,8 @@ $orders = function () use ($removeParam) {
   // Xác định có từ khoá tìm kiếm hay không,
   $query = "";
   if (isset($_GET["query"]) && $_GET["query"] != "") {
-    $query = $_GET["query"];
-    $title = 'Tìm kiếm hoá đơn';
+      $query = $_GET["query"];
+      $title = 'Tìm kiếm hoá đơn';
   }
 
 
