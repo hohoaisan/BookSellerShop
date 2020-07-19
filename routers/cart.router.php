@@ -7,7 +7,8 @@ use Pug\Facade as PugFacade;
 
 $router->get('/', $index);
 $router->post('/remove', $removeItem);
+$router->post('/removeAll', $removeAllItem);
 $router->post('/add', $addItem);
 $router->post('/edit', $editItem);
-$router->get('/show', $showCart);
+$router->get('/getJSON', $getJSON);
 ?>

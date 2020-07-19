@@ -11,12 +11,44 @@ $index = function () {
   $result = [];
   if ($fetch) {
     $result = $fetch["books"];
+    $totalMoney = $fetch["totalmoney"];
   }
   echo PugFacade::displayFile('../views/home/cart.jade', [
-    'cartItems' => $result
+    'cartItems' => $result,
+    'totalMoney' => $totalMoney
   ]);
 };
+
+$removeAllItem = function() {
+  //Trả lại số lượng cho mặt hàng
+  $_SESSION["cart"] = [];
+  http_response_code(201);
+  echo json_encode(array('status' => true), JSON_UNESCAPED_UNICODE);
+  exit();
+};
+
 $removeItem = function () {
+  $_POST = json_decode(file_get_contents("php://input"), true);
+  if (isset($_POST["bookid"])) {
+    $bookid = $_POST["bookid"];
+    $condition = true;
+    if ($condition) {
+      unset($_SESSION["cart"][$bookid]);
+      $fetch = CartModel::getItemsDetail($_SESSION["cart"]);
+      $totalMoney = $fetch["totalmoney"];
+      http_response_code(201);
+      echo json_encode(array('status' => true, 'bookid' => $bookid, 'totalMoney' => $totalMoney), JSON_UNESCAPED_UNICODE);
+      exit();
+    } else {
+      http_response_code(304);
+      echo json_encode(array(
+        'status' => false,
+        'message' => "Không thể xoá khỏi giỏ hàng"
+      ), JSON_UNESCAPED_UNICODE);
+      exit();
+    }
+  }
+  header('location: /cart/');
 };
 
 
@@ -35,7 +67,7 @@ $addItem = function () {
         $_SESSION["cart"][$bookid] = 1;
       }
       http_response_code(201);
-      echo json_encode(array('status' => true, 'bookid' => $_POST["bookid"]), JSON_UNESCAPED_UNICODE);
+      echo json_encode(array('status' => true, 'bookid' => $bookid), JSON_UNESCAPED_UNICODE);
       exit();
     } else {
       http_response_code(304);
@@ -51,12 +83,50 @@ $addItem = function () {
 
 
 $editItem = function () {
+  $_POST = json_decode(file_get_contents("php://input"), true);
   if (isset($_POST["bookid"]) && isset($_POST["quantity"])) {
-    
+    $bookid = $_POST["bookid"];
+    $quantity = $_POST["quantity"];
+    if (isset($_SESSION["cart"][$bookid])) {
+      $condition = true;
+      if ($condition) {
+        $_SESSION["cart"][$bookid] = $quantity;
+        $fetch = CartModel::getItemsDetail($_SESSION["cart"]);
+        $totalMoney = $fetch["totalmoney"];
+        http_response_code(201);
+        echo json_encode(array('status' => true, 'bookid' => $bookid, 'totalMoney' => $totalMoney), JSON_UNESCAPED_UNICODE);
+        exit();
+      } else {
+        http_response_code(304);
+        echo json_encode(array(
+          'status' => false,
+          'message' => "Không thể sửa vào giỏ hàng"
+        ), JSON_UNESCAPED_UNICODE);
+        exit();
+      }
+    } else {
+      http_response_code(405);
+      echo json_encode(array(
+        'status' => false,
+        'message' => "Giỏ hàng không tồn tại sản phẩm này"
+      ), JSON_UNESCAPED_UNICODE);
+      exit();
+    }
   }
+  echo "rejected";
+  header('location: /cart/');
 };
 
-$showCart = function () {
-  print_r(CartModel::getItemsDetail($_SESSION["cart"]));
+$getJSON = function () {
+
+  $totalQuantity = 0;
+  foreach ($_SESSION["cart"] as $id => $quantity) {
+    $totalQuantity+=$quantity;
+  }
+  echo json_encode([
+    'cart'=> $_SESSION["cart"],
+    'total' => $totalQuantity
+  ], JSON_UNESCAPED_UNICODE);
+  // print_r(CartModel::getItemsDetail($_SESSION["cart"]));
   // print_r($_SESSION["cart"]);
 };

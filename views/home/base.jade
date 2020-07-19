@@ -22,8 +22,9 @@ block body
           li.nav-item(role='presentation')
             a.nav-link(href='/auth/login') Đăng nhập
           li.nav-item(role='presentation')
-            a.nav-link(href='/cart') 
-              i.fas.fa-shopping-cart         
+            a.nav-link.text-success(href='/cart') 
+              i.fas.fa-shopping-cart
+              strong#cartIdentity.text-success.rounded.p-1 0
   div.mb-4
     header
       a(href='/').web-title

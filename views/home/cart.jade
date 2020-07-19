@@ -1,5 +1,6 @@
 extends base
 block content
+  #messages
   if (cartItems)
     .shopping-cart
       .pb-5
@@ -17,95 +18,32 @@ block content
                         .card-title.mb-2= item.bookname
                         .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
                         .card-subtitle.text-success= item.price+" đ"
-                        a.text-danger.cartRemoveItem
+                        a.text-danger.cartRemoveItem(data-bookid=item.bookid)
                           i.fa.fa-trash.p-1
                           | Xoá
                       .col-12.col-md-7.col-sm-12.col-lg-4.mt-2
-                        .input-group.input-group-sm
+                        .input-group.input-group-sm.cartEditInputGroup(data-bookid=item.bookid)
                           input.form-control.text-center(type='number' name="quantity" min=1 value=item.quantity)
                           .input-group-append
                             button.btn.btn-outline-secondary(type='button').cartEditQuantity Cập nhật
-
+              .col-12.m-2
+                .btn.btn-primary.text-light.float-right.cartRemoveAllItem Xoá toàn bộ giỏ hàng
             .col-lg-4.col-md-5.col-12.p-2
               .card.mb-2
                 .card-body
-                  .row.mb-2
-                    .col.mb-2
-                      .card-subtitle.text-muted Tạm tính
-                    .col.float-right
-                      .card-subtitle.text-muted Tạm tính
-                  hr
+                  //- .row.mb-2
+                  //-   .col.mb-2
+                  //-     .card-subtitle.text-muted  Tạm tính
+                  //-   .col.float-right
+                  //-     .card-subtitle.text-muted= totalMoney+'đ'
+                  //- hr
                   .row
                     .col
                       .card-title Tổng tiền
                     .col
-                      .lead.text-success 100000
+                      .lead.text-success#totalMoney= totalMoney
+                        span đ
+                        
               .btn.btn-danger.btn-block Tiến hành đặt hàng
-          //- .row
-          //-   .col-md-12.bg-white.rounded.shadow-sm.mb-5
-          //-     .table-responsive
-          //-       table.table
-          //-         thead
-          //-           tr
-          //-             th.border-0.bg-dark.text-light(scope='col')
-          //-               .p-2.px-3.text-uppercase Sản phẩm
-          //-             th.border-0.bg-dark.text-light(scope='col')
-          //-               .py-2.text-uppercase Số lượng
-          //-             th.border-0.bg-dark.text-light(scope='col')
-          //-               .py-2.text-uppercase Thành tiền
-          //-             th.border-0.bg-dark.text-light(scope='col')
-          //-               .py-2.text-uppercase Xóa
-          //-         tbody
-          //-           each item in cartItems
-          //-             tr
-          //-               td.border-0(scope='row')
-          //-                 .p-2
-          //-                   img.img-fluid.rounded.shadow-sm(src='/assets/img/books/' + item.bookimageurl, alt='' width='70')
-          //-                   .ml-3.d-inline-block.align-middle
-          //-                     h5.mb-0
-          //-                       a.text-dark.d-inline-block.align-middle(href='#')= item.bookname
-          //-                     span.text-muted.font-weight-normal.font-italic.d-block= item.price+" đ"
-          //-                     span.text-muted.font-weight-normal.font-italic.d-block= item.authorname
-          //-               td.border-0.align-middle
-          //-                 .row
-          //-                   .input-group.number-spinner.col-md-6
-          //-                     input.form-control.text-center(type='number' name="quantity" min=1 value=item.quantity)
-          //-                     .input-group-append
-          //-                       button.btn.btn-outline-secondary(type='button').edit-quantity Cập nhật
-                            
-          //-               td.border-0.align-middle
-          //-                 strong= item.amount + ' đ'
-          //-               td.border-0.align-middle
-          //-                 a.text-danger(href='#' style='font-size: 1.5rem;')
-          //-                   i.fa.fa-trash
-                      
-          //- .row.py-5.p-4.bg-white.rounded.shadow-sm
-          //-   .col-lg-6
-          //-     .bg-dark.text-light.rounded-pill.px-4.py-3.text-uppercase.font-weight-bold
-          //-       | Ghi chú cho đơn hàng
-          //-     .p-4
-          //-       p.font-italic.mb-4
-          //-         | Nếu bạn có ghi chú thêm cho đơn hàng xin hãy điền vào bên dưới.
-          //-       textarea.form-control(name='' cols='30' rows='5' placeholder='Type something...')
-          //-   .col-lg-6
-          //-     .bg-dark.text-light.rounded-pill.px-4.py-3.text-uppercase.font-weight-bold
-          //-       | Order summary
-          //-     .p-4
-          //-       p.font-italic.mb-4
-          //-         | Phí vận chuyển có thể thay đổi tùy thuộc theo khu vực.
-          //-       ul.list-unstyled.mb-4
-          //-         li.d-flex.justify-content-between.py-3.border-bottom
-          //-           strong.text-muted Tạm tính
-          //-           strong 390.000 VNĐ
-          //-         li.d-flex.justify-content-between.py-3.border-bottom
-          //-           strong.text-muted Phí vận chuyển
-          //-           strong 10.000 VNĐ
-          //-         li.d-flex.justify-content-between.py-3.border-bottom
-          //-           strong.text-muted Thuế GTGT
-          //-           strong 0 VNĐ
-          //-         li.d-flex.justify-content-between.py-3.border-bottom
-          //-           strong.text-muted Thành tiền
-          //-           h5.font-weight-bold 400.000 VNĐ
-          //-       a.btn.btn-outline-primary.rounded-pill.py-2.btn-block(href='#') Tiến hành đặt hàng.
   else
     .alert.alert-warning Bạn không có sản phẩm nào trong giỏ hàng
