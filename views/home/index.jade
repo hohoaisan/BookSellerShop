@@ -163,7 +163,7 @@ block content
                                 i.fa.fa-heart
                                     span &nbsp;
                                     span Dành cho bạn                                 
-                    .row.mb-2.ml-1.mr-1
+                    .row.mb-0.ml-1.mr-1
                         each book in listBooks
                             .col-6.col-md-2.pl-1.pr-1.mb-4
                                 .card.card-inverse.card-info
@@ -174,3 +174,5 @@ block content
                                     .card-footer
                                         small= book.price + ' VNĐ'
                                         button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
+                    div.d-flex.justify-content-end.mt-0
+                        a.stretched-link.btn.btn-primary(href='/books') Xem chi tiết >>
