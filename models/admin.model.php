@@ -95,17 +95,25 @@ class AdminModel
     }
   }
 
-  public static function getBooks()
+  public static function getBooks($query, $authorid, $categoryid)
   {
     try {
       $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price
       from books,`authors`,categories
       WHERE books.authorid = `authors`.authorid
       and books.categoryid = categories.categoryid
+      having (bookid like :query or bookname like :query) and (books.authorid like :authorid and books.categoryid like :categoryid)
       order by bookid asc
       ";
-      $result = Database::queryResults($sql, array());
-      return $result;
+      $result = Database::queryResults($sql, array(
+        ':query' => $query ? "%" . $query . "%" : "%", //Nếu không có từ khoá thì đặt là %
+        ':authorid' => $authorid ? "%" . $authorid . "%" : "%",
+        ':categoryid' => $categoryid ? "%" . $categoryid . "%" : "%"
+      ));
+      return [
+        'result' => $result,
+        'rowcount' => 2,
+      ];
     } catch (PDOException $e) {
       return false;
     }
@@ -231,7 +239,7 @@ class AdminModel
           limit $begin, $itemperpage
           ";
       }
-      $queryFull = Database::queryResults($sqlCount,array(':query' => "%" . $query . "%",));
+      $queryFull = Database::queryResults($sqlCount, array(':query' => "%" . $query . "%",));
       $rowcount = count($queryFull);
       $result = Database::queryResults($sql, array(':query' => "%" . $query . "%",));
       // print_r($result);

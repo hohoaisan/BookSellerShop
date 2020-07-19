@@ -19,12 +19,6 @@ class Status {
     return $errors;
   }
 
-  public static function getItemsCart() {
-    self::initalizeSession(); //Khởi tạo nếu session chưa có
-    $items = $_SESSION["shopping_cart"]; //Đặt vào biến tạm
-    return $items;
-  }
-
   public static function getMessages() {
     self::initalizeSession();
     $messages = $_SESSION["messages"];
@@ -47,9 +41,5 @@ class Status {
   public static function addMessages($messages) {
     self::initalizeSession();
     $_SESSION["messages"] = array_merge($_SESSION["messages"], $messages);
-  }
-  public static function addItemsCart($items) {
-    self::initalizeSession();
-    $_SESSION["shopping_cart"] = array_merge($_SESSION["shopping_cart"], $items);
   }
 }

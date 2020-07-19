@@ -1,11 +1,20 @@
 <?php
+session_start();
+if (!isset($_SESSION["cart"])) {
+  $_SESSION["cart"] = [];
+}
+
+include('actionStatus.php');
 include_once('vendor/autoload.php');
 include_once('models/connect.php');
 include_once('controllers/home.controller.php');
 
+
+
 $router = new \Bramus\Router\Router();
 $_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
 use Pug\Facade as PugFacade;
+
 
 
 

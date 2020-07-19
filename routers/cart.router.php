@@ -1,11 +1,13 @@
 <?php
-$index = function() {
-  echo "THis is cart router";
-};
+
+include('../controllers/cart.controller.php');
+use Pug\Facade as PugFacade;
+
 
 
 $router->get('/', $index);
-$router->get('/abcxyz', function() {
-  echo "funk you";
-});
+$router->post('/remove', $removeItem);
+$router->post('/add', $addItem);
+$router->post('/edit', $editItem);
+$router->get('/show', $showCart);
 ?>

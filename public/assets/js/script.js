@@ -1,23 +1,31 @@
+
 $(document).ready(function () {
-    $('#add_to_cart').click(function () {
-        var bookid = $(this).data('bookid');
-        var bookname = $(this).data('bookname');
-        var price = $(this).data('price');
-        var bookimageurl = $(this).data('bookimageurl');
-        var action = "add";
-        $.ajax({
-            url: "/models/home.php",
-            method: "POST",
+    $(".add-to-cart").on('click', async function(event){
+        
+        let bookid = $(this).data('bookid');
+        let result = await axios({
+            url: '/cart/add',
+            method: 'post',
             data: {
-                bookid: bookid,
-                bookname: bookname,
-                price: price,
-                bookimageurl: bookimageurl,
-                action: action
+                bookid: bookid
             },
-            success: function (data) {
-                alert("Item has been Added into Cart");
-            }
+            withCredentials: true,
+        }).then((res) => {
+            return res.data;
+        }).catch((err) => {
+            alert("Có lỗi xảy ra trong quá trình thêm vào giỏ hàng");
         });
+        if (result.status) {
+            alert("Đã thêm vào giỏ hàng");
+        }
+        else {
+            alert("Không thể thêm vào giỏ hàng");
+        }
+        
     });
+
+    $(".edit-quantity").on('click', function(event) {
+        alert('clicked');
+    });
+   
 });

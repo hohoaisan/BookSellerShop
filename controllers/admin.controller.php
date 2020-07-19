@@ -1,9 +1,5 @@
 <?php
-session_start();
-
 include('../models/admin.model.php');
-include('../actionStatus.php');
-
 use AdminModel\AdminModel as AdminModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
@@ -266,24 +262,39 @@ $getUserJSON = function ($userid) {
 };
 
 $books = function () {
-  $result = AdminModel::getBooks();
-  //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
-  if ($result) {
-    echo PugFacade::displayFile('../views/admin/books.jade', [
-      'books' => $result,
-      'errors' => $errors,
-      'messages' => $messages
-    ]);
-  } else {
-    array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
-    echo PugFacade::displayFile('../views/admin/books.jade', [
-      'books' => [],
-      'errors' => $errors,
-      'messages' => $messages
-    ]);
+  $title = false;
+
+  $query = "";
+  if (isset($_GET["query"]) && $_GET["query"] != "") {
+    $query = $_GET["query"];
+    $title = 'Tìm kiếm sách';
   }
+  $authorid = "";
+  if (isset($_GET["author"]) && $_GET["author"] != "") {
+    $authorid = $_GET["author"];
+    $title = 'Danh sách sách của tác giả';
+  }
+
+  $categoryid = "";
+  if (isset($_GET["categoryid"]) && $_GET["categoryid"] != "") {
+    $categoryid = $_GET["categoryid"];
+    $title = 'Danh sách sách của danh mục';
+  }
+  $fetch = AdminModel::getBooks($query, $authorid, $categoryid);
+  if ($fetch == false) {
+    array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
+  }
+  $result = $fetch['result'];
+  echo PugFacade::displayFile('../views/admin/books.jade', [
+    'books' => $result,
+    'errors' => $errors,
+    'messages' => $messages,
+    'title' => $title,
+    'query' => $query
+  ]);
+
   exit();
 };
 $bookAdd = function () {
