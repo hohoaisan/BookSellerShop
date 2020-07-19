@@ -10,7 +10,7 @@
         public static function getBooks()
         {
             try {
-                $sql = "select bookid, bookname ,bookimageurl, price from books ORDER BY releasedate DESC limit 1,18";
+                $sql = "select bookid, bookname ,bookimageurl, price from books ORDER BY releasedate DESC limit 1,12";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {
@@ -29,7 +29,7 @@
         }
         public static function mostSeller(){
             try {
-                $sql = "select * from books ORDER BY purchasedcount DESC limit 1,12";
+                $sql = "select * from books ORDER BY purchasedcount DESC limit 1,18";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {
