@@ -29,42 +29,34 @@ block content
           div
             p.detail-title.mb-0 Ngày sinh
             p#userDob Ngày sinh
-          //- table.table.table-sm.table-bordered.mt-0.table-striped
-          //-   tr
-          //-     th Mã sách
-          //-     th Tên sách
-          //-     th Số lượng
-          //-     th Tổng tiền
-          //-   tr
-          //-     td S001
-          //-     td Acer aspire
-          //-     td 23
-          //-     td 1300000
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
           //- button.btn.btn-primary(type='button') Lưu
   h3.mt-4.mb-4 Quản lí người dùng
-  if (messages)
-    each message in messages
-      .alert.alert-success= message
-  if (errors)
-    each error in errors
-      .alert.alert-warning= error
   ul.nav.nav-tabs.mb-4
     li.nav-item
-      a.nav-link.active(href='#') Tất cả
+      a.nav-link(href='/admin/users', class=card?"":"active") Tất cả
     li.nav-item
-      a.nav-link(href='#') Bị vô hiệu hoá
+      a.nav-link(href='/admin/users?filter=disabled' class=(card=='disabled')?"active":"") Bị vô hiệu hoá
     li.nav-item
-      a.nav-link(href='#') Quản trị viên
+      a.nav-link(href='/admin/users?filter=admin' class=(card=='admin')?"active":"") Quản trị viên
   .d-flex.justify-content-between.align-items-center.mb-2.flex-sm-row.flex-column
-    h4.ml-2 Tất cả người dùng
+    if (!title)
+      h4.ml-2 Tất cả người dùng
+    else
+      h4.ml-2= title
     .d-flex.justify-content-between.align-items-center.mb-2
       form.d-flex
-        input.form-control.mr-1(type='search', placeholder='Nhập tên', aria-label='Search')
+        input.form-control.mr-1(type='search', placeholder='Nhập từ khoá', aria-label='Search', name="query", value=search)
         button.btn.btn-outline-success.w-25(type='submit')
           .fas.fa-search
   .mb-4
+    if (messages)
+      each message in messages
+        .alert.alert-success= message
+    if (errors)
+      each error in errors
+        .alert.alert-warning= error
     if (users)
       table.table.table-sm
         thead
@@ -105,6 +97,13 @@ block content
                         button.dropdown-item.text-danger(type="submit") Vô hiệu hoá người dùng
                     form(action="/admin/users/"+user.userid+"/delete", method="POST")
                       button.dropdown-item.text-danger(type="submit") Xoá tài khoản
+      ul.pagination
+        if (pagination_pages>1)
+          - for (i=1; i<=pagination_pages; i++)
+            li.page-item(class=(i==pagination_current_page)?"active":"")
+              a.page-link(href=pagination_url+'page='+i)=i
+    else
+      .alert.alert-warning Danh sách người dùng trống
 block external
   script.
     $('#userModal').on('show.bs.modal', async function (event) {

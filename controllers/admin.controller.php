@@ -23,6 +23,8 @@ $index = function () {
 };
 
 $orders = function () use ($removeParam) {
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
   // Xác định có ?filter= hay không, nếu có thì
   // chuyển mục trong trang và đặt lại tiêu đề
   $filter = isset($_GET["filter"]) ? $_GET["filter"] : "";
@@ -53,7 +55,7 @@ $orders = function () use ($removeParam) {
 
   //Pagination
   try {
-    $page = intval(isset($_GET['page'])?$_GET['page']:1);
+    $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
   } catch (Exception $e) {
     $page = 1;
   }
@@ -61,14 +63,15 @@ $orders = function () use ($removeParam) {
 
   $fetch = AdminModel::getOrders($filter, $query, $page, $itemperpage);
   $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
+
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-  $errors = Status::getErrors();
-  $messages = Status::getMessages();
+
   if (!$fetch) {
-    array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
+    array_push($errors, "Có vấn đề xảy ra hoặc danh sách trống");
     $result = [];
   }
+
   echo PugFacade::displayFile('../views/admin/orders.jade', [
     'orders' => $result,
     'errors' => $errors,
@@ -135,36 +138,65 @@ $orderError = function ($orderid) {
 
 
 
-$users = function () {
+$users = function () use ($removeParam) {
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+
   $filter = isset($_GET["filter"]) ? $_GET["filter"] : "";
   switch ($filter) {
     case 'disabled':
       $card = 'disabled';
       $title = 'Danh sách người dùng bị vô hiệu hoá';
+
       break;
     case 'admin':
       $card = 'admin';
       $title = 'Danh sách quản trị viên';
       break;
     default:
+      $filter = false;
       $card = false;
-      $title = false;
+      $title = "";
   }
 
-  $result = AdminModel::getUsers($filter);
+  $query = "";
+  if (isset($_GET["query"]) && $_GET["query"] != "") {
+    $query = $_GET["query"];
+    $title = 'Tìm kiếm người dùng';
+  }
+
+  //Pagination
+  try {
+    $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+  } catch (Exception $e) {
+    $page = 1;
+  }
+  $itemperpage = 3;
+
+
+  $fetch = AdminModel::getUsers($filter, $query, $page, $itemperpage);
   //Khởi tạo session
-  $errors = Status::getErrors();
-  $messages = Status::getMessages();
-  if (!$result) {
-    array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
+  if ($fetch == false) {
+    array_push($errors, "Có vấn đề xảy ra hoặc danh sách trống");
     $result = [];
   }
+  $result = $fetch['result'];
+
+  $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
+  $num_page = ceil($num_records / $itemperpage); //Số trang
+
+
+
   echo PugFacade::displayFile('../views/admin/users.jade', [
     'users' => $result,
     'errors' => $errors,
     'messages' => $messages,
     'card' => $card, // Xác đỊnh mục nào đang được chọn
     'title' => $title,
+    'search' => $query, // Lưu lại từ khoá và đưa vào mục tìm kiếm
+    'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
+    'pagination_pages' => $num_page,
+    'pagination_current_page' => $page
   ]);
   exit();
 };
