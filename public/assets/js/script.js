@@ -24,8 +24,16 @@ $(document).ready(function () {
         
     });
 
-    $(".edit-quantity").on('click', function(event) {
-        alert('clicked');
+    $(".cartEditQuantity").on('click', function(event) {
+        let input = event.target.parentElement;
+        console.log(input);
+        alert("edit");
     });
+    $(".cartRemoveItem").on('click', function(event) {
+        let input = event.target.parentElement;
+        console.log(input);
+        alert("remove");
+    });
+
    
 });
