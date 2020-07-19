@@ -30,14 +30,17 @@ $orders = function () use ($removeParam) {
     case 'pending':
       $card = 'pending';
       $title = 'Các đơn chờ xác nhận';
+      $filter = 'p'; //sql keyword 
       break;
     case 'accepted':
       $card = 'accepted';
       $title = 'Các đơn chờ thanh toán';
+      $filter = 'a';
       break;
     default:
       $card = false;
       $title = false;
+      $filter = '%'; //lấy toàn bộ dữ liệu
   }
 
   // Xác định có từ khoá tìm kiếm hay không,
@@ -64,6 +67,7 @@ $orders = function () use ($removeParam) {
   $messages = Status::getMessages();
   if (!$fetch) {
     array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
+    $result = [];
   }
   echo PugFacade::displayFile('../views/admin/orders.jade', [
     'orders' => $result,
@@ -132,24 +136,36 @@ $orderError = function ($orderid) {
 
 
 $users = function () {
-  $result = AdminModel::getUsers();
+  $filter = isset($_GET["filter"]) ? $_GET["filter"] : "";
+  switch ($filter) {
+    case 'disabled':
+      $card = 'disabled';
+      $title = 'Danh sách người dùng bị vô hiệu hoá';
+      break;
+    case 'admin':
+      $card = 'admin';
+      $title = 'Danh sách quản trị viên';
+      break;
+    default:
+      $card = false;
+      $title = false;
+  }
+
+  $result = AdminModel::getUsers($filter);
   //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
-  if ($result) {
-    echo PugFacade::displayFile('../views/admin/users.jade', [
-      'users' => $result,
-      'errors' => $errors,
-      'messages' => $messages
-    ]);
-  } else {
+  if (!$result) {
     array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
-    echo PugFacade::displayFile('../views/admin/users.jade', [
-      'users' => [],
-      'errors' => $errors,
-      'messages' => $messages
-    ]);
+    $result = [];
   }
+  echo PugFacade::displayFile('../views/admin/users.jade', [
+    'users' => $result,
+    'errors' => $errors,
+    'messages' => $messages,
+    'card' => $card, // Xác đỊnh mục nào đang được chọn
+    'title' => $title,
+  ]);
   exit();
 };
 $userDisable = function ($userid) {

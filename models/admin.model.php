@@ -175,8 +175,9 @@ class AdminModel
   }
 
 
-  public static function getUsers() {
+  public static function getUsers($filter) {
     try {
+
       $sql = "select userid, username, fullname,dob, phone, email, male, addressid, addresstext, isdisable, isadmin
       from users
       order by isadmin desc, isdisable asc, userid asc";
@@ -253,18 +254,7 @@ class AdminModel
 
   public static function getOrders($filter,$query,$page, $itemperpage) {
     try {
-      //Lọc theo đơn hàng xác nhận hoặc chờ thanh toán
-      //Nếu khác thì cho là '%' để lấy toàn bộ kết quả mà không phải lọc
-      switch($filter) {
-        case 'accepted':
-          $keyword = "a";
-        break;
-        case 'pending':
-          $keyword = "p";
-        break;
-        default: $keyword = "%";
-      }
-      // Nếu từ khoá tìm kiếm trống thì đặt là '%'
+
       if (!$query || $query == "") {
         $query = '%';
       };
@@ -274,7 +264,7 @@ class AdminModel
       $begin = ($page-1)*$itemperpage;
       $sqlfull = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, orderstatus, receivername from orders having orderstatus like :filter and (orderid like :query or LOWER(receivername) like LOWER(:query) or LOWER(fullname) like LOWER(:query))";
       $queryFull = Database::queryResults($sqlfull,array(
-        ':filter' => $keyword,
+        ':filter' => $filter,
         'query' => "%".$query."%",
       ));
       $rowcount = count($queryFull);
@@ -282,7 +272,7 @@ class AdminModel
 
       $sql = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, receivername, orderstatus, timestamp,totalmoney from orders having orderstatus like :filter and (orderid like :query or LOWER(receivername) like LOWER(:query) or LOWER(fullname) like LOWER(:query)) order by timestamp desc limit $begin, $itemperpage";
       $result = Database::queryResults($sql,array(
-          ':filter' => $keyword,
+          ':filter' => $filter,
           'query' => "%".$query."%",
         ));
       return [
