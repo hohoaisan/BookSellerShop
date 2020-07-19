@@ -10,5 +10,13 @@
             'book' => $book
         ]);
         exit();
+    };
+
+    $bookDetail = function($bookid){
+        $book = BookModel::getBookDetail($bookid);
+        echo PugFacade::displayFile('../views/home/bookDetail.jade',[
+            'book' => $book
+        ]);
+        exit();
     }
 ?>
