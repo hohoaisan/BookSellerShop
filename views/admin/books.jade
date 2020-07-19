@@ -23,11 +23,13 @@ block content
             button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
             button.btn.btn-primary(type='submit') Lưu
   h3.mt-4.mb-4 Quản lí sách
+  if (title)
+    h4.mt-4.mb-4= title
   .d-flex.justify-content-between.align-items-center.mb-2
     a(href="/admin/books/add")
       .btn.btn-primary.mr-4 Thêm sách mới
     form.d-flex(action="/admin/books")
-      input.form-control.mr-1(type='search', placeholder='Nhập tên hoặc id', aria-label='Search', name="q")
+      input.form-control.mr-1(type='search', placeholder='Nhập tên hoặc id', aria-label='Search', name="query" value=query)
       button.btn.btn-outline-success.w-25(type='submit')
         .fas.fa-search
   .mb-4

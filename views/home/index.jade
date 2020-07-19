@@ -67,7 +67,7 @@ block content
                                                 h5.card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY       
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -79,7 +79,7 @@ block content
                                                 h5.card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY                                    
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -91,7 +91,7 @@ block content
                                                 h5.card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY    
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
                                 -}           
     //Popular banner
     .container
@@ -120,7 +120,7 @@ block content
                                                 h5.card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY       
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -132,7 +132,7 @@ block content
                                                 h5.card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY                                    
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -144,7 +144,7 @@ block content
                                                 h5.card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm BUY    
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY 
                                 -}          
     //book Show
     .container
@@ -166,4 +166,4 @@ block content
                                         h5.card-title= book.bookname
                                     .card-footer
                                         small= book.price + ' VNĐ'
-                                        button#add_to_cart.btn.btn-primary.float-right.btn-sm.select_product(name="add_to_cart",data-bookid= "'" + book.bookid + "'",data-bookname= "'" + book.bookname + "'",data-price= "'" + book.price + "'",data-bookimageurl= "'" + book.bookimageurl + "'") BUY 
+                                        button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
