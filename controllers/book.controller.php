@@ -6,12 +6,8 @@
     
     $index = function($bookid){
         $book = BookModel::getBook($bookid);
-        $category = BookModel::getCategory($bookid);
-        $author =  BookModel::getAuthor($bookid);
         echo PugFacade::displayFile('../views/home/bookDetail.jade',[
-            'book' => $book,
-            'category' => $category,
-            'author' => $author
+            'book' => $book
         ]);
         exit();
     }

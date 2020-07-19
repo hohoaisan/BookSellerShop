@@ -5,30 +5,10 @@ use PDOException;
 
 class BookModel
 {
-    public static function getBook($id){
+    public static function getBook($bookid){
         try {
-            $sql = "select * from `books` where bookid = ?";
-            $result = Database::querySingleResult($sql, $id);
-            return $result;
-        } catch (PDOException $e) {
-        return false;
-        }
-    }
-
-    public static function getCategory($id){
-        try {
-            $sql = "select * from categories where categoryid = ?";
-            $result = Database::querySingleResult($sql, $id);
-            return $result;
-        } catch (PDOException $e) {
-        return false;
-        }
-    }
-
-    public static function getAuthor($id){
-        try {
-            $sql = "select * from `authors` where authorid = ?";
-            $result = Database::querySingleResult($sql, $id);
+            $sql = "select b.bookname, b.bookimageurl, b.bookdescription, b.bookpages, b.bookweight, b.	releasedate, a.authorname, c.categoryname, b.price from books as b, authors as a, categories as c where b.bookid = ? and c.categoryid = b.categoryid and a.authorid = b.authorid ";
+            $result = Database::querySingleResult($sql,  array($bookid));
             return $result;
         } catch (PDOException $e) {
         return false;

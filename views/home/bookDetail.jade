@@ -1,10 +1,10 @@
 extends base
-block contents
-    if book && category && author
-        .single_product
+block content
+    if (book)
+        .single_product.p-0(style="margin: 0 10%;")
             .container-fluid(style=' background-color: #fff; padding: 11px;')
                 .row
-                    .col-lg-4.order-lg-2.order-1
+                    .col-lg-6.order-lg-2.order-1
                         .image_selected
                             img(src='/assets/img/books/' + book.bookimageurl, alt='')
                     .col-lg-6.order-3
@@ -12,23 +12,18 @@ block contents
                             nav
                                 ol.breadcrumb
                                     li.breadcrumb-item
-                                        a(href='#') Home
+                                        a(href='/') Home
                                     li.breadcrumb-item
                                         a(href='#') Books
-                                    li.breadcrumb-item.active= category.categoryname
+                                    li.breadcrumb-item.active= book.categoryname
                             .product_name= book.bookname;
-                            .product-rating
-                                span.badge.badge-success
-                                    i.fa.fa-star
-                                    |  4.5 Star
-                                span.rating-review 35 Ratings & 45 Reviews
                             div
-                                span.product_price= book.price
+                                span.product_price= book.price + " VNĐ"
                             hr.singleline
                             div
                                 span.product_info
                                     | Tác giả: 
-                                    strong= author.authorname
+                                    strong= book.authorname
                                 br
                                 span.product_info
                                     | Nhà Xuất Bản: 
@@ -57,9 +52,6 @@ block contents
                                                     #quantity_dec_button.quantity_dec.quantity_control
                                                         i.fas.fa-chevron-down
                                             button.btn.btn-primary.shop-button(type='button') Add to Cart
-                                            button.btn.btn-success.shop-button(type='button') Buy Now
-                                            .product_fav
-                                                i.fas.fa-heart
                 .row.row-underline
                     .col-md-6
                         span.deal-text Thông tin sách
@@ -75,13 +67,13 @@ block contents
                                         span.p_specification Số trang :
                                     td.col-md-8
                                         ul
-                                            li= book.bookpage
+                                            li= book.bookpages + " trang"
                                 tr.row.mt-10
                                     td.col-md-4
                                         span.p_specification Book weight :
                                     td.col-md-8
                                         ul
-                                            li= book.bookweight
+                                            li= book.bookweight + " gram"
                                 tr.row.mt-10
                                     td.col-md-4
                                         span.p_specification Ngày ra mắt :
@@ -93,7 +85,7 @@ block contents
                                         span.p_specification Tác giả :
                                     td.col-md-8
                                         ul
-                                            li Sorn & Accel
+                                            li= book.authorname
                                 tr.row.mt-10
                                     td.col-md-4
                                         span.p_specification Nội dung :
@@ -106,122 +98,5 @@ block contents
                                     td.col-md-8
                                         ul
                                             li Kim Đồng
-        //- .single_product
-        //-     .container-fluid(style=' background-color: #fff; padding: 11px;')
-        //-         .row
-        //-             .col-lg-4.order-lg-2.order-1
-        //-                 .image_selected
-        //-                     img(src='https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg', alt='')
-        //-             .col-lg-6.order-3
-        //-                 .product_description
-        //-                     nav
-        //-                         ol.breadcrumb
-        //-                             li.breadcrumb-item
-        //-                                 a(href='#') Home
-        //-                             li.breadcrumb-item
-        //-                                 a(href='#') Books
-        //-                             li.breadcrumb-item.active Phiêu lưu
-        //-                     .product_name
-        //-                         | Liệu Có Sai Lầm Khi Tìm Kiếm Cuộc Gặp Gỡ Định Mệnh Trong Dungeon -
-        //-                         | Tặng Kèm Bookmark + Postcard PVC + Poster Khổ Lớn (35x50cm)
-        //-                     .product-rating
-        //-                         span.badge.badge-success
-        //-                             i.fa.fa-star
-        //-                             |  4.5 Star
-        //-                         span.rating-review 35 Ratings & 45 Reviews
-        //-                     div
-        //-                         span.product_price 85.500 đ
-        //-                     hr.singleline
-        //-                     div
-        //-                         span.product_info
-        //-                             | Tác giả: 
-        //-                             strong Sorn & Accel
-        //-                         br
-        //-                         span.product_info
-        //-                             | Nhà Xuất Bản: 
-        //-                             strong Kim Đồng
-        //-                         br
-        //-                         span.product_info
-        //-                             | Hình thức bìa: 
-        //-                             strong bìa mềm
-        //-                         br
-        //-                         span.product_info
-        //-                             | Chính sách đổi trả : 
-        //-                             strong
-        //-                                 | Đổi trả sản phẩm trong 30
-        //-                                 | ngày
-        //-                         br
-        //-                     hr.singleline
-        //-                     .order_info.d-flex.flex-row
-        //-                         form(action='#')
-        //-                     .row
-        //-                         .col-xs-6.d-flex(style='margin-left: 13px;')
-        //-                             .product_quantity.mb-0
-        //-                                 span QTY: 
-        //-                                 input#quantity_input(type='text', pattern='[0-9]*', value='1')
-        //-                                 .quantity_buttons
-        //-                                     #quantity_inc_button.quantity_inc.quantity_control
-        //-                                         i.fas.fa-chevron-up
-        //-                                     #quantity_dec_button.quantity_dec.quantity_control
-        //-                                         i.fas.fa-chevron-down
-        //-                             button.btn.btn-primary.shop-button(type='button') Add to Cart
-        //-                             button.btn.btn-success.shop-button(type='button') Buy Now
-        //-                             .product_fav
-        //-                                 i.fas.fa-heart
-        //-         .row.row-underline
-        //-             .col-md-6
-        //-                 span.deal-text Thông tin sách
-        //-             .col-md-6
-        //-                 a(href='#', data-abc='true')
-        //-                     span.ml-auto.view-all
-        //-         .row
-        //-             .col-md-12
-        //-                 table.col-md-12
-        //-                     tbody
-        //-                         tr.row.mt-10
-        //-                             td.col-md-4
-        //-                                 span.p_specification Số trang :
-        //-                             td.col-md-8
-        //-                                 ul
-        //-                                     li 900 trang
-        //-                         tr.row.mt-10
-        //-                             td.col-md-4
-        //-                                 span.p_specification Book weight :
-        //-                             td.col-md-8
-        //-                                 ul
-        //-                                     li 40kg
-        //-                         tr.row.mt-10
-        //-                             td.col-md-4
-        //-                                 span.p_specification Ngày ra mắt :
-        //-                             td.col-md-8
-        //-                                 ul
-        //-                                     li 25/07/2020
-        //-                         tr.row.mt-10
-        //-                             td.col-md-4
-        //-                                 span.p_specification Tác giả :
-        //-                             td.col-md-8
-        //-                                 ul
-        //-                                     li Sorn & Accel
-        //-                         tr.row.mt-10
-        //-                             td.col-md-4
-        //-                                 span.p_specification Nội dung :
-        //-                             td.col-md-8
-        //-                                 ul
-        //-                                     li
-        //-                                         | Thành phố mê cung Orario – thành phố khổng lồ chứa một mê cung to lớn
-        //-                                         | dưới lòng đất được biết đến với tên gọi là Dungeon. Sự kích thích mang
-        //-                                         | tên “bí ẩn”, vô số của cải, thanh danh chói lọi, quyền lực, và sự lãng
-        //-                                         | mạn với một cô gái dễ thương. Tại nơi quy tụ tất cả ước mơ và khát vọng
-        //-                                         | của con người này, cậu thiếu niên đã gặp một nữ thần nhỏ bé.
-        //-                                         | Cuộc gặp gỡ định mệnh giữa cậu thiếu niên khát khao trở thành mạo hiểm
-        //-                                         | giả nhưng đã bị không biết bao nhiêu familia từ chối, và một nữ thần
-        //-                                         | không có thành viên familia nào.
-        //-                                         | Đây là câu chuyện do cậu thiếu niên tạo, nữ thần viết.
-        //-                         tr.row.mt-10
-        //-                             td.col-md-4
-        //-                                 span.p_specification Nhà xuất bản :
-        //-                             td.col-md-8
-        //-                                 ul
-        //-                                     li Kim Đồng
     else
         .alert.alert-warning Có lỗi xảy ra

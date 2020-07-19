@@ -62,7 +62,8 @@ block content
                                 - for(i = 0; i < 6; i++){
                                     .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
-                                            img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
                                                 h5.card-title= mostSeller[i].bookname
                                             .card-footer
@@ -74,7 +75,8 @@ block content
                                 - for(i = 6; i < 12; i++){
                                     .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
-                                            img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
                                                 h5.card-title= mostSeller[i].bookname
                                             .card-footer
@@ -86,7 +88,8 @@ block content
                                 - for(i = 12; i < 18; i++){
                                     .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
-                                            img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
                                                 h5.card-title= mostSeller[i].bookname
                                             .card-footer
@@ -115,7 +118,8 @@ block content
                                 - for(i = 0; i < 6; i++){
                                     .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
-                                            img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
                                                 h5.card-title= mostPopular[i].bookname
                                             .card-footer
@@ -127,7 +131,8 @@ block content
                                 - for(i = 6; i < 12; i++){
                                     .col-6.col-md-2.pl-1.mr-0.pr-1
                                         .card.card-inverse.card-info 
-                                            img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
                                                 h5.card-title= mostPopular[i].bookname
                                             .card-footer
@@ -139,7 +144,8 @@ block content
                                 - for(i = 12; i < 18; i++){
                                     .col-6.col-md-2.pl-1.pr-1
                                         .card.card-inverse.card-info 
-                                            img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
                                                 h5.card-title= mostPopular[i].bookname
                                             .card-footer
@@ -161,7 +167,8 @@ block content
                         each book in listBooks
                             .col-6.col-md-2.pl-1.pr-1.mb-4
                                 .card.card-inverse.card-info
-                                    img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
+                                    a(href='/books/' + book.bookid)
+                                        img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
                                     .card-block(style="height: 4em; overflow:hidden;")
                                         h5.card-title= book.bookname
                                     .card-footer

@@ -1,8 +1,5 @@
 <?php
-$index = function() {
-  echo "THis is book router";
-};
-
+include('../controllers/book.controller.php');
 
 $router->get('/{bookid}', $index);
 ?>

@@ -72,7 +72,7 @@ CREATE TABLE `books`  (
   `authorid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL,
   `quantity` int NOT NULL DEFAULT 0,
-  `price` decimal(10, 2) UNSIGNED NULL DEFAULT 0,
+  `price` decimal(10, 0) UNSIGNED NULL DEFAULT 0,
   `timestamp` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`bookid`) USING BTREE,
   INDEX `fkIdx_37`(`authorid`) USING BTREE,
