@@ -5,16 +5,17 @@
 include_once('../controllers/admin.controller.php');
 // $router chính là $router từ index.php truyền sang bằng use($router),
 //nhằm tiếp nhận những đưỡng dẫn phía sau /admin/... thông qua hàm mount
+$requireAdmin = function () {
+  if (isset($_COOKIE['userid']) && isset($_COOKIE['admin']) && $_COOKIE['admin'] == "1") {
+  } else {
 
-$router->before('GET|POST', '/.*', function() {
-  if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'] ) && $_COOKIE['admin']=="1") {
-    //Tiếp tục chạy các hàm bên dưới
-  }
-  else {
-    // Nếu chưa đăng nhập và chưa phải là admin thì bắt buộc phải login
     header('location: /auth/login');
   }
-});
+};
+
+$router->before('GET|POST', '*', $requireAdmin);
+$router->before('GET|POST', '.*', $requireAdmin);
+
 $router->get('/', $index);
 
 $router->get('/orders', $orders);
@@ -22,13 +23,15 @@ $router->get('/orders/{orderid}', $orderJSON);
 $router->post('/orders/{orderid}/reject', $orderReject);
 $router->post('/orders/{orderid}/accept', $orderAccept);
 $router->post('/orders/{orderid}/complete', $orderComplete);
-$router->post('/orders/{orderid}/error', $orderReject);
+$router->post('/orders/{orderid}/error', $orderError);
 
 $router->get('/users', $users);
-$router->post('/users/{userid}/disable', $usersDisable);
-$router->post('/users/{userid}/delete', $usersDelete);
-$router->post('/users/{userid}/makeadmin', $usersAdmin);
-
+$router->post('/users/{userid}/disable', $userDisable);
+$router->post('/users/{userid}/enable', $userEnable);
+$router->post('/users/{userid}/delete', $userDelete);
+$router->post('/users/{userid}/makeadmin', $userMakeAdmin);
+$router->post('/users/{userid}/removeadmin', $userRemoveAdmin);
+$router->get('/users/{userid}/',$getUserJSON);
 
 $router->get('/books', $books);
 // $router->get('/books?q=', $books);

@@ -1,4 +1,6 @@
 extends base
+block vars
+  - var admin_list='books';
 block content
   #bookQuantity.modal.fade(tabindex='-1', role='dialog', aria-labelledby='bookQuantity', aria-hidden='true')
     form#bookQuantityForm(action="", method="POST")

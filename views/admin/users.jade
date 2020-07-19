@@ -1,13 +1,62 @@
 extends base
+block vars
+  - var admin_list='users';
 block content
+  #userModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='userModal', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#userModalLabel.modal-title Xem thông tin người dùng
+            span.ml-2 ID
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          div
+            p.detail-title.mb-0 Họ tên
+            p#userFullName Họ tên
+          div
+            p.detail-title.mb-0 Địa chỉ
+            p#userAddress Địa chỉ
+          div
+            p.detail-title.mb-0 Email
+            p#userEmail Email
+          div
+            p.detail-title.mb-0 Số điện thoại
+            p#userPhone Số điện thoại
+          div
+            p.detail-title.mb-0 Giới tính
+            p#userGender Giới tính
+          div
+            p.detail-title.mb-0 Ngày sinh
+            p#userDob Ngày sinh
+          //- table.table.table-sm.table-bordered.mt-0.table-striped
+          //-   tr
+          //-     th Mã sách
+          //-     th Tên sách
+          //-     th Số lượng
+          //-     th Tổng tiền
+          //-   tr
+          //-     td S001
+          //-     td Acer aspire
+          //-     td 23
+          //-     td 1300000
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+          //- button.btn.btn-primary(type='button') Lưu
   h3.mt-4.mb-4 Quản lí người dùng
-  .alert.alert-danger Lỗi không thể thêm vào cơ sở dữ liệu, hãy thử lại
-  .alert.alert-success Đã thêm thành công
+  if (messages)
+    each message in messages
+      .alert.alert-success= message
+  if (errors)
+    each error in errors
+      .alert.alert-warning= error
   ul.nav.nav-tabs.mb-4
     li.nav-item
       a.nav-link.active(href='#') Tất cả
     li.nav-item
       a.nav-link(href='#') Bị vô hiệu hoá
+    li.nav-item
+      a.nav-link(href='#') Quản trị viên
   .d-flex.justify-content-between.align-items-center.mb-2.flex-sm-row.flex-column
     h4.ml-2 Tất cả người dùng
     .d-flex.justify-content-between.align-items-center.mb-2
@@ -16,32 +65,60 @@ block content
         button.btn.btn-outline-success.w-25(type='submit')
           .fas.fa-search
   .mb-4
+    if (users)
       table.table.table-sm
         thead
           tr
             th Mã người dùng
             th Tên người dùng
+            th Họ tên
             th Số điện thoại
-            th Ngày sinh
             th Giới tính
-            th Địa chỉ
             th Thao tác
         tbody
-          tr
-            td Chờ duyệt
-            td Text
-            td Cell 2
-            td Cell 2
-            td Đà Nẵng
-            td Cell 2
-            td.tablecell-action
-              .btn-group
-                button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                  | Action
-                .dropdown-menu
-                  a.dropdown-item(href='#') Xem lịch sử giao dịch
-                  .dropdown-divider
-                  a.dropdown-item.text-primary(href='#') Đặt làm quản trị viên
-                  .dropdown-divider
-                  a.dropdown-item(href='#') Vô hiệu hoá
-                  a.dropdown-item.text-danger(href='#') Xoá tài khoản
+          each user in users
+            tr(class=user.isdisable?"table-danger":(user.isadmin?"table-primary":""))
+              td= user.userid
+              td= user.username
+              td= user.fullname
+              td= user.phone
+              td= user.male?"Nam":"Nữ"
+              td.tablecell-action
+                .btn-group
+                  button.btn.btn-sm.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Action
+                  .dropdown-menu
+                    button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#userModal', data-id=user.userid, data-name=user.fullname, data-phone=user.phone, data-dob=user.dob, data-email=user.email, data-addressid=user.addressid, data-addresstext=user.addresstext ) Xem thông tin chi tiết
+                    .dropdown-divider
+                    if (user.isadmin)
+                      form(action="/admin/users/"+user.userid+"/removeadmin", method="POST")
+                        button.dropdown-item.text-primary(type="submit") Gỡ quyền quản trị viên
+                    else
+                      form(action="/admin/users/"+user.userid+"/makeadmin", method="POST")
+                        button.dropdown-item.text-primary(type="submit") Đặt làm quản trị viên
+                    .dropdown-divider
+                    if (user.isdisable)
+                      form(action="/admin/users/"+user.userid+"/enable", method="POST")
+                        button.dropdown-item.text-danger(type="submit") Gỡ vô hiệu hoá người dùng
+                    else
+                      form(action="/admin/users/"+user.userid+"/disable", method="POST")
+                        button.dropdown-item.text-danger(type="submit") Vô hiệu hoá người dùng
+                    form(action="/admin/users/"+user.userid+"/delete", method="POST")
+                      button.dropdown-item.text-danger(type="submit") Xoá tài khoản
+block external
+  script.
+    $('#userModal').on('show.bs.modal', async function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    let data = await axios.get('/admin/users/'+id).then((res)=>{
+      return res.data;
+    });
+    document.querySelector('#userAddress').innerText = data.address;
+    document.querySelector('#userEmail').innerText = data.email;
+    document.querySelector('#userFullName').innerText = data.fullname;
+    document.querySelector('#userEmail').innerText = data.email;
+    document.querySelector('#userPhone').innerText = data.phone;
+    document.querySelector('#userGender').innerText = data.male;
+    document.querySelector('#userDob').innerText = data.dob;
+    var modal = $(this);
+    })   

@@ -8,46 +8,213 @@ use AdminModel\AdminModel as AdminModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
+
+$removeParam = function ($param) {
+  $url = $_SERVER['REQUEST_URI'];
+  $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*$/', '', $url);
+  $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*&/', '$1', $url);
+  if (strpos($url, '?')) {
+    return $url . '&';
+  } else return $url . '?';
+};
+
 $index = function () {
   echo PugFacade::displayFile('../views/admin/index.jade');
 };
 
-$orders = function () {
-  //orders?name=&user=&sort=pending|accept|history
-  echo PugFacade::displayFile('../views/admin/orders.jade');
+$orders = function () use ($removeParam) {
+  // Xác định có ?filter= hay không, nếu có thì
+  // chuyển mục trong trang và đặt lại tiêu đề
+  $filter = isset($_GET["filter"]) ? $_GET["filter"] : "";
+  switch ($filter) {
+    case 'pending':
+      $card = 'pending';
+      $title = 'Các đơn chờ xác nhận';
+      break;
+    case 'accepted':
+      $card = 'accepted';
+      $title = 'Các đơn chờ thanh toán';
+      break;
+    default:
+      $card = false;
+      $title = false;
+  }
+
+  // Xác định có từ khoá tìm kiếm hay không,
+  $query = "";
+  if (isset($_GET["query"]) && $_GET["query"] != "") {
+    $query = $_GET["query"];
+    $title = 'Tìm kiếm hoá đơn';
+  }
+
+
+  //Pagination
+  try {
+    $page = intval(isset($_GET['page'])?$_GET['page']:1);
+  } catch (Exception $e) {
+    $page = 1;
+  }
+  $itemperpage = 5;
+
+  $fetch = AdminModel::getOrders($filter, $query, $page, $itemperpage);
+  $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
+  $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
+  $num_page = ceil($num_records / $itemperpage); //Số trang
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  if (!$fetch) {
+    array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
+  }
+  echo PugFacade::displayFile('../views/admin/orders.jade', [
+    'orders' => $result,
+    'errors' => $errors,
+    'messages' => $messages,
+    'card' => $card, // Xác đỊnh mục nào đang được chọn
+    'title' => $title,
+    'search' => $query, // Lưu lại từ khoá và đưa vào mục tìm kiếm
+    'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
+    'pagination_pages' => $num_page,
+    'pagination_current_page' => $page
+  ]);
+  exit();
 };
 
-$orderJSON = function () {
-  echo PugFacade::displayFile('../views/admin/orders.jade');
+
+$orderJSON = function ($orderid) {
+  $result = AdminModel::getOrder($orderid);
+  $result["books"] =  AdminModel::getOrderDetail($orderid);
+  echo json_encode($result, JSON_UNESCAPED_UNICODE);
 };
 
-$orderReject = function () {
-  echo PugFacade::displayFile('../views/admin/orders.jade');
+$orderReject = function ($orderid) {
+  $result = AdminModel::rejectOrder($orderid);
+  if ($result) {
+    Status::addMessage("Đã từ chối đơn hàng có id " . $orderid);
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/orders');
+  exit();
 };
 
-$orderAccept = function () {
-  echo PugFacade::displayFile('../views/admin/orders.jade');
+$orderAccept = function ($orderid) {
+  $result = AdminModel::acceptOrder($orderid);
+  if ($result) {
+    Status::addMessage("Đã chấp nhận đơn hàng có id " . $orderid);
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/orders');
+  exit();
 };
-$orderComplete = function () {
-  echo PugFacade::displayFile('../views/admin/orders.jade');
+$orderComplete = function ($orderid) {
+  $result = AdminModel::completeOrder($orderid);
+  if ($result) {
+    Status::addMessage("Đã đánh dấu đơn hàng có id " . $orderid . " là đã thanh toán");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/orders');
+  exit();
 };
-$orderReject = function () {
-  echo PugFacade::displayFile('../views/admin/orders.jade');
+
+$orderError = function ($orderid) {
+  $result = AdminModel::makeOrderError($orderid);
+  if ($result) {
+    Status::addMessage("Đã đánh dấu đơn hàng có id " . $orderid . " là lỗi");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/orders');
+  exit();
 };
+
+
 
 $users = function () {
-  echo PugFacade::displayFile('../views/admin/users.jade');
+  $result = AdminModel::getUsers();
+  //Khởi tạo session
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  if ($result) {
+    echo PugFacade::displayFile('../views/admin/users.jade', [
+      'users' => $result,
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  } else {
+    array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
+    echo PugFacade::displayFile('../views/admin/users.jade', [
+      'users' => [],
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  }
+  exit();
 };
-$usersDisable = function () {
-  echo PugFacade::displayFile('../views/admin/users.jade');
+$userDisable = function ($userid) {
+  $result = AdminModel::disableUser($userid);
+  if ($result) {
+    Status::addMessage("Đã vô hiệu hoá người dùng có id " . $userid . ", người dùng sẽ không thể đăng nhập");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/users');
+  exit();
+};
+$userEnable = function ($userid) {
+  $result = AdminModel::enableUser($userid);
+  if ($result) {
+    Status::addMessage("Đã gỡ vô hiệu hoá người dùng có id " . $userid . ", giờ đây người dùng đã có thể đăng nhập");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/users');
+  exit();
+};
+$userDelete = function ($userid) {
+  $result = AdminModel::removeUser($userid);
+  if ($result) {
+    Status::addMessage("Đã xoá người dùng có id " . $userid . " khỏi cơ sở dữ liệu");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/users');
+  exit();
+  // echo PugFacade::displayFile('../views/admin/users.jade');
 };
 
-$usersDelete = function () {
-  echo PugFacade::displayFile('../views/admin/users.jade');
+
+$userMakeAdmin = function ($userid) {
+  $result = AdminModel::makeUserAdmin($userid);
+  if ($result) {
+    Status::addMessage("Đã đặt người dùng có id " . $userid . " làm quản trị viên, giờ đây người này đã có thể quản trị website");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/users');
+  exit();
+};
+$userRemoveAdmin = function ($userid) {
+  $result = AdminModel::removeUserAdmin($userid);
+  if ($result) {
+    Status::addMessage("Đã xoá người dùng có id " . $userid . " khỏi quyền quản trị viên");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/users');
+  exit();
 };
 
-$usersAdmin = function () {
-  echo PugFacade::displayFile('../views/admin/users.jade');
+$getUserJSON = function ($userid) {
+  $result = AdminModel::getUserJSON($userid);
+  if ($result) {
+    echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    exit();
+  } else {
+    http_response_code(404);
+    exit();
+  }
 };
 
 $books = function () {
@@ -160,7 +327,7 @@ $postBookMiddleware =  function ($redirecturl = "/admin/books/add", $requireImag
   }
   if (count($errors)) {
     Status::addErrors($errors);
-    header('location: '.$redirecturl);
+    header('location: ' . $redirecturl);
     exit();
   }
 };
@@ -185,7 +352,7 @@ $postBookMoveFile = function ($redirecturl = "/admin/books/add") {
     return $newfile;
   } else {
     Status::addError("Có sự cố trong việc xử lí ảnh");
-    header('location: '.$redirecturl);
+    header('location: ' . $redirecturl);
     exit();
   }
 };
@@ -229,7 +396,7 @@ $bookEdit = function ($bookid) {
 
 $postBookEdit = function ($bookid) use ($postBookMiddleware, $postBookMoveFile) {
   $replaceimage = isset($_POST["replaceimage"]);
-  $postBookMiddleware('/admin/books/'.$bookid.'/edit', $replaceimage);
+  $postBookMiddleware('/admin/books/' . $bookid . '/edit', $replaceimage);
   $bookname = $_POST["bookname"];
   $bookdescription = $_POST["description"];
   $bookpages = $_POST["bookpages"];
@@ -237,23 +404,23 @@ $postBookEdit = function ($bookid) use ($postBookMiddleware, $postBookMoveFile) 
   $releasedate = $_POST["releasedate"];
   $authorid = $_POST["authorid"];
   $categoryid = $_POST["categoryid"];
-  $bookimageurl = $replaceimage?$postBookMoveFile('/admin/books/'.$bookid.'/edit'):false;
+  $bookimageurl = $replaceimage ? $postBookMoveFile('/admin/books/' . $bookid . '/edit') : false;
   $bookprice = $_POST["bookprice"];
-  $quantity = $_POST["quantity"]; 
+  $quantity = $_POST["quantity"];
   $result = AdminModel::editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl);
   if ($result) {
     Status::addMessage("Đã chỉnh sửa thông tin của sách");
   } else {
     Status::addError("Lỗi, không thể chỉnh sửa sách, hãy thử lại");
   }
-  header('location: /admin/books/'.$bookid.'/edit');
+  header('location: /admin/books/' . $bookid . '/edit');
   exit();
 };
 
 $postBookEditSimpleMiddleware = function () {
   try {
     $errors = [];
-    
+
     if (!isset($_POST["quantity"]) || $_POST["quantity"] == "" || intval($_POST["quantity"]) <= 0) {
       array_push($errors, "Số lượng nhập vào phải hợp lệ (chữ số, lớn hơn hoặc bằng 0)");
     }

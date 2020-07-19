@@ -2,6 +2,8 @@ extends ../base
 block head
   title Quản trị website
   link(href='/assets/css/admin/style.css', rel='stylesheet')
+  title #{title}
+  meta(name='description', content='#{description}')
 block body
   nav.navbar.navbar-expand-lg.navbar-light.bg-light.border-bottom
       button#menu-toggle.btn.btn-outline-info
@@ -22,22 +24,22 @@ block body
     
     #sidebar-wrapper.bg-light.border-right.position-fixed
       .list-group.list-group-flush
-        a.list-group-item.list-group-item-action.bg-light(href='/admin/orders')
+        a.list-group-item.list-group-item-action(href='/admin/orders', class=(admin_list=='orders'?"active":""))
           .fas.fa-cart-arrow-down.mr-2.fa-fw
           | Quản lí đơn hàng
-        a.list-group-item.list-group-item-action.bg-light(href='/admin/users')
+        a.list-group-item.list-group-item-action(href='/admin/users', class=(admin_list=='users'?"active":""))
           .fas.fa-book-reader.mr-2.fa-fw
           | Quản lí người dùng
-        a.list-group-item.list-group-item-action.bg-light(href='/admin/books')
+        a.list-group-item.list-group-item-action(href='/admin/books',class=(admin_list=='books'?"active":""))
           .fas.fa-book.mr-2.fa-fw
           | Quản lí sách
-        a.list-group-item.list-group-item-action.bg-light(href='/admin/categories')
+        a.list-group-item.list-group-item-action(href='/admin/categories',class=(admin_list=='categories'?"active":""))
           .fas.fa-th-list.mr-2.fa-fw
           | Quản lí danh mục
-        a.list-group-item.list-group-item-action.bg-light(href='/admin/authors')
+        a.list-group-item.list-group-item-action(href='/admin/authors',class=(admin_list=='authors'?"active":""))
           .fas.fa-feather-alt.mr-2.fa-fw
           | Quản lí tác giả
-        a.list-group-item.list-group-item-action.bg-light(href='#')
+        a.list-group-item.list-group-item-action(href='#')
           .fas.fa-edit.mr-2.fa-fw
           | Chỉnh sửa web
     // /#sidebar-wrapper

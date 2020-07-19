@@ -3,6 +3,7 @@
 namespace AdminModel;
 
 use Database\Database as Database;
+use PDO;
 use PDOException;
 
 class AdminModel
@@ -169,6 +170,190 @@ class AdminModel
       $result = Database::queryExecute($sql, array($quantity,$price, $bookid));
       return !!$result;
     } catch (PDOException $e) {
+      return false;
+    }
+  }
+
+
+  public static function getUsers() {
+    try {
+      $sql = "select userid, username, fullname,dob, phone, email, male, addressid, addresstext, isdisable, isadmin
+      from users
+      order by isadmin desc, isdisable asc, userid asc";
+      $result = Database::queryResults($sql,array());
+      return $result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function removeUser($userid) {
+    try {
+      $sql = "delete from users where userid = ?";
+      $result = Database::queryExecute($sql,array($userid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function disableUser($userid) {
+    try {
+      $sql = "update users set isdisable=1 where userid = ?";
+      $result = Database::queryExecute($sql,array($userid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function enableUser($userid) {
+    try {
+      $sql = "update users set isdisable=0 where userid = ?";
+      $result = Database::queryExecute($sql,array($userid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function removeUserAdmin($userid) {
+    try {
+      $sql = "update users set isadmin=0 where userid = ?";
+      $result = Database::queryExecute($sql,array($userid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function makeUserAdmin($userid) {
+    try {
+      $sql = "update users set isadmin=1 where userid = ?";
+      $result = Database::queryExecute($sql,array($userid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function getUserJSON($userid) {
+    try {
+      $sql = "select userid, username, fullname,dob, phone, email, male, concat_ws(', ',addresstext,(select CONCAT_WS(', ', ward.`name`,district.`name`, province.`name`) as address FROM ward,district, province WHERE ward.did=district.id and district.pid=province.id and ward.id=addressid)) as address
+      from users where userid=?";
+      $result = Database::querySingleResult($sql,array($userid));
+      $result["male"] = $result["male"] == "1"?"Nam":"Nữ";
+      return $result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+
+
+  public static function getOrders($filter,$query,$page, $itemperpage) {
+    try {
+      //Lọc theo đơn hàng xác nhận hoặc chờ thanh toán
+      //Nếu khác thì cho là '%' để lấy toàn bộ kết quả mà không phải lọc
+      switch($filter) {
+        case 'accepted':
+          $keyword = "a";
+        break;
+        case 'pending':
+          $keyword = "p";
+        break;
+        default: $keyword = "%";
+      }
+      // Nếu từ khoá tìm kiếm trống thì đặt là '%'
+      if (!$query || $query == "") {
+        $query = '%';
+      };
+      
+
+      //pagination
+      $begin = ($page-1)*$itemperpage;
+      $sqlfull = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, orderstatus, receivername from orders having orderstatus like :filter and (orderid like :query or LOWER(receivername) like LOWER(:query) or LOWER(fullname) like LOWER(:query))";
+      $queryFull = Database::queryResults($sqlfull,array(
+        ':filter' => $keyword,
+        'query' => "%".$query."%",
+      ));
+      $rowcount = count($queryFull);
+
+
+      $sql = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, receivername, orderstatus, timestamp,totalmoney from orders having orderstatus like :filter and (orderid like :query or LOWER(receivername) like LOWER(:query) or LOWER(fullname) like LOWER(:query)) order by timestamp desc limit $begin, $itemperpage";
+      $result = Database::queryResults($sql,array(
+          ':filter' => $keyword,
+          'query' => "%".$query."%",
+        ));
+      return [
+        'result' => $result,
+        'rowcount' => $rowcount
+      ];
+    }
+    catch (PDOException $e) {
+      print_r($e->getMessage());
+      return false;
+    }
+  }
+  
+  public static function getOrder($orderid) {
+    try {
+      $sql = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, receivername, orderstatus, timestamp, concat_ws(', ',orders.addresstext,(select CONCAT_WS(', ', ward.`name`,district.`name`, province.`name`) as address FROM ward,district, province WHERE ward.did=district.id and district.pid=province.id and ward.id=orders.addressid)) as address,totalmoney, phone from orders where orderid=?";
+      $result = Database::querySingleResult($sql,array($orderid));
+      return $result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+
+  public static function getOrderDetail($orderid) {
+    try {
+      $sql = "SELECT books.bookid, books.bookname, qtyordered, amount from ordersdetails, books where books.bookid = ordersdetails.bookid and ordersdetails.orderid=?";
+      $result = Database::queryResults($sql,array($orderid));
+      return $result;
+    }
+    catch(PDOException $e) {
+
+    }
+  }
+  public static function rejectOrder($orderid) {
+    try {
+      $sql = "update orders set orderstatus='r' where orderid = ?";
+      $result = Database::queryExecute($sql,array($orderid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function acceptOrder($orderid) {
+    try {
+      $sql = "update orders set orderstatus='a' where orderid = ?";
+      $result = Database::queryExecute($sql,array($orderid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function completeOrder($orderid) {
+    try {
+      $sql = "update orders set orderstatus='c' where orderid = ?";
+      $result = Database::queryExecute($sql,array($orderid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
+      return false;
+    }
+  }
+  public static function makeOrderError($orderid) {
+    try {
+      $sql = "update orders set orderstatus='e' where orderid = ?";
+      $result = Database::queryExecute($sql,array($orderid));
+      return !!$result;
+    }
+    catch (PDOException $e) {
       return false;
     }
   }

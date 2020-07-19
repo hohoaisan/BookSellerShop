@@ -1,4 +1,6 @@
 extends base
+block vars
+  - var admin_list='authors';
 block content
   #commonModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='commonModal', aria-hidden='true')
     form#commonModalForm(action="/admin/authors/add", method="POST")
