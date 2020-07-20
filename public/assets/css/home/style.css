@@ -329,11 +329,11 @@ footer p {
   color: white;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+/* .breadcrumb-item + .breadcrumb-item::before {
   content: '>';
-}
+} */
 
-.breadcrumb {
+/* .breadcrumb {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -341,9 +341,8 @@ footer p {
   padding: 0.1rem 0rem !important;
   margin-bottom: 0rem;
   list-style: none;
-  background-color: #ffffff;
   border-radius: 0.25rem;
-}
+} */
 
 .single_product {
   padding-top: 66px;

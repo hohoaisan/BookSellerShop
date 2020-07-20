@@ -2,6 +2,13 @@ extends base
 block content
     .container
         if (listBooks) 
+            nav(aria-label='breadcrumb')
+                ol.breadcrumb
+                    li.breadcrumb-item
+                        a(href='/') Home
+                    li.breadcrumb-item
+                        a(href='/categories') Danh mục
+                    li.breadcrumb-item.active(aria-current='page')= category.categoryname
             .row.mt-4
                 .col-12                                
                     .row.mb-0.ml-1.mr-1
@@ -21,4 +28,4 @@ block content
                         li.page-item(class=(i==pagination_current_page)?"active":"")
                             a.page-link(href=pagination_url+'page='+i)=i
         else
-            .alert.alert-warning Không tìm thấy sách
+            .alert.alert-warning Không tìm thấy sách theo danh mục

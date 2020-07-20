@@ -22,6 +22,7 @@ use Pug\Facade as PugFacade;
 
 $router->get('/', $index);
 // $router->mount('/users', function () use($router) {include('routers/user.router.php');});
+$router->mount('/categories', function () use($router) {include('routers/category.router.php');});
 $router->mount('/cart', function () use($router) {include('routers/cart.router.php');});
 $router->mount('/books', function () use($router) {include('routers/books.router.php');});
 $router->mount('/auth', function () use($router) {include('routers/auth.router.php');});
