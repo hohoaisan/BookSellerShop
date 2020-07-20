@@ -37,7 +37,8 @@ async function addItemToCart(event) {
       showError('Có lỗi xảy ra trong quá trình thêm vào giỏ hàng');
     });
   if (result.status) {
-    showMessage('Đã thêm vào giỏ hàng');
+    // showMessage('Đã thêm vào giỏ hàng');
+    $('#cartPopup').focus();
   } else {
     showError('Không thể thêm vào giỏ hàng');
   }
@@ -99,8 +100,8 @@ async function removeItemFromCart(event) {
       showMessage('Đã xoá khỏi giỏ hàng');
     }
   } else {
-    showError(res.message)
-  };
+    showError(res.message);
+  }
   updateCartIdentity();
 }
 
@@ -117,9 +118,7 @@ async function removeAllItemFromCart() {
       showError('Có lỗi xảy ra trong quá trình xoá giỏ hàng');
     });
   if (result.status) {
-    $('<div class="alert alert-warning">Bạn không có sản phẩm nào trong giỏ hàng</div>').insertBefore(
-      '.shopping-cart',
-    );
+    $('<div class="alert alert-warning">Bạn không có sản phẩm nào trong giỏ hàng</div>').insertBefore('.shopping-cart');
     $('.shopping-cart').remove();
   }
   updateCartIdentity();
@@ -143,6 +142,9 @@ $(document).ready(function () {
   $(window).scrollTop(scrollable);
   //Cập nhật số trên biểu tượng giỏ hàng
   updateCartIdentity();
+  $('#cartPopup').popover({
+    trigger: 'focus',
+  });
 });
 
 //keep Scrooling Position
@@ -153,4 +155,3 @@ window.addEventListener('scroll', () => {
     alert('end of page');
   }
 });
-  

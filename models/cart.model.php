@@ -26,8 +26,10 @@ class CartModel {
         $book["quantity"] = $quantity;
         $book["amount"] = $book["quantity"]*$book["price"];
         $totalMoney+=$book["amount"];
+        $book["price"] = number_format($book["price"], 0, "," , ".");
         array_push($books, $book);
       }
+      $totalMoney = number_format($totalMoney, 0, "," , ".");
       return [
         'totalmoney' => $totalMoney,
         'books' => $books
