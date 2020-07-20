@@ -2,17 +2,17 @@ extends base
 block content   
     .container
         .row
-            .col-md-3.pr-1
+            .col-md-3
                 .list-group
                     li.list-group-item.list-group-item-primary.text-center Danh mục sản phẩm
                     each category in listCategories
                         a.list-group-item.list-group-item-action.list-group-item-light.text-center.font-weight-bold(href="/categories/" + category.categoryid)= category.categoryname
-            .col-md-9.pl-1.position-relative
-                #carouselExampleIndicators.carousel.slide.h-100.w-100(data-ride='carousel')
+            .col-md-9.position-relative.col-12
+                #carouselBanner.carousel.slide.h-100.w-100(data-ride='carousel')
                     ol.carousel-indicators
-                        li.active(data-target='#carouselExampleIndicators' data-slide-to='0')
-                        li(data-target='#carouselExampleIndicators' data-slide-to='1')
-                        li(data-target='#carouselExampleIndicators' data-slide-to='2')
+                        li.active(data-target='#carouselBanner' data-slide-to='0')
+                        li(data-target='#carouselBanner' data-slide-to='1')
+                        li(data-target='#carouselBanner' data-slide-to='2')
                     .carousel-inner.h-100.w-100
                         .carousel-item.h-100.w-100.active
                             a(href='#').d-block
@@ -32,10 +32,10 @@ block content
                                 .carousel-caption.d-none.d-md-block
                                     h5 Third slide label
                                     p Nulla vitae elit libero, a pharetra augue mollis interdum.
-                    a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+                    a.carousel-control-prev(href='#carouselBanner' role='button' data-slide='prev')
                         span.carousel-control-prev-icon(aria-hidden='true')
                         span.sr-only Previous
-                    a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+                    a.carousel-control-next(href='#carouselBanner' role='button' data-slide='next')
                         span.carousel-control-next-icon(aria-hidden='true')
                         span.sr-only Next
     //Most Seller Banner                
