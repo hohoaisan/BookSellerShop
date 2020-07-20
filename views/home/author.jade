@@ -1,8 +1,8 @@
 extends base
 block content
     .container
-        .row
-            if (listAuthors)
+        if (listAuthors)
+            .row
                 each author in listAuthors
                     .col-6.col-md-4
                         .our-team-main
@@ -10,76 +10,13 @@ block content
                                 img.img-fluid(src='/assets/img/pipi.jpg')
                                 h3= author.authorname
                             .team-back
-                                span= author.authordescription                  
+                                span= author.authordescription 
+            div.d-flex.justify-content-center
                 ul.pagination
                     if (pagination_pages>1)
                         - for (i=1; i<=pagination_pages; i++)
                             li.page-item(class=(i==pagination_current_page)?"active":"")
                                 a.page-link(href=pagination_url+'page='+i)=i
-            else
-                .alert.alert-warning Có lỗi xảy ra
-            //- // team-2
-            //- .col-6.col-md-4
-            //-     .our-team-main
-            //-         .team-front
-            //-             img.img-fluid(src='/assets/img/pipi.jpg')
-            //-             h3 Prism
-            //-         .team-back
-            //-             span
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque penatibus et magnis dis parturient montes,
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque.
-            //- // team-2
-            //- // team-3
-            //- .col-6.col-md-4
-            //-     .our-team-main
-            //-         .team-front
-            //-             img.img-fluid(src='/assets/img/pipi.jpg')
-            //-             h3 Kruskal
-            //-         .team-back
-            //-             span
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque penatibus et magnis dis parturient montes,
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque.
-            //- // team-3
-            //- // team-4
-            //- .col-6.col-md-4
-            //-     .our-team-main
-            //-         .team-front
-            //-             img.img-fluid(src='/assets/img/pipi.jpg')
-            //-             h3 Dijkstra 
-            //-         .team-back
-            //-             span
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque penatibus et magnis dis parturient montes,
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque.
-            //- // team-4
-            //- // team-5
-            //- .col-6.col-md-4
-            //-     .our-team-main
-            //-         .team-front
-            //-             img.img-fluid(src='/assets/img/pipi.jpg')
-            //-             h3 Euler
-            //-         .team-back 
-            //-             span
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque penatibus et magnis dis parturient montes,
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque.
-            //- // team-5
-            //- // team-6
-            //- .col-6.col-md-4
-            //-     .our-team-main
-            //-         .team-front
-            //-             img.img-fluid(src='/assets/img/pipi.jpg')
-            //-             h3 Hamington
-            //-         .team-back
-            //-             span
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque penatibus et magnis dis parturient montes,
-            //-                 | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-            //-                 | natoque.
-            //- // team-6
+        else
+            .alert.alert-warning Có lỗi xảy ra
+            
