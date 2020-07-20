@@ -98,10 +98,9 @@ block content
                     form(action="/admin/users/"+user.userid+"/delete", method="POST")
                       button.dropdown-item.text-danger(type="submit") Xoá tài khoản
       ul.pagination
-        if (pagination_pages>1)
-          - for (i=1; i<=pagination_pages; i++)
-            li.page-item(class=(i==pagination_current_page)?"active":"")
-              a.page-link(href=pagination_url+'page='+i)=i
+        each page in pagination
+          li.page-item(class=(page.index==pagination_current_page)?"active":"")
+            a.page-link(href=page.url)= page.index       
     else
       .alert.alert-warning Danh sách người dùng trống
 block external

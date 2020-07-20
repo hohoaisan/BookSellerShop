@@ -95,24 +95,41 @@ class AdminModel
     }
   }
 
-  public static function getBooks($query, $authorid, $categoryid)
+  public static function getBooks($query, $authorid, $page, $itemperpage)
   {
     try {
+
+      $begin = ($page - 1) * $itemperpage;
+      $sqlCount = "select bookid, bookname, authorname, books.authorid, books.categoryid
+      from books,`authors`,categories
+      WHERE books.authorid = `authors`.authorid
+      and books.categoryid = categories.categoryid
+      having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
+      ";
+
       $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price
       from books,`authors`,categories
       WHERE books.authorid = `authors`.authorid
       and books.categoryid = categories.categoryid
-      having (bookid like :query or bookname like :query) and (books.authorid like :authorid and books.categoryid like :categoryid)
+      having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
       order by bookid asc
+      limit $begin, $itemperpage
       ";
+
+      $queryFull = Database::queryResults($sqlCount, array(
+        ':query' => $query ? "%" . $query . "%" : "%", //Nếu không có từ khoá thì đặt là %
+        ':authorid' => $authorid ? "%" . $authorid . "%" : "%",
+      ));
+      $rowcount = count($queryFull);
+
       $result = Database::queryResults($sql, array(
         ':query' => $query ? "%" . $query . "%" : "%", //Nếu không có từ khoá thì đặt là %
         ':authorid' => $authorid ? "%" . $authorid . "%" : "%",
-        ':categoryid' => $categoryid ? "%" . $categoryid . "%" : "%"
       ));
+
       return [
         'result' => $result,
-        'rowcount' => 2,
+        'rowcount' => $rowcount
       ];
     } catch (PDOException $e) {
       return false;

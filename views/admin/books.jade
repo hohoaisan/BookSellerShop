@@ -78,7 +78,10 @@ block content
                     .dropdown-divider
                     form(action="/admin/books/" + book.bookid + "/delete", method="POST")
                         button(type="submit").dropdown-item.text-danger Xoá sách
-                    
+      ul.pagination
+        each page in pagination
+          li.page-item(class=(page.index==pagination_current_page)?"active":"")
+            a.page-link(href=page.url)= page.index              
 append external
   script.
     $('#bookQuantity').on('show.bs.modal', function (event) {

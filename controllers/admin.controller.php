@@ -1,5 +1,6 @@
 <?php
 include('../models/admin.model.php');
+
 use AdminModel\AdminModel as AdminModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
@@ -14,11 +15,61 @@ $removeParam = function ($param) {
   } else return $url . '?';
 };
 
+$paginationGenerator = function($currentPage,$num_page, $chunk = 5) use($removeParam) {
+  //Mặc định chunk là 5, chỉ có 5 số được xuất hiện
+  $pagination = [];
+  if ($num_page > 1) {
+    $url = $removeParam('page');
+    for ($i = 1; $i <= $num_page; $i++) {
+      array_push($pagination, [
+        'index' => $i,
+        'url' => $url . 'page=' . $i
+      ]);
+    }
+    $offset = $currentPage - $chunk / 2;
+    if ($currentPage == $num_page) {
+      $offset = $num_page - $chunk;
+    }
+
+    if ($offset < 0) {
+      $offset = 0;
+    }
+    $pagination = array_slice($pagination, $offset, $chunk);
+    if (intval($currentPage) != 1) {
+      array_unshift($pagination, [
+        'index' => '<',
+        'url' => $url . 'page=' . (intval($currentPage)-1)
+      ]);
+    }
+    if (intval($currentPage) != $num_page) {
+      array_push($pagination, [
+        'index' => '>',
+        'url' => $url . 'page=' . (intval($currentPage)+1)
+      ]);
+    }
+    if ($num_page > $chunk) {
+      if (intval($currentPage) != 1) {
+        array_unshift($pagination, [
+          'index' => '<<',
+          'url' => $url . 'page=1'
+        ]);
+      }
+      if (intval($currentPage) != $num_page) {
+        array_push($pagination, [
+          'index' => '>>',
+          'url' => $url . 'page=' . $num_page
+        ]);
+      }
+    }
+    
+  }
+  return $pagination;
+};
 $index = function () {
   echo PugFacade::displayFile('../views/admin/index.jade');
 };
 
-$orders = function () use ($removeParam) {
+$orders = function () use ($paginationGenerator) {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   // Xác định có ?filter= hay không, nếu có thì
@@ -44,25 +95,25 @@ $orders = function () use ($removeParam) {
   // Xác định có từ khoá tìm kiếm hay không,
   $query = "";
   if (isset($_GET["query"]) && $_GET["query"] != "") {
-      $query = $_GET["query"];
-      $title = 'Tìm kiếm hoá đơn';
+    $query = $_GET["query"];
+    $title = 'Tìm kiếm hoá đơn';
   }
 
 
   //Pagination
   try {
-    $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+    $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
   } catch (Exception $e) {
-    $page = 1;
+    $currentPage = 1;
   }
   $itemperpage = 5;
 
-  $fetch = AdminModel::getOrders($filter, $query, $page, $itemperpage);
+  $fetch = AdminModel::getOrders($filter, $query, $currentPage, $itemperpage);
   $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
 
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-
+  $pagination = $paginationGenerator($currentPage, $num_page);
   if (!$fetch) {
     array_push($errors, "Có vấn đề xảy ra hoặc danh sách trống");
     $result = [];
@@ -75,9 +126,8 @@ $orders = function () use ($removeParam) {
     'card' => $card, // Xác đỊnh mục nào đang được chọn
     'title' => $title,
     'search' => $query, // Lưu lại từ khoá và đưa vào mục tìm kiếm
-    'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
-    'pagination_pages' => $num_page,
-    'pagination_current_page' => $page
+    'pagination' => $pagination,
+    'pagination_current_page' => $currentPage
   ]);
   exit();
 };
@@ -134,7 +184,7 @@ $orderError = function ($orderid) {
 
 
 
-$users = function () use ($removeParam) {
+$users = function () use ($paginationGenerator) {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
 
@@ -163,14 +213,14 @@ $users = function () use ($removeParam) {
 
   //Pagination
   try {
-    $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+    $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
   } catch (Exception $e) {
-    $page = 1;
+    $currentPage = 1;
   }
-  $itemperpage = 3;
-
-
-  $fetch = AdminModel::getUsers($filter, $query, $page, $itemperpage);
+  
+  
+  $itemperpage = 4;
+  $fetch = AdminModel::getUsers($filter, $query, $currentPage, $itemperpage);
   //Khởi tạo session
   if ($fetch == false) {
     array_push($errors, "Có vấn đề xảy ra hoặc danh sách trống");
@@ -180,7 +230,7 @@ $users = function () use ($removeParam) {
 
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-
+  $pagination = $paginationGenerator($currentPage, $num_page);
 
 
   echo PugFacade::displayFile('../views/admin/users.jade', [
@@ -190,9 +240,8 @@ $users = function () use ($removeParam) {
     'card' => $card, // Xác đỊnh mục nào đang được chọn
     'title' => $title,
     'search' => $query, // Lưu lại từ khoá và đưa vào mục tìm kiếm
-    'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
-    'pagination_pages' => $num_page,
-    'pagination_current_page' => $page
+    'pagination' => $pagination,
+    'pagination_current_page' => $currentPage
   ]);
   exit();
 };
@@ -261,7 +310,8 @@ $getUserJSON = function ($userid) {
   }
 };
 
-$books = function () {
+
+$books = function () use($paginationGenerator) {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $title = false;
@@ -277,22 +327,30 @@ $books = function () {
     $title = 'Danh sách sách của tác giả';
   }
 
-  $categoryid = "";
-  if (isset($_GET["categoryid"]) && $_GET["categoryid"] != "") {
-    $categoryid = $_GET["categoryid"];
-    $title = 'Danh sách sách của danh mục';
+  $itemperpage = 3;
+  try {
+    $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+  } catch (Exception $e) {
+    $currentPage = 1;
   }
-  $fetch = AdminModel::getBooks($query, $authorid, $categoryid);
+
+  $fetch = AdminModel::getBooks($query, $authorid, $currentPage, $itemperpage);
   if ($fetch == false) {
     array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
   }
   $result = $fetch['result'];
+  $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
+  $num_page = ceil($num_records / $itemperpage); //Số trang
+  $pagination = $paginationGenerator($currentPage, $num_page);
+
   echo PugFacade::displayFile('../views/admin/books.jade', [
     'books' => $result,
     'errors' => $errors,
     'messages' => $messages,
     'title' => $title,
-    'query' => $query
+    'query' => $query,
+    'pagination' => $pagination,
+    'pagination_current_page' => $currentPage
   ]);
 
   exit();
