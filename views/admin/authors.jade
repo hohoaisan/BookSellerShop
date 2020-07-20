@@ -25,7 +25,7 @@ block content
   .d-flex.justify-content-between.align-items-center.mb-2
     button.btn.btn-primary(type='button', data-toggle='modal', data-target='#commonModal') Thêm tác giả mới
     form.d-flex
-      input.form-control.mr-1(type='search', placeholder='Nhập tên', aria-label='Search')
+      input.form-control.mr-1(type='search', placeholder='Nhập từ khoá', aria-label='Search' name="query" value=query)
       button.btn.btn-outline-success.w-25(type='submit')
         .fas.fa-search
   .mb-4.mt-4
@@ -59,6 +59,10 @@ block content
                       .dropdown-divider 
                       form(action="/admin/authors/"+author.authorid+"/delete", method="POST")
                         button(type="submit").dropdown-item.text-danger Xoá tác giả
+        ul.pagination
+          each page in pagination
+            li.page-item(class=(page.index==pagination_current_page)?"active":"")
+              a.page-link(href=page.url)= page.index       
       else
         .alert.alert-warning Không có tác giả nào trong cơ sở dữ liệu
 append external

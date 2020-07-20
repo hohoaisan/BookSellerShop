@@ -8,12 +8,40 @@ use PDOException;
 
 class AdminModel
 {
-  public static function getAuthors()
+  public static function getAllAuthors()
   {
     try {
       $sql = "select authorid, authorname, authordescription from `authors`";
       $result = Database::queryResults($sql, array());
       return $result;
+    } catch (PDOException $e) {
+      return false;
+    }
+  }
+
+  public static function getAuthors($query, $page, $itemperpage)
+  {
+    try {
+      $begin = ($page - 1) * $itemperpage;
+      $sqlCount = "select authorid, authorname, authordescription from `authors`
+      where authorid like :query or authorname like :query or authordescription like :query";
+
+      $sql = "select authorid, authorname, authordescription from `authors`
+      where authorid like :query or authorname like :query or authordescription like :query
+      limit $begin, $itemperpage
+      ";
+
+      $queryFull = Database::queryResults($sqlCount, array(
+        ':query' => $query ? "%" . $query . "%" : "%"
+      ));
+      $rowcount = count($queryFull);
+      $result = Database::queryResults($sql, array(
+        ':query' => $query ? "%" . $query . "%" : "%", //Nếu không có từ khoá thì đặt là %
+      ));
+      return [
+        'result' => $result,
+        'rowcount' => $rowcount
+      ];
     } catch (PDOException $e) {
       return false;
     }

@@ -15,7 +15,7 @@ $removeParam = function ($param) {
   } else return $url . '?';
 };
 
-$paginationGenerator = function($currentPage,$num_page, $chunk = 5) use($removeParam) {
+$paginationGenerator = function ($currentPage, $num_page, $chunk = 5) use ($removeParam) {
   //Mặc định chunk là 5, chỉ có 5 số được xuất hiện
   $pagination = [];
   if ($num_page > 1) {
@@ -38,13 +38,13 @@ $paginationGenerator = function($currentPage,$num_page, $chunk = 5) use($removeP
     if (intval($currentPage) != 1) {
       array_unshift($pagination, [
         'index' => '<',
-        'url' => $url . 'page=' . (intval($currentPage)-1)
+        'url' => $url . 'page=' . (intval($currentPage) - 1)
       ]);
     }
     if (intval($currentPage) != $num_page) {
       array_push($pagination, [
         'index' => '>',
-        'url' => $url . 'page=' . (intval($currentPage)+1)
+        'url' => $url . 'page=' . (intval($currentPage) + 1)
       ]);
     }
     if ($num_page > $chunk) {
@@ -61,10 +61,10 @@ $paginationGenerator = function($currentPage,$num_page, $chunk = 5) use($removeP
         ]);
       }
     }
-    
   }
   return $pagination;
 };
+
 $index = function () {
   echo PugFacade::displayFile('../views/admin/index.jade');
 };
@@ -217,8 +217,8 @@ $users = function () use ($paginationGenerator) {
   } catch (Exception $e) {
     $currentPage = 1;
   }
-  
-  
+
+
   $itemperpage = 4;
   $fetch = AdminModel::getUsers($filter, $query, $currentPage, $itemperpage);
   //Khởi tạo session
@@ -311,7 +311,7 @@ $getUserJSON = function ($userid) {
 };
 
 
-$books = function () use($paginationGenerator) {
+$books = function () use ($paginationGenerator) {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $title = false;
@@ -357,7 +357,7 @@ $books = function () use($paginationGenerator) {
 };
 $bookAdd = function () {
   $categories = AdminModel::getCategories();
-  $authors = AdminModel::getAuthors();
+  $authors = AdminModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   echo PugFacade::displayFile('../views/admin/books.add.jade', [
@@ -498,7 +498,7 @@ $postBookAdd = function () use ($postBookMiddleware, $postBookMoveFile) {
 
 $bookEdit = function ($bookid) {
   $categories = AdminModel::getCategories();
-  $authors = AdminModel::getAuthors();
+  $authors = AdminModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $book = AdminModel::getBook($bookid);
@@ -583,25 +583,45 @@ $bookDelete = function ($bookid) {
 };
 
 
-$authors = function () {
-  $result = AdminModel::getAuthors();
+$authors = function () use ($paginationGenerator) {
   //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
-  if ($result) {
-    echo PugFacade::displayFile('../views/admin/authors.jade', [
-      'authors' => $result,
-      'errors' => $errors,
-      'messages' => $messages
-    ]);
-  } else {
-    array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
-    echo PugFacade::displayFile('../views/admin/authors.jade', [
-      'authors' => [],
-      'errors' => $errors,
-      'messages' => $messages
-    ]);
+
+  $title = false;
+
+  $query = "";
+  if (isset($_GET["query"]) && $_GET["query"] != "") {
+    $query = $_GET["query"];
+    $title = 'Tìm kiếm tác giả';
   }
+  $itemperpage = 3;
+  try {
+    $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+  } catch (Exception $e) {
+    $currentPage = 1;
+  }
+
+
+  $fetch = AdminModel::getAuthors("$query",$currentPage, $itemperpage);
+  if (!$fetch) {
+    array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
+    $result = [];
+  }
+
+  $result = $fetch['result'];
+  $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
+  $num_page = ceil($num_records / $itemperpage); //Số trang
+  $pagination = $paginationGenerator($currentPage, $num_page);
+
+  echo PugFacade::displayFile('../views/admin/authors.jade', [
+    'authors' => $result,
+    'errors' => $errors,
+    'messages' => $messages,
+    'query' => $query,
+    'pagination' => $pagination,
+    'pagination_current_page' => $currentPage
+  ]);
   exit();
 };
 
