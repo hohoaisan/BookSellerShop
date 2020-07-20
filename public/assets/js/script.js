@@ -139,7 +139,6 @@ $(document).ready(function () {
   $('.cartEditQuantity').on('click', editItemQuantity);
   $('.cartRemoveItem').on('click', removeItemFromCart);
   $('.cartRemoveAllItem').on('click', removeAllItemFromCart);
-  $(window).scrollTop(scrollable);
   //Cập nhật số trên biểu tượng giỏ hàng
   updateCartIdentity();
   $('#cartPopup').popover({
