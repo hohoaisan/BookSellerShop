@@ -8,6 +8,7 @@ function showMessage(message) {
     $('#messages').html('');
   }, 2000);
 }
+
 function showError(error) {
   $('#messages').html(`
   <div class="alert alert-warning" role="alert">
@@ -22,13 +23,13 @@ function showError(error) {
 async function addItemToCart(event) {
   let bookid = $(this).data('bookid');
   let result = await axios({
-    url: '/cart/add',
-    method: 'post',
-    data: {
-      bookid: bookid,
-    },
-    withCredentials: true,
-  })
+      url: '/cart/add',
+      method: 'post',
+      data: {
+        bookid: bookid,
+      },
+      withCredentials: true,
+    })
     .then((res) => {
       return res.data;
     })
@@ -47,14 +48,14 @@ async function editItemQuantity(event) {
   bookid = $(this).closest('.cartEditInputGroup').data('bookid');
   quantity = $(this).closest('.cartEditInputGroup').find('input[name="quantity"]').val();
   let result = await axios({
-    url: '/cart/edit',
-    method: 'post',
-    data: {
-      bookid: bookid,
-      quantity: quantity,
-    },
-    withCredentials: true,
-  })
+      url: '/cart/edit',
+      method: 'post',
+      data: {
+        bookid: bookid,
+        quantity: quantity,
+      },
+      withCredentials: true,
+    })
     .then((res) => {
       return res.data;
     })
@@ -73,13 +74,13 @@ async function editItemQuantity(event) {
 async function removeItemFromCart(event) {
   let bookid = $(this).data('bookid');
   let result = await axios({
-    url: '/cart/remove',
-    method: 'post',
-    data: {
-      bookid: bookid,
-    },
-    withCredentials: true,
-  })
+      url: '/cart/remove',
+      method: 'post',
+      data: {
+        bookid: bookid,
+      },
+      withCredentials: true,
+    })
     .then((res) => {
       return res.data;
     })
@@ -92,14 +93,12 @@ async function removeItemFromCart(event) {
     if (result.totalMoney == 0) {
       $('<div class="alert alert-warning">Bạn không có sản phẩm nào trong giỏ hàng</div>').insertBefore(
         '.shopping-cart',
-        );
-        $('.shopping-cart').remove();
-      }
-      else {
-        showMessage('Đã xoá khỏi giỏ hàng');
-      }
-  }
-  else {
+      );
+      $('.shopping-cart').remove();
+    } else {
+      showMessage('Đã xoá khỏi giỏ hàng');
+    }
+  } else {
     showError(res.message)
   };
   updateCartIdentity();
@@ -107,10 +106,10 @@ async function removeItemFromCart(event) {
 
 async function removeAllItemFromCart() {
   let result = await axios({
-    url: '/cart/removeAll',
-    method: 'post',
-    withCredentials: true,
-  })
+      url: '/cart/removeAll',
+      method: 'post',
+      withCredentials: true,
+    })
     .then((res) => {
       return res.data;
     })
@@ -118,13 +117,14 @@ async function removeAllItemFromCart() {
       showError('Có lỗi xảy ra trong quá trình xoá giỏ hàng');
     });
   if (result.status) {
-        $('<div class="alert alert-warning">Bạn không có sản phẩm nào trong giỏ hàng</div>').insertBefore(
-          '.shopping-cart',
-        );
-        $('.shopping-cart').remove();
+    $('<div class="alert alert-warning">Bạn không có sản phẩm nào trong giỏ hàng</div>').insertBefore(
+      '.shopping-cart',
+    );
+    $('.shopping-cart').remove();
   }
   updateCartIdentity();
 }
+
 function updateCartIdentity() {
   //Sửa số trên biểu tượng giỏ hàng
   axios({
@@ -132,8 +132,7 @@ function updateCartIdentity() {
     url: '/cart/getJSON',
   }).then((res) => {
     $('#cartIdentity').text(res.data.total);
-  })
-  ;
+  });
 }
 $(document).ready(function () {
   //Thêm, sửa, xoá
@@ -141,7 +140,17 @@ $(document).ready(function () {
   $('.cartEditQuantity').on('click', editItemQuantity);
   $('.cartRemoveItem').on('click', removeItemFromCart);
   $('.cartRemoveAllItem').on('click', removeAllItemFromCart);
-
+  $(window).scrollTop(scrollable);
   //Cập nhật số trên biểu tượng giỏ hàng
   updateCartIdentity();
 });
+
+//keep Scrooling Position
+window.addEventListener('scroll', () => {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = window.scrollY;
+  if (Math.ceil(scrolled) === scrollable) {
+    alert('end of page');
+  }
+});
+  

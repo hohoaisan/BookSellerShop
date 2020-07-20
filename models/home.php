@@ -7,6 +7,26 @@
 
     class HomePage
     {
+        public static function getShowBooks($page, $itemperpage)
+    {
+        try {
+            //pagination
+            $begin = ($page - 1) * $itemperpage;
+            $sqlfull = "select * from books";
+            $queryFull = Database::queryResults($sqlfull, array());
+            $rowcount = count($queryFull);
+            //show books each page
+            $sql = "select * from books order by releasedate desc limit $begin, $itemperpage";
+            $result = Database::queryResults($sql, array());
+            return [
+            'result' => $result,
+            'rowcount' => $rowcount
+            ];
+        } catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+    }
         public static function getBooks()
         {
             try {

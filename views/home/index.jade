@@ -162,9 +162,9 @@ block content
                             div.d-flex.justify-content-center.align-items-center.mr-1
                                 i.fa.fa-heart
                                     span &nbsp;
-                                    span Dành cho bạn                                 
+                                    span Sách mới                                 
                     .row.mb-0.ml-1.mr-1
-                        each book in listBooks
+                        each book in showBooks
                             .col-6.col-md-2.pl-1.pr-1.mb-4
                                 .card.card-inverse.card-info
                                     a(href='/books/' + book.bookid)
@@ -174,5 +174,9 @@ block content
                                     .card-footer
                                         small= book.price + ' VNĐ'
                                         button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
-                    div.d-flex.justify-content-end.mt-0
-                        a.stretched-link.btn.btn-primary(href='/books') Xem chi tiết >>
+                    div.d-flex.justify-content-center.mt-0
+                        ul.pagination
+                            if (pagination_pages>1)
+                                - for (i=1; i<=pagination_pages; i++)
+                                    li.page-item(class=(i==pagination_current_page)?"active":"")
+                                        a#submitPage.page-link(href=pagination_url+'page='+i)=i
