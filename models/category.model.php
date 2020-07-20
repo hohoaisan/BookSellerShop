@@ -15,9 +15,6 @@
         public static function getCategoryBooks($categoryid, $page, $itemperpage)
         {
             try {
-                if (!$categoryid || $categoryid == "") {
-                    $query = '%';
-                };
                 //pagination
                 $begin = ($page - 1) * $itemperpage;
                 $sqlfull = "select * from books where categoryid like :categoryid";

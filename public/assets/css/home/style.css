@@ -322,8 +322,8 @@ footer p {
   height: 20px;
   text-align: center;
 }
-
 .web-title:link {
+  font-family: 'Dancing Script', cursive;
   text-decoration: none;
 }
 
