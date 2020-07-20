@@ -2,7 +2,7 @@ extends base
 block content   
     .container
         .row
-            .col-md-3
+            .col-md-4.col-lg-3
                 .navbar.navbar-expand-md.navbar-light.bg-light.d-md-block.position-relative.p-0
                     .navbar-toggler.float-right.position-absolute.w-100.h-100.p-0.m-0(type='button', data-toggle='collapse', data-target='#categories', aria-controls='navbarText', aria-expanded='false', aria-label='Toggle navigation', style="z-index: 100")
                     a(href='#').list-group-item.active.w-100 Danh mục sản phẩm
@@ -11,7 +11,7 @@ block content
                         ul.list-group.w-100
                             each category in listCategories
                                 a.list-group-item.list-group-item-action.list-group-item-light(href="/categories/" + category.categoryid)= category.categoryname
-            .col-md-9.position-relative.col-12
+            .col-md-8.col-lg-9.position-relative.col-12
                 #carouselBanner.carousel.slide.h-100.w-100(data-ride='carousel')
                     ol.carousel-indicators
                         li.active(data-target='#carouselBanner' data-slide-to='0')
@@ -60,16 +60,16 @@ block content
                         li(data-target='#MostSeller' data-slide-to='1')
                         li(data-target='#MostSeller' data-slide-to='2')
                     // Carousel items
-                    .carousel-inner.mt-4
+                    .carousel-inner
                         .carousel-item.active
                             .row.mb-2.ml-1.mr-1
                                 - for(i = 0; i < 6; i++){
-                                    .col-6.col-md-2.pl-1.mr-0.pr-1
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1.mt-2.mt-md-0
                                         .card.card-inverse.card-info 
                                             a(href='/books/' + mostSeller[i].bookid)
                                                 img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostSeller[i].bookname
+                                                .card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
@@ -77,12 +77,12 @@ block content
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
                                 - for(i = 6; i < 12; i++){
-                                    .col-6.col-md-2.pl-1.mr-0.pr-1
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1.mt-2.mt-md-0
                                         .card.card-inverse.card-info 
                                             a(href='/books/' + mostSeller[i].bookid)
                                                 img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostSeller[i].bookname
+                                                .card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
@@ -90,12 +90,12 @@ block content
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
                                 - for(i = 12; i < 18; i++){
-                                    .col-6.col-md-2.pl-1.mr-0.pr-1
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1.mt-2.mt-md-0
                                         .card.card-inverse.card-info 
                                             a(href='/books/' + mostSeller[i].bookid)
                                                 img.card-img-top(src='/assets/img/books/' + mostSeller[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostSeller[i].bookname
+                                                .card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
@@ -116,16 +116,16 @@ block content
                         li(data-target='#MostPopular' data-slide-to='1')
                         li(data-target='#MostPopular' data-slide-to='2')
                     // Carousel items
-                    .carousel-inner.mt-4
+                    .carousel-inner
                         .carousel-item.active
                             .row.mb-2.ml-1.mr-1
                                 - for(i = 0; i < 6; i++){
-                                    .col-6.col-md-2.pl-1.mr-0.pr-1
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1.mt-2.mt-md-0
                                         .card.card-inverse.card-info 
                                             a(href='/books/' + mostPopular[i].bookid)
                                                 img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostPopular[i].bookname
+                                                .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
@@ -133,12 +133,12 @@ block content
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
                                 - for(i = 6; i < 12; i++){
-                                    .col-6.col-md-2.pl-1.mr-0.pr-1
+                                    .col-6.col-md-2.pl-1.mr-0.pr-1.mt-2.mt-md-0
                                         .card.card-inverse.card-info 
                                             a(href='/books/' + mostPopular[i].bookid)
                                                 img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostPopular[i].bookname
+                                                .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
@@ -151,7 +151,7 @@ block content
                                             a(href='/books/' + mostPopular[i].bookid)
                                                 img.card-img-top(src='/assets/img/books/' + mostPopular[i].bookimageurl)
                                             .card-block(style="height: 4em; overflow:hidden;")
-                                                h5.card-title= mostPopular[i].bookname
+                                                .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
                                                 button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY 
@@ -169,16 +169,16 @@ block content
                                     span Sách mới                                 
                     .row.mb-0.ml-1.mr-1
                         each book in showBooks
-                            .col-6.col-md-2.pl-1.pr-1.mb-4
+                            .col-6.col-md-2.pl-1.pr-1.mt-2
                                 .card.card-inverse.card-info
                                     a(href='/books/' + book.bookid)
                                         img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
                                     .card-block(style="height: 4em; overflow:hidden;")
-                                        h5.card-title= book.bookname
+                                        .card-title= book.bookname
                                     .card-footer
                                         small= book.price + ' VNĐ'
                                         button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
-                    div.d-flex.justify-content-center.mt-0
+                    div.d-flex.justify-content-center.mt-4
                         ul.pagination
                             if (pagination_pages>1)
                                 - for (i=1; i<=pagination_pages; i++)

@@ -6,12 +6,12 @@ block content
             .col-12                                
                 .row.mb-0.ml-1.mr-1
                     each book in listBooks
-                        .col-6.col-md-2.pl-1.pr-1.mb-4
+                        .col-6.col-sm-4.col-md-3.col-lg-2.pl-1.pr-1.mb-4
                             .card.card-inverse.card-info
                                 a(href='/books/' + book.bookid)
                                     img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
                                 .card-block(style="height: 4em; overflow:hidden;")
-                                    h5.card-title= book.bookname
+                                    .card-title= book.bookname
                                 .card-footer
                                     small= book.price + ' đ'
                                     button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
