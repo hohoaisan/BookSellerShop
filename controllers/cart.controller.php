@@ -151,3 +151,8 @@ $purchaseCart = function() use($checkCartIsReady,$getUserInfo,$getFullAddressInf
     'address' =>$addressInfo
   ]);
 };
+
+$purchaseProcess = function() use($checkCartIsReady) {
+  $checkCartIsReady();
+  print_r($_POST);
+};
