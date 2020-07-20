@@ -1,6 +1,7 @@
 <?php
 include('../models/auth.model.php');
 
+use Status\Status as Status;
 use AuthModel\AuthModel as AuthModel;
 use Pug\Facade as PugFacade;
 
@@ -12,18 +13,30 @@ $login = function () {
       header('location: /');
     }
   }
-  echo PugFacade::displayFile('../views/auth/login.jade');
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  echo PugFacade::displayFile('../views/auth/login.jade', [
+    'errors' => $errors,
+    'messages' => $messages,
+  ]);
 };
 
 $register = function () {
   if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {
     if ($_COOKIE['admin'] == "1") {
       header('location: /admin');
+      exit();
     } else {
       header('location: /');
+      exit();
     }
   }
-  echo PugFacade::displayFile('../views/auth/register.jade');
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  echo PugFacade::displayFile('../views/auth/register.jade', [
+    'errors' => $errors,
+    'messages' => $messages,
+  ]);
 };
 
 $postRegisterRequiredField = function () {
@@ -45,7 +58,8 @@ $postRegisterRequiredField = function () {
     array_push($errors, "Email không được để trống");
   };
   if (count($errors)) {
-    echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors]);
+    Status::addErrors($errors);
+    header('location: /auth/register');
     exit();
   }
 };
@@ -63,19 +77,15 @@ $postRegister = function () use ($postRegisterRequiredField) {
     $dob = $_POST["dob"];
     $result = AuthModel::regiserNewUser($username, $password, $email, $fullname, $male, $phone, $dob);
     if ($result) {
-      $messages = ["Tạo tài khoản thành công"];
-      echo PugFacade::displayFile('../views/auth/login.jade', ['messages' => $messages]);
-      exit();
+      Status::addMessage("Tạo tài khoản thành công");
     } else {
-      $errors = ["Tạo tài khoản thất bại"];
-      echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors, 'username' => $_POST["username"], 'fullname' => $_POST["fullname"]]);
-      exit();
+      Status::addError("Tạo tài khoản thất bại");
     }
   } else {
-    $errors = ["Tên người dùng hoặc email đã được đăng kí"];
-    echo PugFacade::displayFile('../views/auth/register.jade', ['errors' => $errors, 'username' => $_POST["username"], 'fullname' => $_POST["fullname"]]);
-    exit();
+    Status::addError("Tên người dùng hoặc email đã được đăng kí");
   }
+  header('location: /auth/register');
+  exit();
 };
 
 $postLoginRequiredField = function () {
@@ -85,13 +95,13 @@ $postLoginRequiredField = function () {
   }
   $errors = [];
   if ($_POST["username"] == "") {
-    array_push($errors, "Tên đăng nhập không được để trống");
+    Status::addError("Tên đăng nhập không được để trống");
   };
   if ($_POST["password"] == "") {
-    array_push($errors, "Mật khẩu không được để trống");
+    Status::addError("Mật khẩu không được để trống");
   };
   if (count($errors)) {
-    echo PugFacade::displayFile('../views/auth/login.jade', ['errors' => $errors]);
+    header('location: /auth/login');
     exit();
   }
 };
@@ -107,8 +117,8 @@ $postLogin = function () use ($postLoginRequiredField) {
     setcookie("admin", $result["isadmin"], time() + (1800), "/");
     header('location: /auth/login');
   } else {
-    $errors = [$result["message"]];
-    echo PugFacade::displayFile('../views/auth/login.jade', ['errors' => $errors, 'username' => $username]);
+    Status::addError($result["message"]);
+    header('location: /auth/login');
     exit();
   }
 };

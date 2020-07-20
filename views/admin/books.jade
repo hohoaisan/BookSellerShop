@@ -61,7 +61,7 @@ block content
               td
                 a(href="/admin/books?author="+book.authorid)= book.authorname
               td
-                a(href="/admin/books?category="+book.categoryid)= book.categoryname
+                a= book.categoryname
               td= book.timestamp
               td= book.purchasedcount
               td= book.viewcount
