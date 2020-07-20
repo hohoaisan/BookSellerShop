@@ -64,6 +64,16 @@ block content
           label Số lượng
           input(type="number", name="quantity", value=book.quantity).form-control.form-control-sm
         .form-group
+          label Nhà xuất bản
+          input(type="text", name="publisher" value=book.publisher).form-control.form-control-sm
+        .form-group
+          label Loại bìa
+          select.form-control.custom-select-sm(name="bookbind")
+            option(value=book.bookbinding selected)= book.bookbinding
+            option(value="Bìa mềm") Bìa mềm
+            option(value="Bìa cứng") Bìa cứng
+            option(value="Bìa rời") Bìa rời
+        .form-group
           label Mô tả cho sách
           textarea.form-control.form-control-sm(name="description")= book.bookdescription 
 
@@ -72,7 +82,7 @@ block content
       button(type="submit").btn.btn-primary.btn-block Sửa
 
       
-block external
+append external
   script.
     document.querySelector("#replaceImage").addEventListener('change', (e) => {
       document.querySelector("#replaceImageInput").disabled = !document.querySelector("#replaceImage").checked;

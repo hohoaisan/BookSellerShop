@@ -52,6 +52,15 @@ block content
           label Số lượng
           input(type="number", name="quantity", value=0).form-control.form-control-sm
         .form-group
+          label Nhà xuất bản
+          input(type="text", name="publisher").form-control.form-control-sm
+        .form-group
+          label Loại bìa
+          select.form-control.custom-select-sm(name="bookbind")
+            option(value="Bìa mềm" selected) Bìa mềm
+            option(value="Bìa cứng") Bìa cứng
+            option(value="Bìa rời") Bìa rời
+        .form-group
           label Mô tả cho sách
           textarea.form-control.form-control-sm(name="description")
     .form-group.col

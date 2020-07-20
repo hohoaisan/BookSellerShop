@@ -103,7 +103,7 @@ block content
             a.page-link(href=page.url)= page.index       
     else
       .alert.alert-warning Danh sách người dùng trống
-block external
+append external
   script.
     $('#userModal').on('show.bs.modal', async function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal

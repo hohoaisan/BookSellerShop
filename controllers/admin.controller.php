@@ -404,6 +404,12 @@ $postBookMiddleware =  function ($redirecturl = "/admin/books/add", $requireImag
   if (!isset($_POST["description"]) || $_POST["description"] == "") {
     array_push($errors, "Sách phải có mô tả");
   };
+  if (!isset($_POST["publisher"]) || $_POST["publisher"] == "") {
+    array_push($errors, "Sách phải có nhà xuất bản");
+  };
+  if (!isset($_POST["bookbind"]) || $_POST["bookbind"] == "") {
+    array_push($errors, "Sách phải có loại bìa");
+  };
   if (!isset($_POST["bookprice"]) || $_POST["bookprice"] == "") {
     array_push($errors, "Phải nhập giá của sách");
   } else {
@@ -486,7 +492,9 @@ $postBookAdd = function () use ($postBookMiddleware, $postBookMoveFile) {
   $bookimageurl = $postBookMoveFile();
   $bookprice = $_POST["bookprice"];
   $quantity = $_POST["quantity"];
-  $result = AdminModel::addBook($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl);
+  $publisher = $_POST["publisher"];
+  $bookbind = $_POST["bookbind"];
+  $result = AdminModel::addBook($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind);
   if ($result) {
     Status::addMessage("Đã thêm sách vào cơ sở dữ liệu");
   } else {
@@ -524,7 +532,11 @@ $postBookEdit = function ($bookid) use ($postBookMiddleware, $postBookMoveFile) 
   $bookimageurl = $replaceimage ? $postBookMoveFile('/admin/books/' . $bookid . '/edit') : false;
   $bookprice = $_POST["bookprice"];
   $quantity = $_POST["quantity"];
-  $result = AdminModel::editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl);
+  $publisher = $_POST["publisher"];
+  $bookbind = $_POST["bookbind"];
+  echo $publisher;
+  echo $bookbind;
+  $result = AdminModel::editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind);
   if ($result) {
     Status::addMessage("Đã chỉnh sửa thông tin của sách");
   } else {
