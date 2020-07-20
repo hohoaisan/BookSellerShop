@@ -18,3 +18,18 @@ $getward =  function($provinceid,$districtid) {
   $result = Database::queryResults($sql, array($districtid,$provinceid));
   echo json_encode($result, JSON_UNESCAPED_UNICODE);
 };
+$getFullAddressInfo = function($wardid) {
+  $sql = "select 
+  province.id as provinceid,
+  province.`name` as provincename,
+  district.id as districtid,
+  district.`name` as districtname,
+  ward.id as wardid,
+  ward.`name` as wardname
+  from province,district,ward
+  WHERE province.id=district.pid
+  and district.id=ward.did
+  and ward.id=?";
+  $result = Database::querySingleResult($sql, array($wardid));
+  return $result;
+};

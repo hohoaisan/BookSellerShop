@@ -1,0 +1,96 @@
+extends base
+block content
+  .pb-5
+    .container
+      h4 CHỌN ĐỊA CHỈ GIAO HÀNG
+      if (!user)
+        .alert.alert-warning Bạn chưa đăng nhập, hãy 
+          a(href="/auth/login")
+            strong đăng nhập
+          |  để chúng tôi có thể phục vụ bạn tốt hơn
+      .row.bg-white.rounded.shadow-sm.mb-5
+        .col-12.col-md-6.p-2
+          .card
+            .card-body
+              fieldset(disabled=!user).mb-2.mt-2
+                fieldset#editAddress(disabled)
+                  .row
+                    .col
+                      label.text-center.font-weight-bold Địa chỉ hiện tại
+                      //- select userid,username, fullname, phone, email, male,addressid, addresstext, dob
+                  .form-group.row
+                    label.col-sm-3.col-form-label Họ tên
+                    .col-sm-9
+                      input.form-control.form-control-sm(type='text', hidden name="userid" value=user.userid)
+                      input.form-control.form-control-sm(type='text', name="receivername" value=user.fullname, disabled)
+                  .form-group.row
+                    label.col-sm-3.col-form-label Điện thoại
+                    .col-sm-9
+                      input.form-control.form-control-sm(type='text' name="phone" value=user.phone)
+                  .form-group.row
+                    label.col-sm-3.col-form-label Tỉnh/Thành phố
+                    .col-sm-9
+                      select.form-control.form-control-sm#provinceEdit
+                        option(value=address.provinceid seleted)= address.provincename
+                  .form-group.row
+                    label.col-sm-3.col-form-label Quận, huyện
+                    .col-sm-9
+                      select.form-control.form-control-sm#districtEdit
+                        option(value=address.districtid selected)= address.districtname
+                  .form-group.row
+                    label.col-sm-3.col-form-labe Phường, Xã
+                    .col-sm-9
+                      select.form-control.form-control-sm#wardEdit(name="addressid")
+                        option(value=address.wardid seleted)= address.wardname
+                  .form-group.row
+                    label.col-sm-3.col-form-label Số đường, số nhà
+                    .col-sm-9
+                      textarea.form-control.form-control-sm(name="addresstext")= user.addresstext
+                div
+                  input.btn.btn-success.btn-sm.float-left(type="button" value="Sửa thông tin giao hàng")
+                  input.btn.btn-primary.btn-sm.float-right(type="submit" value="Giao đến địa chỉ này")
+
+append external
+  script.
+    function renderOptions(container, json) {
+    result = json.map((item, index) => {
+      option = document.createElement('option');
+      option.setAttribute('value', item.id);
+      option.innerText = item.name;
+      return option;
+    });
+    result.forEach(element => {
+      if (element.value != container.value) {
+        container.appendChild(element);
+      }
+
+    });
+    }
+
+
+    async function loadContent(url, container) {
+      result = await axios.get(url).then(function (res) {
+        return res.data;
+      });
+      renderOptions(container, result);
+    }
+    initLoadContent = function() {
+      provinceEdit = document.querySelector('#provinceEdit');
+      districtEdit = document.querySelector('#districtEdit');
+      wardEdit = document.querySelector('#wardEdit');
+      loadContent('/api/locals/', provinceEdit);
+      loadContent(`/api/locals/${provinceEdit.value}`, districtEdit);
+      loadContent(`/api/locals/${provinceEdit.value}/${districtEdit.value}`, wardEdit);
+    }
+    window.addEventListener('DOMContentLoaded', function () {
+      initLoadContent();
+    });
+    //- province.addEventListener('change', function () {
+    //-   district.innerHTML = "";
+    //-   wardSelect.innerHTML = "";
+    //-   loadContent(`/api/locals/${province.value}`, district);
+    //- })
+    //- district.addEventListener('change', function () {
+    //-   wardSelect.innerHTML = "";
+    //-   loadContent(`/api/locals/${province.value}/${district.value}`, wardSelect);
+    //- })

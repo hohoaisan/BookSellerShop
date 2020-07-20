@@ -1,9 +1,18 @@
 <?php
-include('../models/auth.model.php');
+include_once('../models/auth.model.php');
 
 use Status\Status as Status;
 use AuthModel\AuthModel as AuthModel;
 use Pug\Facade as PugFacade;
+
+
+$getUserInfo = function() {
+  if (isset($_COOKIE['userid'])) {
+    $userid = $_COOKIE['userid'];
+    return AuthModel::getUserInfo($userid);
+  }
+  return false;
+};
 
 $login = function () {
   if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {

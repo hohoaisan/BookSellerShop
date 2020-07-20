@@ -42,7 +42,7 @@ block content
                       .card-title Tổng tiền
                     .col
                       .lead.text-success#totalMoney= totalMoney + " đ"
-                        
-              .btn.btn-danger.btn-block Tiến hành đặt hàng
+              a(href="/cart/purchase")        
+                .btn.btn-danger.btn-block Tiến hành đặt hàng
   else
     .alert.alert-warning Bạn không có sản phẩm nào trong giỏ hàng

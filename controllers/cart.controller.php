@@ -1,5 +1,7 @@
 <?php
 include('../models/cart.model.php');
+include_once('../controllers/auth.controller.php');
+include_once('../controllers/api.controller.php');
 
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
@@ -129,4 +131,23 @@ $getJSON = function () {
   ], JSON_UNESCAPED_UNICODE);
   // print_r(CartModel::getItemsDetail($_SESSION["cart"]));
   // print_r($_SESSION["cart"]);
+};
+
+$checkCartIsReady = function() {
+  if (count($_SESSION["cart"]) == 0){
+    header('location: /cart/');
+    exit();
+  }
+};
+
+
+$purchaseCart = function() use($checkCartIsReady,$getUserInfo,$getFullAddressInfo) {
+  $checkCartIsReady();
+  $userInfo = $getUserInfo();
+  $addressInfo = $getFullAddressInfo($userInfo['addressid']);
+  // select userid,username, fullname, phone, email, male,addressid, addresstext, dob
+  echo PugFacade::displayFile('../views/home/cart.purchase.jade', [
+    'user' => $userInfo,
+    'address' =>$addressInfo
+  ]);
 };

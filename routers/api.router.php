@@ -1,5 +1,5 @@
 <?php
-include_once('../controllers/api.controller.php');
+include('../controllers/api.controller.php');
 
 $router->get('/locals',$getProvince);
 $router->get('/locals/{provinceid}/{districtid}',$getward);
