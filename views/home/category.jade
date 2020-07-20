@@ -6,8 +6,6 @@ block content
                 ol.breadcrumb
                     li.breadcrumb-item
                         a(href='/') Home
-                    li.breadcrumb-item
-                        a(href='/categories') Danh mục
                     li.breadcrumb-item.active(aria-current='page')= category.categoryname
             .row.mt-4
                 .col-12                                
@@ -29,3 +27,5 @@ block content
                             a.page-link(href=pagination_url+'page='+i)=i
         else
             .alert.alert-warning Không tìm thấy sách theo danh mục
+
+
