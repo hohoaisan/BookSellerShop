@@ -22,7 +22,7 @@ block body
           li.nav-item(role='presentation')
             a.nav-link(href='/auth/login') Đăng nhập
           li.nav-item(role='presentation')
-            a.nav-link.text-success(href='/cart') 
+            a.nav-link.text-success#cartPopup(href='/cart', data-toggle='popover', data-animation='true', data-trigger='focus', data-placement='bottom', title='Giỏ hàng', tabindex='0', data-content="Đã thêm vào giỏ hàng")
               i.fas.fa-shopping-cart
               strong#cartIdentity.text-success.rounded.p-1 0
   div.mb-4
