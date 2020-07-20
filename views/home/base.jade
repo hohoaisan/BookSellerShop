@@ -6,15 +6,15 @@ block body
   .navbar.navbar-light.navbar-expand-md.sticky-top(style="background-color: #f7f7f7;")
     .container-fluid
       div
+        button.navbar-toggler.justify-content-end.mr-2(data-toggle='collapse', data-target='#navcol-1', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+          span.navbar-toggler-icon
         a.navbar-brand(href='/')
           img(style='max-height:30px;', src="/assets/img/BS.png") 
-          span Cronicle Book 
-        button.navbar-toggler.justify-content-end(data-toggle='collapse', data-target='#navcol-1', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
-          span.navbar-toggler-icon
+          span Chronicle Book 
       #navcol-1.collapse.navbar-collapse
-        form(action="/books", method="get").form-inline.mb-0
-          input.form-control.mr-sm-2(type='search', placeholder='Nhập từ khoá', aria-label='Search', name="query", value= search)
-          button.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
+        form(action="/books", method="get").form-inline.mb-0.mt-2.mt-sm-0.row.ml-2.mr-2
+          input.col.form-control.mr-sm-2(type='search', placeholder='Nhập từ khoá', aria-label='Search', name="query", value= search)
+          button.col-2.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
             .fas.fa-search
         ul.nav.navbar-nav.ml-auto
           li.nav-item(role='presentation')
@@ -22,9 +22,9 @@ block body
           li.nav-item(role='presentation')
             a.nav-link(href='/auth/login') Đăng nhập
           li.nav-item(role='presentation')
-            a.nav-link.text-success#cartPopup(href='/cart', data-toggle='popover', data-animation='true', data-trigger='focus', data-placement='bottom', title='Giỏ hàng', tabindex='0', data-content="Đã thêm vào giỏ hàng")
-              i.fas.fa-shopping-cart
-              strong#cartIdentity.text-success.rounded.p-1 0
+      a.text-success#cartPopup(href='/cart', data-toggle='popover', data-animation='true', data-trigger='focus', data-placement='bottom', title='Giỏ hàng', tabindex='0', data-content="Đã thêm vào giỏ hàng")
+        i.fas.fa-shopping-cart
+        strong#cartIdentity.text-success.rounded.p-1 0
   div.mb-4
     header
       a(href='/').web-title
