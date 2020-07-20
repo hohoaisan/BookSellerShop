@@ -3,10 +3,14 @@ block content
     .container
         .row
             .col-md-3
-                .list-group
-                    li.list-group-item.list-group-item-primary.text-center Danh mục sản phẩm
-                    each category in listCategories
-                        a.list-group-item.list-group-item-action.list-group-item-light.text-center.font-weight-bold(href="/categories/" + category.categoryid)= category.categoryname
+                .navbar.navbar-expand-md.navbar-light.bg-light.d-md-block.position-relative.p-0
+                    .navbar-toggler.float-right.position-absolute.w-100.h-100.p-0.m-0(type='button', data-toggle='collapse', data-target='#categories', aria-controls='navbarText', aria-expanded='false', aria-label='Toggle navigation', style="z-index: 100")
+                    a(href='#').list-group-item.active.w-100 Danh mục sản phẩm
+                        i.fas.fa-angle-down.text-light.float-right.m-1
+                    #categories.collapse.navbar-collapse.collapse
+                        ul.list-group.w-100
+                            each category in listCategories
+                                li.list-group-item.list-group-item-action.list-group-item-light= category.categoryname
             .col-md-9.position-relative.col-12
                 #carouselBanner.carousel.slide.h-100.w-100(data-ride='carousel')
                     ol.carousel-indicators
