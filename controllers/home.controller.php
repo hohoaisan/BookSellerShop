@@ -1,5 +1,5 @@
 <?php
-include('../models/home.php');
+include('../models/home.model.php');
 
 use HomePage\HomePage as HomePage;
 use Phug\Lexer\State;

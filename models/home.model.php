@@ -30,7 +30,7 @@
         public static function getBooks()
         {
             try {
-                $sql = "select * from books ORDER BY releasedate DESC limit 1,12";
+                $sql = "select bookid, bookname ,bookimageurl, price from books ORDER BY releasedate DESC limit 1,12";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {
@@ -40,7 +40,7 @@
 
         public static function getCategory(){
             try {
-                $sql = "select categoryid, categoryname from categories";
+                $sql = "select categoryid, categoryname from categories limit 1,7";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {
