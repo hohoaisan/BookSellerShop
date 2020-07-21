@@ -2,6 +2,8 @@ extends base
 block content
     .container
         if (listBooks) 
+            if(search)
+                .alert.alert-success= "Đã tìm thấy sách theo từ khóa '" + search + "'"
             .row.mt-4
                 .col-12                                
                     .row.mb-0.ml-1.mr-1
