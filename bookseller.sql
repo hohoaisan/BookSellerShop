@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 20/07/2020 20:29:36
+ Date: 21/07/2020 15:04:25
 */
 
 SET NAMES utf8mb4;
@@ -888,22 +888,26 @@ CREATE TABLE `orders`  (
   `totalmoney` double NOT NULL DEFAULT 0,
   `receivername` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `phone` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shipping` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `payment` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`orderid`) USING BTREE,
   INDEX `fkIdx_58`(`userid`) USING BTREE,
   INDEX `fk_orders_ward_1`(`addressid`) USING BTREE,
+  INDEX `fk_shipping`(`shipping`) USING BTREE,
+  INDEX `tk_payment`(`payment`) USING BTREE,
   CONSTRAINT `fk_orders_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (000002, 000002, 'a', '2020-07-17 14:26:24', '00007', '34 Nguyễn Hữu Thắng', 43000, NULL, '');
-INSERT INTO `orders` VALUES (000003, 000002, 'e', '2020-07-17 14:26:53', '00006', '43 Công Nông', 12000, NULL, '');
-INSERT INTO `orders` VALUES (000005, 000002, 'r', '2020-07-17 14:28:26', '00001', '43 Công Nông', 56000, NULL, '');
-INSERT INTO `orders` VALUES (000006, 000002, 'e', '2020-07-17 14:29:09', '00004', '32 Thần', 12000, NULL, '');
-INSERT INTO `orders` VALUES (000007, 000002, 'c', '2020-07-17 14:30:26', '00006', 'heheh', 23000, NULL, '');
-INSERT INTO `orders` VALUES (000010, NULL, 'c', '2020-07-17 14:38:42', '00007', 'really', 0, 'Phạm Anh Tú', '091273512');
+INSERT INTO `orders` VALUES (000002, 000002, 'a', '2020-07-17 14:26:24', '00007', '34 Nguyễn Hữu Thắng', 43000, NULL, '', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000003, 000002, 'e', '2020-07-17 14:26:53', '00006', '43 Công Nông', 12000, NULL, '', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000005, 000002, 'r', '2020-07-17 14:28:26', '00001', '43 Công Nông', 56000, NULL, '', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000006, 000002, 'e', '2020-07-17 14:29:09', '00004', '32 Thần', 12000, NULL, '', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000007, 000002, 'c', '2020-07-17 14:30:26', '00006', 'heheh', 23000, NULL, '', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000010, NULL, 'c', '2020-07-17 14:38:42', '00007', 'really', 0, 'Phạm Anh Tú', '091273512', 'EXPRE', NULL);
 
 -- ----------------------------
 -- Table structure for ordersdetails
@@ -926,6 +930,25 @@ CREATE TABLE `ordersdetails`  (
 -- ----------------------------
 INSERT INTO `ordersdetails` VALUES (2, 32000, 000010, 000004);
 INSERT INTO `ordersdetails` VALUES (23, 3423424, 000010, 000027);
+
+-- ----------------------------
+-- Table structure for payment
+-- ----------------------------
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE `payment`  (
+  `id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `default` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of payment
+-- ----------------------------
+INSERT INTO `payment` VALUES ('BANK', 'Thanh toán thông qua ngân hàng', 'Thanh toán trước, chuyển khoản đến Tài khoản ngân hàng VietTink Bank\r\nSố tài khoản TKA1000', NULL);
+INSERT INTO `payment` VALUES ('MOMO', 'Thanh toán thông qua Momo', 'Thanh toán trước, chuyển khoản đến tài khoản 0123456789', NULL);
+INSERT INTO `payment` VALUES ('NORMAL', 'Thanh toán bằng tiền mặt', NULL, '1');
 
 -- ----------------------------
 -- Table structure for province
@@ -1005,6 +1028,24 @@ INSERT INTO `province` VALUES ('95', 'Tỉnh Bạc Liêu');
 INSERT INTO `province` VALUES ('96', 'Tỉnh Cà Mau');
 
 -- ----------------------------
+-- Table structure for shipping
+-- ----------------------------
+DROP TABLE IF EXISTS `shipping`;
+CREATE TABLE `shipping`  (
+  `id` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pricing` decimal(10, 0) NOT NULL,
+  `default` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of shipping
+-- ----------------------------
+INSERT INTO `shipping` VALUES ('EXPRE', 'Giao hàng nhanh', 50000, NULL);
+INSERT INTO `shipping` VALUES ('NORMA', 'Giao hàng bình thường', 30000, '1');
+
+-- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
@@ -1030,7 +1071,7 @@ CREATE TABLE `users`  (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (000001, 'admin', 'admin', 1, 0, 'Administator', '', '', 1, NULL, NULL, NULL);
-INSERT INTO `users` VALUES (000002, 'hoaisan', 'hoaisan', 0, 0, 'Ho Hoai San', '0123456789', 'hahaha@gmail.com', 1, '00016', '34 Nguyễn Chí Thanh', NULL);
+INSERT INTO `users` VALUES (000002, 'hoaisan', 'hoaisan', 0, 0, 'Ho Hoai San', '0123456789', 'hahaha@gmail.com', 1, '03085', '34 Nguyễn Chí Thanh', NULL);
 INSERT INTO `users` VALUES (000003, 'ahahah', 'thisisdabezt', 0, 0, 'Dragon', '', '', 1, NULL, NULL, NULL);
 INSERT INTO `users` VALUES (000004, '123123', '123123', 0, 0, '', '', '', 1, NULL, NULL, NULL);
 INSERT INTO `users` VALUES (000006, 'hohoaisan', 'hohoaisan', 0, 0, '', '', '', 1, NULL, NULL, NULL);
