@@ -1,0 +1,98 @@
+extends base
+block content
+  .pb-5
+    .container
+      h4 THÔNG TIN THANH TOÁN
+      .row.bg-white.rounded.shadow-sm.mb-5
+        .col-lg-4.col-md-5.col-12.p-2.order-md-2
+          .card.mb-2
+            .card-body
+              .row
+                .col
+                  h6.card-title.mb-2 Địa chỉ giao hàng
+                  hr
+                  .card-title.font-weight-bold= orderInfo.receivername
+                  .card-text=orderInfo.fullAddress
+                  .card-text.font-weight-bold Số điện thoại
+                    span.ml-2= orderInfo.phone
+          .card.mb-2
+            .card-body
+              .row
+                .col
+                  h6.card-title.mb-2 Đơn hàng
+                  hr
+                  each item in cartItems
+                    .row
+                      .col-7
+                        span.mt-0.text-truncate= item.bookname
+                      .col-5
+                        span.card-text.font-weight-bold= item.quantity
+                          span  x 
+                          span.mt-0.text-success= item.price
+                  .row.mt-2
+                    .col-7
+                      span.mt-0.text-truncate Phí vận chuyển
+                    .col-5
+                      span.card-text.font-weight-bold.text-danger#shippingPrice= orderInfo.shippingprice
+                  .row.mt-2
+                    .col-7
+                      span.mt-0.text-truncate.font-weight-bold Tổng cộng
+                    .col-5
+                      span.card-text.font-weight-bold.text-danger#totalPrice= orderInfo.totalMoney
+              
+          
+        .col-lg-8.col-md-7.col-12.p-2
+          .ml-2.mr-2.mb-4
+            h5.lead.mb-2.mt-2 Chọn phương thức giao hàng
+            .card.mb-2
+              .card-body
+                each method in shipping
+                  .form-check.m-2
+                    input(id=method.id).form-check-input(type='radio', name='shippingid', value=method.id checked=method.default)
+                    label.form-check-label(for=method.id)= method.name
+                      span.ml-2 (#{method.pricing})               
+          .ml-2.mr-2.mb-4
+            h5.lead.mb-2.mt-2 Chọn phương thức thanh toán
+            .card.mb-2
+              .card-body
+                each method in payment
+                  .form-check.m-2
+                    input(id=method.id).form-check-input(type='radio', name='payingmethodid', value=method.id, checked=method.default)
+                    label.form-check-label(for=method.id)= method.name
+                  if (method.info)
+                    pre(for=method.id)=method.info
+          form(action="/cart/purchase/process/confirm", method="post")
+            input(type="text",hidden, name="confirm", value=true)        
+            button(type="submit").btn.btn-danger.btn-block Xác nhận đặt hàng
+append external
+  script.
+    $('input[name="shippingid"]').on('click', (event)=> {
+      shippingid = $('input[name="shippingid"]:checked').val();
+      axios({
+        method: 'post',
+        url: '/cart/purchase/process/edit',
+        withCredentials: true,
+        data: {
+          'shippingid': shippingid
+        }
+      })
+      .then((res)=> {
+        console.log(res.data.shippingprice);
+        $('#shippingPrice').text(res.data.shippingprice);
+        $('#totalPrice').text(res.data.totalMoney);
+      })
+    });
+    $('input[name="payingmethodid"]').on('click', (event)=> {
+      payingmethodid = $('input[name="payingmethodid"]:checked').val();
+      axios({
+        method: 'post',
+        url: '/cart/purchase/process/edit',
+        withCredentials: true,
+        data: {
+          'payingmethodid': payingmethodid
+        }
+      })
+      .then((res)=> {
+        console.log(res.data);
+      })
+    });

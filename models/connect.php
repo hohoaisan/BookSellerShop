@@ -8,13 +8,13 @@ use PDOException;
 
 class Database
 {
+  public static $lastInsertId = "";
   public static function connect()
   {
     $host = "localhost";
     $dbname = "BookSeller";
     $user = "root";
     $pass = "";
-
     try {
       $options = array(
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
@@ -57,10 +57,13 @@ class Database
     $conn = self::connect();
     $stmt = $conn->prepare($sql);
     $result = $stmt->execute($params);
+    self::$lastInsertId = $conn->lastInsertId();
     $conn = null;
     return $result;
   }
-
+  public static function getLastInsertId() {
+    return self::$lastInsertId;
+  }
   
 
 }

@@ -14,4 +14,11 @@ $router->get('/getJSON', $getJSON);
 $router->get('/purchase', $purchaseCart);
 
 $router->post('/purchase/process', $purchaseProcess);
+$router->post('/purchase/process/edit', $purchaseProcessEdit);
+$router->post('/purchase/process/confirm', $purchaseComplete);
+$router->get('/purchase/process', function() {
+  header('location: /cart/purchase');
+});
+
+
 ?>
