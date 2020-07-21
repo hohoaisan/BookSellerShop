@@ -79,7 +79,7 @@ CREATE TABLE `books`  (
   `price` decimal(10, 0) UNSIGNED NULL DEFAULT 0,
   `timestamp` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `publisher` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `bookbinding` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Bìa cứng, Bìa rời, Bìa mềm',
+  `bookbinding` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'Bìa mềm' COMMENT 'Bìa cứng, Bìa rời, Bìa mềm',
   PRIMARY KEY (`bookid`) USING BTREE,
   INDEX `fkIdx_37`(`authorid`) USING BTREE,
   INDEX `fkIdx_40`(`categoryid`) USING BTREE,
