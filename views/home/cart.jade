@@ -15,7 +15,8 @@ block content
                       img.img-fluid.rounded.shadow-sm(src='/assets/img/books/' + item.bookimageurl, alt='' width='70')
                     .col.row
                       .col
-                        .card-title.mb-2= item.bookname
+                        a(href="/books/" + item.bookid)
+                          .card-title.mb-2= item.bookname
                         .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
                         .card-subtitle.text-success= item.price+" đ"
                         a.text-danger.cartRemoveItem(data-bookid=item.bookid)
