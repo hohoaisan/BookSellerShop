@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 21/07/2020 15:04:34
+ Date: 22/07/2020 13:31:51
 */
 
 SET NAMES utf8mb4;
@@ -57,7 +57,7 @@ CREATE TABLE `books`  (
   `authorid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL,
   `quantity` int NOT NULL DEFAULT 0,
-  `price` decimal(10, 2) UNSIGNED NULL DEFAULT 0,
+  `price` decimal(10, 0) UNSIGNED NULL DEFAULT 0,
   `timestamp` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `publisher` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `bookbinding` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Bìa cứng, Bìa rời, Bìa mềm',
@@ -66,7 +66,7 @@ CREATE TABLE `books`  (
   INDEX `fkIdx_40`(`categoryid`) USING BTREE,
   CONSTRAINT `FK_37` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_40` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for categories
@@ -76,7 +76,7 @@ CREATE TABLE `categories`  (
   `categoryid` int(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `categoryname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`categoryid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for comments
@@ -127,10 +127,12 @@ CREATE TABLE `orders`  (
   PRIMARY KEY (`orderid`) USING BTREE,
   INDEX `fkIdx_58`(`userid`) USING BTREE,
   INDEX `fk_orders_ward_1`(`addressid`) USING BTREE,
-  INDEX `fk_shipping`(`shipping`) USING BTREE,
   INDEX `tk_payment`(`payment`) USING BTREE,
+  INDEX `fk_shipping`(`shipping`) USING BTREE,
   CONSTRAINT `fk_orders_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_payment` FOREIGN KEY (`payment`) REFERENCES `payment` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_shipping` FOREIGN KEY (`shipping`) REFERENCES `shipping` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -159,7 +161,7 @@ CREATE TABLE `payment`  (
   `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `default` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for province
@@ -181,7 +183,7 @@ CREATE TABLE `shipping`  (
   `pricing` decimal(10, 0) NOT NULL,
   `default` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for users
