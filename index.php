@@ -4,10 +4,10 @@ if (!isset($_SESSION["cart"])) {
   $_SESSION["cart"] = [];
 }
 
-include('actionStatus.php');
+include_once('modules/actionStatus.php');
 include_once('vendor/autoload.php');
 include_once('models/connect.php');
-include_once('controllers/home.controller.php');
+
 
 
 
@@ -19,8 +19,10 @@ use Pug\Facade as PugFacade;
 
 
 
-
+include_once('controllers/home.controller.php');
 $router->get('/', $index);
+
+
 // $router->mount('/users', function () use($router) {include('routers/user.router.php');});
 $router->mount('/authors', function () use($router) {include('routers/authors.router.php');});
 $router->mount('/categories', function () use($router) {include('routers/category.router.php');});

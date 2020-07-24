@@ -1,5 +1,5 @@
 <?php
-
+//Dùng để tạo ra pagination
 $removeParam = function ($param) {
   $url = $_SERVER['REQUEST_URI'];
   $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*$/', '', $url);
