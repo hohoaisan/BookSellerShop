@@ -59,14 +59,15 @@ $removeItem = function () {
 
 $addItem = function () {
   $_POST = json_decode(file_get_contents("php://input"), true);
-  if (isset($_POST["bookid"])) {
+  if (isset($_POST["bookid"]) && isset($_POST["quantity"])) {
     $condition = true; //Kiểm tra số lượng còn
     if ($condition) {
       $bookid = $_POST["bookid"];
+      $quantity = $_POST["quantity"];
       if (isset($_SESSION["cart"][$bookid])) {
-        $_SESSION["cart"][$bookid]++;
+        $_SESSION["cart"][$bookid] += $quantity;
       } else {
-        $_SESSION["cart"][$bookid] = 1;
+        $_SESSION["cart"][$bookid] = $quantity;
       }
       http_response_code(201);
       echo json_encode(array('status' => true, 'bookid' => $bookid), JSON_UNESCAPED_UNICODE);

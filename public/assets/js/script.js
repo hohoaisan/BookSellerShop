@@ -22,11 +22,18 @@ function showError(error) {
 
 async function addItemToCart(event) {
   let bookid = $(this).data('bookid');
+  if ($(this).data('hasvalue')) {
+    quantity = $(this).closest('.addToCart').children('.addToCartValue').val();
+  }
+  else {
+    quantity =1;
+  }
   let result = await axios({
       url: '/cart/add',
       method: 'post',
       data: {
         bookid: bookid,
+        quantity: quantity
       },
       withCredentials: true,
     })
@@ -34,13 +41,13 @@ async function addItemToCart(event) {
       return res.data;
     })
     .catch((err) => {
-      showError('Có lỗi xảy ra trong quá trình thêm vào giỏ hàng');
+      alert('Có lỗi xảy ra trong quá trình thêm vào giỏ hàng');
     });
   if (result.status) {
     // showMessage('Đã thêm vào giỏ hàng');
-    $('#cartPopup').focus();
+    alert(`Đã thêm ${quantity} sản phẩm vào giỏ hàng`);
   } else {
-    showError('Không thể thêm vào giỏ hàng');
+    alert('Không thể thêm vào giỏ hàng');
   }
   updateCartIdentity();
 }

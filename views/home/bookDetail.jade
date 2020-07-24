@@ -34,15 +34,11 @@ block content
                                     strong= book.bookbinding 
                                 br
                             hr.singleline
-                            .order_info.d-flex.flex-row
-                                form(action='#')
-                                    .row
-                                        .col-xs-6.d-flex(style='margin-left: 13px;')
-                                            .input-group.mb-0.col-6.pl-0
-                                                .input-group-prepend.mb-2
-                                                    span#inputQty.input-group-text QTY
-                                                input.form-control(type='number',min = 1, value="1",aria-describedby='inputQty')
-                                            button.btn.btn-primary.shop-button.mb-2(type='button') Add to Cart
+                            .order_info.d-flex.flex-row.input-group.input-group-sm.addToCart
+                                .input-group-prepend
+                                    span.input-group-text Số lượng
+                                input.form-control.addToCartValue(type='number',min = 1, value=1)
+                                button.btn.btn-primary.btn-sm.add-to-cart(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
                 .row.row-underline
                     .col-md-6
                         span.deal-text Thông tin sách
