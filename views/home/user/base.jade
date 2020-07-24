@@ -1,0 +1,95 @@
+extends ../base
+
+block content
+  .container
+    .row.profile
+      .col-lg-3
+        .profile-sidebar
+          .profile-usertitle
+            .profile-usertitle-name Hồ Hoài Sản
+          .profile-usermenu.mt-4
+            ul.d-flex.flex-row.flex-lg-column
+              li.active.nav-item
+                a.nav-link(href='/user/profile')
+                  i.glyphicon.glyphicon-home
+                  | Thông tin
+              li.nav-item
+                a.nav-link(href='/user/address')
+                  i.glyphicon.glyphicon-user
+                  | Địa chỉ
+              li.nav-item
+                a.nav-link(href='/user/orders')
+                  i.glyphicon.glyphicon-user
+                  | Hoá đơn
+              li.nav-item
+                a.nav-link(href='/user/rating')
+                  i.glyphicon.glyphicon-ok
+                  | Đánh giá
+      .col-lg-9
+        .profile-content
+          block profile-content
+
+append external
+  style.
+    body {
+      background: #F1F3FA;
+    }
+    .profile-sidebar {
+      padding: 20px 0 10px 0;
+      background: #fff;
+    }
+
+    
+    .profile-usertitle {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .profile-usertitle-name {
+      color: #5a7391;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+
+    .profile-usermenu ul li {
+      border-bottom: 1px solid #f0f4f7;
+    }
+
+    .profile-usermenu ul li:last-child {
+      border-bottom: none;
+    }
+
+    .profile-usermenu ul li a {
+      color: #93a3b5;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .profile-usermenu ul li a i {
+      margin-right: 8px;
+      font-size: 14px;
+    }
+
+    .profile-usermenu ul li a:hover {
+      background-color: #fafcfd;
+      color: #5b9bd1;
+    }
+
+    .profile-usermenu ul li.active {
+      border-bottom: none;
+    }
+
+    .profile-usermenu ul li.active a {
+      color: #5b9bd1;
+      background-color: #f6f9fb;
+      border-left: 2px solid #5b9bd1;
+      margin-left: -2px;
+    }
+
+    .profile-content {
+      padding: 20px;
+      background: #fff;
+      
+    }

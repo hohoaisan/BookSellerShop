@@ -15,7 +15,7 @@ $index = function () {
     $result = $fetch["books"];
     $totalMoney = $fetch["totalmoney"];
   }
-  echo PugFacade::displayFile('../views/home/cart.jade', [
+  echo PugFacade::displayFile('../views/home/cart/cart.jade', [
     'cartItems' => $result,
     'totalMoney' => $totalMoney
   ]);
@@ -148,7 +148,7 @@ $purchaseCart = function () use ($checkCartIsReady, $getUserInfo, $getFullAddres
   $userInfo = $getUserInfo();
   $addressInfo = $getFullAddressInfo($userInfo['addressid']);
   // select userid,username, fullname, phone, email, male,addressid, addresstext, dob
-  echo PugFacade::displayFile('../views/home/cart.purchase.jade', [
+  echo PugFacade::displayFile('../views/home/cart/cart.purchase.jade', [
     'user' => $userInfo,
     'address' => $addressInfo,
     'errors' => $errors
@@ -205,7 +205,7 @@ $purchaseProcess = function () use ($checkCartIsReady, $purchaseProcessMiddleWar
   $_SESSION['orderInfo']['totalMoney'] = $_SESSION['orderInfo']['totalAmount'] + $defaultShippingMethod['pricing'];
 
 
-  echo PugFacade::displayFile('../views/home/cart.purchaseProcess.jade', [
+  echo PugFacade::displayFile('../views/home/cart/cart.purchaseProcess.jade', [
     'orderInfo' => $_SESSION['orderInfo'],
     'cartItems' => $result,
     'shipping' => $shipping,
@@ -259,7 +259,7 @@ $purchaseComplete = function () {
       $result = CartModel::savePurchasedOrderDetail($orderId, $cart);
       unset($_SESSION['cart']);
       unset($_SESSION['orderInfo']);
-      echo PugFacade::displayFile('../views/home/cart.purchaseComplete.jade', [
+      echo PugFacade::displayFile('../views/home/cart/cart.purchaseComplete.jade', [
         'orderid' => $orderId
       ]);
       exit();

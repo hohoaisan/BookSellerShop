@@ -1,0 +1,33 @@
+extends base
+block profile-content
+  h5 Thông tin tài khoản
+  .row.mt-2.p-2
+    .col-12
+      form#editAddress(action="/cart/purchase/process" method="POST")
+        .row
+          .col
+            label.text-center.font-weight-bold Địa chỉ hiện tại
+        .form-group.row
+          label.col-sm-3.col-form-label Họ tên
+          .col-sm-9
+            input.form-control.form-control-sm(type='text' name="receivername" value=user.fullname)
+        .form-group.row
+          label.col-sm-3.col-form-label Điện thoại
+          .col-sm-9
+            input.form-control.form-control-sm(type='text' name="phone" value=user.phone)
+        .form-group.row
+          label.col-sm-3.col-form-label Email
+          .col-sm-9
+            input.form-control.form-control-sm(type='text' name="email" value=user.phone)
+        .form-group.row
+          label.col-sm-3.col-form-label Giới tính
+          .col-sm-9
+            input.form-control.form-control-sm(type='text' name="male" value=user.phone)
+        .form-group.row
+          label.col-sm-3.col-form-label Ngày sinh
+          .col-sm-9
+            input.form-control.form-control-sm(type='date' name="dob" value=user.phone)
+        .row
+          .col-6
+            input.btn.btn-success.btn-sm.float-left(type="button" value="Lưu")
+          .col-6
