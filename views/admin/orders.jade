@@ -21,6 +21,10 @@ block content
             p#orderPhone
             p.detail-title.mb-0 Tổng số tiền
             p#orderTotal
+            p.detail-title.mb-0 Hình thức giao hàng
+            p#orderShipping
+            p.detail-title.mb-0 Hình thức thanh toán
+            p#orderPayment
             p.detail-title.mb-0 Chi tiết đơn hàng
           table.table.table-sm.table-bordered.mt-2.table-striped
             thead
@@ -154,6 +158,8 @@ append external
     $('#orderPhone').text(data.phone);
     $('#orderAddress').text(data.address);
     $('#orderTotal').text(data.totalmoney);
+    $('#orderPayment').text(data.payment);
+    $('#orderShipping').text(data.shipping);
     renderOrderDetailList(data.books);
     var modal = $(this);
     })          

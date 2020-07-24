@@ -164,11 +164,11 @@ class AdminModel
     }
   }
 
-  public static function addBook($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $price, $quantity, $bookimageurl, $publisher,$bookbind)
+  public static function addBook($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $price, $quantity, $bookimageurl, $publisher, $bookbind)
   {
     try {
       $sql = "insert into books (bookname,bookdescription,bookpages,bookweight,releasedate,authorid,categoryid, price,quantity,bookimageurl, timestamp, publisher, bookbinding) values (?, ?, ?, ? , ?, ? ,?, ?, ?, ?, CURRENT_TIME(), ? ,? )";
-      return Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $price, $quantity, $bookimageurl, $publisher,$bookbind));
+      return Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $price, $quantity, $bookimageurl, $publisher, $bookbind));
     } catch (PDOException $e) {
       echo $e->getMessage();
       return false;
@@ -185,20 +185,20 @@ class AdminModel
     }
   }
 
-  public static function editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind)
+  public static function editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher, $bookbind)
   {
     try {
       if ($bookimageurl) {
         $sql = "update books 
       set bookname=?, bookdescription=?, bookpages=?, bookweight=?, releasedate=?, authorid=?, categoryid=?, price=?, quantity=?, bookimageurl=?, publisher=?, bookbinding=?
       where bookid = ?";
-        $result = Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind,$bookid));
+        $result = Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher, $bookbind, $bookid));
         return $result;
       } else {
         $sql = "update books 
     set bookname=?, bookdescription=?, bookpages=?, bookweight=?, releasedate=?, authorid=?, categoryid=?, price=?, quantity=?,  publisher=?, bookbinding=?
     where bookid = ?";
-        $result = Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity,$publisher,$bookbind, $bookid));
+        $result = Database::queryExecute($sql, array($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $publisher, $bookbind, $bookid));
         return $result;
       }
     } catch (PDOException $e) {
@@ -420,7 +420,36 @@ class AdminModel
   public static function getOrder($orderid)
   {
     try {
-      $sql = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, receivername, orderstatus, timestamp, concat_ws(', ',orders.addresstext,(select CONCAT_WS(', ', ward.`name`,district.`name`, province.`name`) as address FROM ward,district, province WHERE ward.did=district.id and district.pid=province.id and ward.id=orders.addressid)) as address,totalmoney, phone from orders where orderid=?";
+      $sql = "
+      SELECT
+	orderid,
+	orders.userid,
+	( SELECT users.fullname FROM users WHERE users.userid = orders.userid ) AS fullname,
+	receivername,
+	orderstatus,
+	TIMESTAMP,
+	concat_ws(
+          ', ',
+          orders.addresstext,(
+          SELECT
+            CONCAT_WS( ', ', ward.`name`, district.`name`, province.`name` ) AS address 
+          FROM
+            ward,
+            district,
+            province 
+          WHERE
+            ward.did = district.id 
+            AND district.pid = province.id 
+            AND ward.id = orders.addressid 
+          )) AS address,
+        concat_ws('', (select payment.`name` from payment where payment.id = orders.payment)) as `payment`,
+        concat_ws('', (select shipping.`name` from shipping where shipping.id = orders.shipping)) as `shipping`,
+        totalmoney,
+        phone 
+      FROM
+        orders
+      
+      ";
       $result = Database::querySingleResult($sql, array($orderid));
       return $result;
     } catch (PDOException $e) {
