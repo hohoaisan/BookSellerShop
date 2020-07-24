@@ -15,36 +15,39 @@ $getUserInfo = function() {
 };
 
 $login = function () {
+  $prompt = false;
   if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {
     if ($_COOKIE['admin'] == "1") {
       header('location: /admin');
-    } else {
-      header('location: /');
+      exit();
     }
+    $prompt = true;
   }
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   echo PugFacade::displayFile('../views/auth/login.jade', [
     'errors' => $errors,
     'messages' => $messages,
+    'prompt' => $prompt
   ]);
 };
 
 $register = function () {
+  $prompt = false;
   if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {
     if ($_COOKIE['admin'] == "1") {
       header('location: /admin');
       exit();
-    } else {
-      header('location: /');
-      exit();
     }
+    $prompt = true;
+
   }
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   echo PugFacade::displayFile('../views/auth/register.jade', [
     'errors' => $errors,
     'messages' => $messages,
+    'prompt' => $prompt
   ]);
 };
 
@@ -122,9 +125,9 @@ $postLogin = function () use ($postLoginRequiredField) {
   $password = $_POST["password"];
   $result = AuthModel::verifyCredential($username, $password);
   if ($result["status"] == 1) {
-    setcookie("userid", $result["userid"], time() + (1800), "/"); //cookie tồn tại 3 phút (180)
+    setcookie("userid", $result["userid"], time() + (1800), "/");
     setcookie("admin", $result["isadmin"], time() + (1800), "/");
-    header('location: /auth/login');
+    header('location: /');
   } else {
     Status::addError($result["message"]);
     header('location: /auth/login');

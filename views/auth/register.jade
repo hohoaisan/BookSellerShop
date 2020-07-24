@@ -6,50 +6,56 @@ block content
   if (errors)
     each error in errors
       .alert.alert-warning= error
-  .row.justify-content-center
-    .col-md-6
-      article.card-body
-        h4.card-title.text-center.mb-3 Tạo tài khoản mớI
-        form(method='post')
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-user
-            input.form-control(name='username', placeholder='Tên đăng nhập', type='text' value=username?username:"", required)
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-lock
-            input.form-control(name='password', placeholder='Nhập mật khẩu', type='password', required)
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-lock
-            input.form-control(name='password-repeat', placeholder='Xác nhận mật khẩu', type='password', required)
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-user
-            input.form-control(name='fullname', placeholder='Họ tên', type='text' value=fullname?fullname:"", required)
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-envelope
-            input.form-control(name='email', placeholder='Email', type='email', required)
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text Giới tính
-            select.form-control(name='male', required)
-              option(selected,value='1') Nam
-              option(value='0') Nữ
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text Ngày sinh
-            input(name='dob',type="date", required).form-control
-          .form-group.input-group
-            .input-group-prepend
-              span.input-group-text
-                i.fa.fa-phone
-            input.form-control(name='phone', placeholder='Số điện thoại', type='text', required)
-          .form-group
-            button.btn.btn-primary.btn-block(type='submit') Tạo tài khoản mới
+  if (!prompt)
+    .row.justify-content-center
+      .col-md-6
+        article.card-body
+          h4.card-title.text-center.mb-3 Tạo tài khoản mớI
+          form(method='post')
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text
+                  i.fa.fa-user
+              input.form-control(name='username', placeholder='Tên đăng nhập', type='text' value=username?username:"", required)
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text
+                  i.fa.fa-lock
+              input.form-control(name='password', placeholder='Nhập mật khẩu', type='password', required)
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text
+                  i.fa.fa-lock
+              input.form-control(name='password-repeat', placeholder='Xác nhận mật khẩu', type='password', required)
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text
+                  i.fa.fa-user
+              input.form-control(name='fullname', placeholder='Họ tên', type='text' value=fullname?fullname:"", required)
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text
+                  i.fa.fa-envelope
+              input.form-control(name='email', placeholder='Email', type='email', required)
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text Giới tính
+              select.form-control(name='male', required)
+                option(selected,value='1') Nam
+                option(value='0') Nữ
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text Ngày sinh
+              input(name='dob',type="date", required).form-control
+            .form-group.input-group
+              .input-group-prepend
+                span.input-group-text
+                  i.fa.fa-phone
+              input.form-control(name='phone', placeholder='Số điện thoại', type='text', required)
+            .form-group
+              button.btn.btn-primary.btn-block(type='submit') Tạo tài khoản mới
+  else
+    .alert.alert-warning Bạn đã đăng nhập, bạn có muốn 
+      a(href="/auth/logout")
+        strong đăng xuất
+      | ?

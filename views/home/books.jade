@@ -1,6 +1,9 @@
 extends base
 block content
     .container
+        .row
+            .col
+                h4 Danh sách sách
         if (listBooks) 
             if(search)
                 .alert.alert-success= "Đã tìm thấy sách theo từ khóa '" + search + "'"
@@ -18,9 +21,8 @@ block content
                                         small= book.price + ' đ'
                                         button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
             ul.pagination
-                if (pagination_pages>1)
-                    - for (i=1; i<=pagination_pages; i++)
-                        li.page-item(class=(i==pagination_current_page)?"active":"")
-                            a.page-link(href=pagination_url+'page='+i)=i
+                each page in pagination
+                    li.page-item(class=(page.index==pagination_current_page)?"active":"")
+                        a.page-link(href=page.url)= page.index       
         else
             .alert.alert-warning Không tìm thấy sách

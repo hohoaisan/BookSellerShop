@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 22/07/2020 13:31:41
+ Date: 24/07/2020 20:45:30
 */
 
 SET NAMES utf8mb4;
@@ -59,6 +59,8 @@ CREATE TABLE `banner`  (
 -- ----------------------------
 -- Records of banner
 -- ----------------------------
+INSERT INTO `banner` VALUES (000008, '0205050257ec61af49d226d6cec3f50415a6298c.jpg');
+INSERT INTO `banner` VALUES (000033, 'tre-920x420.jpg');
 
 -- ----------------------------
 -- Table structure for books
@@ -149,27 +151,6 @@ INSERT INTO `categories` VALUES (06, 'Sách lịch sử');
 INSERT INTO `categories` VALUES (07, 'Sách ngoại văn');
 INSERT INTO `categories` VALUES (08, 'Thơ');
 INSERT INTO `categories` VALUES (09, 'Truyện tranh');
-
--- ----------------------------
--- Table structure for comments
--- ----------------------------
-DROP TABLE IF EXISTS `comments`;
-CREATE TABLE `comments`  (
-  `commentid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-  `timestamp` datetime(0) NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `bookid` int(6) UNSIGNED ZEROFILL NOT NULL,
-  PRIMARY KEY (`commentid`) USING BTREE,
-  INDEX `fkIdx_48`(`userid`) USING BTREE,
-  INDEX `fkIdx_51`(`bookid`) USING BTREE,
-  CONSTRAINT `FK_48` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_51` FOREIGN KEY (`bookid`) REFERENCES `books` (`bookid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of comments
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for district
@@ -914,12 +895,12 @@ CREATE TABLE `orders`  (
   PRIMARY KEY (`orderid`) USING BTREE,
   INDEX `fkIdx_58`(`userid`) USING BTREE,
   INDEX `fk_orders_ward_1`(`addressid`) USING BTREE,
-  INDEX `tk_payment`(`payment`) USING BTREE,
   INDEX `fk_shipping`(`shipping`) USING BTREE,
+  INDEX `tk_payment`(`payment`) USING BTREE,
   CONSTRAINT `fk_orders_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_payment` FOREIGN KEY (`payment`) REFERENCES `payment` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_shipping` FOREIGN KEY (`shipping`) REFERENCES `shipping` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_shipping` FOREIGN KEY (`shipping`) REFERENCES `shipping` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1049,6 +1030,28 @@ INSERT INTO `province` VALUES ('93', 'Tỉnh Hậu Giang');
 INSERT INTO `province` VALUES ('94', 'Tỉnh Sóc Trăng');
 INSERT INTO `province` VALUES ('95', 'Tỉnh Bạc Liêu');
 INSERT INTO `province` VALUES ('96', 'Tỉnh Cà Mau');
+
+-- ----------------------------
+-- Table structure for rating
+-- ----------------------------
+DROP TABLE IF EXISTS `rating`;
+CREATE TABLE `rating`  (
+  `ratingid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `timestamp` datetime(0) NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `bookid` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `rating` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`ratingid`) USING BTREE,
+  INDEX `fkIdx_48`(`userid`) USING BTREE,
+  INDEX `fkIdx_51`(`bookid`) USING BTREE,
+  CONSTRAINT `FK_48` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_51` FOREIGN KEY (`bookid`) REFERENCES `books` (`bookid`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of rating
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for shipping

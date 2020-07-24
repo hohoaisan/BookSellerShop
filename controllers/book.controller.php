@@ -1,36 +1,30 @@
 <?php
+
     include('../models/book.model.php');
+    include('../modules/pagination.php');
     use Pug\Facade as PugFacade;
     use BookModel\BookModel as BookModel;   
     
-    $removeParam = function ($param) {
-        $url = $_SERVER['REQUEST_URI'];
-        $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*$/', '', $url);
-        $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*&/', '$1', $url);
-        if (strpos($url, '?')) {
-            return $url . '&';
-        } else return $url . '?';
-    };
 
-    $index = function () use ($removeParam){ 
+    $index = function () use ($paginationGenerator){ 
         $query = "";
         if (isset($_GET["query"]) && $_GET["query"] != "") {
             $query = $_GET["query"];
         }
         //Pagination
         try {
-            $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+            $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
         } catch (Exception $e) {
-            $page = 1;
+            $currentPage = 1;
         }
         $itemperpage = 12;
     
-        $fetch = BookModel::getFullBooks($query, $page, $itemperpage);
+        $fetch = BookModel::getFullBooks($query, $currentPage, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
         $num_page = ceil($num_records / $itemperpage); //Số trang
-    
+        $pagination = $paginationGenerator($currentPage, $num_page);
         if (!$fetch) {
             $result = [];
         }
@@ -38,9 +32,8 @@
         echo PugFacade::displayFile('../views/home/books.jade', [
         'listBooks' => $result,// Xác đỊnh mục nào đang được chọn
         'search' => $query, // Lưu lại từ khoá và đưa vào mục tìm kiếm
-        'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
-        'pagination_pages' => $num_page,
-        'pagination_current_page' => $page
+        'pagination' => $pagination,
+        'pagination_current_page' => $currentPage
         ]);
         exit();
     };
@@ -51,7 +44,4 @@
             'book' => $book
         ]);
         exit();
-    }
-
-
-?>
+    };

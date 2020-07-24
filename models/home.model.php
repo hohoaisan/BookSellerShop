@@ -65,6 +65,14 @@
                 return false;
             }
         }
-        
+        public static function getBanner() {
+            try {
+                $sql = "select bookid, customimage from banner";
+                $result = Database::queryResults($sql, array());
+                return $result;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
     }
 ?>

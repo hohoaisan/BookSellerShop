@@ -35,14 +35,14 @@ block content
   h3.mt-4.mb-4 Quản lí người dùng
   ul.nav.nav-tabs.mb-4
     li.nav-item
-      a.nav-link(href='/admin/users', class=card?"":"active") Tất cả
+      a.nav-link(href='/admin/users', class=card?"":"active") Người dùng
     li.nav-item
       a.nav-link(href='/admin/users?filter=disabled' class=(card=='disabled')?"active":"") Bị vô hiệu hoá
     li.nav-item
       a.nav-link(href='/admin/users?filter=admin' class=(card=='admin')?"active":"") Quản trị viên
   .d-flex.justify-content-between.align-items-center.mb-2.flex-sm-row.flex-column
     if (!title)
-      h4.ml-2 Tất cả người dùng
+      h4.ml-2 Người dùng
     else
       h4.ml-2= title
     .d-flex.justify-content-between.align-items-center.mb-2
@@ -111,6 +111,7 @@ append external
     let data = await axios.get('/admin/users/'+id).then((res)=>{
       return res.data;
     });
+    console.log(data);
     document.querySelector('#userAddress').innerText = data.address;
     document.querySelector('#userEmail').innerText = data.email;
     document.querySelector('#userFullName').innerText = data.fullname;

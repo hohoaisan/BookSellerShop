@@ -274,11 +274,13 @@ class AdminModel
           $sqlCount = "
           select userid, username, fullname, phone
           from users
+          where isadmin=0
           having userid like :query or username like :query or fullname like :query or phone like :query
           ";
           $sql = "
           select userid, username, fullname,dob, phone, email, male, addressid, addresstext, isdisable, isadmin
           from users
+          where isadmin=0
           having userid like :query or username like :query or fullname like :query or phone like :query
           order by userid asc
           limit $begin, $itemperpage

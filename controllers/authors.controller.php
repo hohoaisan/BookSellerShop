@@ -1,5 +1,6 @@
 <?php 
     include('../models/author.model.php');
+    include('../modules/pagination.php');
     use Pug\Facade as PugFacade;
     use AuthorModel\AuthorModel as AuthorModel; 
 
@@ -12,30 +13,29 @@
         } else return $url . '?';
     };
 
-    $index = function() use ($removeParam){
+    $index = function() use ($paginationGenerator){
         //Pagination
         try {
-            $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+            $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
         } catch (Exception $e) {
-            $page = 1;
+            $currentPage = 1;
         }
         $itemperpage = 6;
     
-        $fetch = AuthorModel::getAllAuthor($page, $itemperpage);
+        $fetch = AuthorModel::getAllAuthor($currentPage, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
         $num_page = ceil($num_records / $itemperpage); //Số trang
-    
+        $pagination = $paginationGenerator($currentPage, $num_page);
         if (!$fetch) {
             $result = [];
         }
     
         echo PugFacade::displayFile('../views/home/author.jade', [
         'listAuthors' => $result,
-        'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
-        'pagination_pages' => $num_page,
-        'pagination_current_page' => $page
+        'pagination' => $pagination,
+        'pagination_current_page' => $currentPage
         ]);
         exit();
     }
