@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 24/07/2020 20:45:30
+ Date: 25/07/2020 16:09:28
 */
 
 SET NAMES utf8mb4;
@@ -121,11 +121,11 @@ INSERT INTO `books` VALUES (000025, 'Từ Ấy', 'huu1.jpg', 'Từ ấy gồm 71
 INSERT INTO `books` VALUES (000026, 'Đắc Nhân Tâm', 'dale1.jpg', 'Tác phẩm được đánh giá là cuốn sách đầu tiên và hay nhất trong thể loại này, có ảnh hưởng thay đổi cuộc đời đối với hàng triệu người trên thế giới.', 322, 400, '1936-10-12', 2021, 348, 000008, 07, 1500, 79000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000027, 'Quẳng gánh lo đi và vui sống', 'dale2.jpg', 'Quyển sách này là một cẩm nang về cách làm việc và vui sống không bị lo âu.', 306, 400, '1948-03-08', 1898, 421, 000008, 07, 400, 79000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000028, 'Thuật hùng biện', 'dale3.jpg', 'Sự thành công trong kinh doanh, trong các mối quan hệ xã hội, hay ngay cả tronglĩnh vực riêng tức của một người phụ thuộc rất nhiều vào khả năng giao tiếp của người đó, khả năng thể hiện, diễn đạt cho mọi người biết bạn là ai, bạn muốn gì, và bạn tin vào điều gì', 264, 300, '2010-12-22', 221, 49, 000008, 08, 7, 59000, '2020-07-11 10:52:55', NULL, NULL);
-INSERT INTO `books` VALUES (000029, 'Nàng và con mèo của nàng', 'shinkai1.png', 'là sự gặp gỡ giữa cô gái tên Miyu với một bé mèo trắng bị bỏ hoang. Miyu trầm tính, ít nói và sống độc thân trong một căn hộ nhỏ.', 175, 200, '1999-05-05', 298, 49, 000015, 01, 129, 89000, '2020-07-11 10:52:55', NULL, NULL);
-INSERT INTO `books` VALUES (000030, 'Your Name', 'shinkai2.jpg', 'Mitsuha - cô nữ sinh sống tại một vùng quê Nhật Bản, chán ngán cuộc sống hiện tại và luôn mong được lên Tokyo sống. Taki - một cậu nam sinh ở Tokyo, làm thêm tại một nhà hàng Ý sau giờ học, thích vẽ vời và quan tâm đến ngành kiến trúc.', 262, 200, '2016-06-18', 400, 158, 000015, 01, 304, 139000, '2020-07-11 10:52:55', NULL, NULL);
+INSERT INTO `books` VALUES (000029, 'Nàng và con mèo của nàng', 'shinkai1.png', 'là sự gặp gỡ giữa cô gái tên Miyu với một bé mèo trắng bị bỏ hoang. Miyu trầm tính, ít nói và sống độc thân trong một căn hộ nhỏ.', 175, 200, '1999-05-05', 298, 49, 000015, 01, 0, 89000, '2020-07-25 09:54:29', NULL, NULL);
+INSERT INTO `books` VALUES (000030, 'Your Name', 'shinkai2.jpg', 'Mitsuha - cô nữ sinh sống tại một vùng quê Nhật Bản, chán ngán cuộc sống hiện tại và luôn mong được lên Tokyo sống. Taki - một cậu nam sinh ở Tokyo, làm thêm tại một nhà hàng Ý sau giờ học, thích vẽ vời và quan tâm đến ngành kiến trúc.', 262, 200, '2016-06-18', 400, 158, 000015, 01, 0, 139000, '2020-07-25 09:54:31', NULL, NULL);
 INSERT INTO `books` VALUES (000031, 'Thanh Gươm Diệt Quỷ vol 1', 'guom1h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000032, 'Thanh Gươm Diệt Quỷ vol 2', 'guom2h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
-INSERT INTO `books` VALUES (000033, 'Thanh Gươm Diệt Quỷ vol 3', 'guom3.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
+INSERT INTO `books` VALUES (000033, 'Thanh Gươm Diệt Quỷ vol 3', 'guom3.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-25 08:25:48', 'Nhà Xuất Bản Trẻ', 'Bìa mềm');
 INSERT INTO `books` VALUES (000034, 'Thanh Gươm Diệt Quỷ vol 4', 'guom4h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000035, 'Thanh Gươm Diệt Quỷ vol 6', 'guom6h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
 
@@ -901,7 +901,7 @@ CREATE TABLE `orders`  (
   CONSTRAINT `fk_payment` FOREIGN KEY (`payment`) REFERENCES `payment` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_shipping` FOREIGN KEY (`shipping`) REFERENCES `shipping` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
@@ -912,6 +912,7 @@ INSERT INTO `orders` VALUES (000005, 000002, 'r', '2020-07-17 14:28:26', '00001'
 INSERT INTO `orders` VALUES (000006, 000002, 'e', '2020-07-17 14:29:09', '00004', '32 Thần', 12000, NULL, '', 'EXPRE', NULL);
 INSERT INTO `orders` VALUES (000007, 000002, 'c', '2020-07-17 14:30:26', '00006', 'heheh', 23000, NULL, '', 'EXPRE', NULL);
 INSERT INTO `orders` VALUES (000010, NULL, 'c', '2020-07-17 14:38:42', '00007', 'really', 0, 'Phạm Anh Tú', '091273512', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000012, 000002, 'p', '2020-07-25 15:36:35', '03085', '34 Nguyễn Chí Thanh', 168000, 'Ho Hoai San', '0123456789', 'EXPRE', 'MOMO');
 
 -- ----------------------------
 -- Table structure for ordersdetails
@@ -934,6 +935,8 @@ CREATE TABLE `ordersdetails`  (
 -- ----------------------------
 INSERT INTO `ordersdetails` VALUES (2, 32000, 000010, 000004);
 INSERT INTO `ordersdetails` VALUES (23, 3423424, 000010, 000027);
+INSERT INTO `ordersdetails` VALUES (1, 79000, 000012, 000026);
+INSERT INTO `ordersdetails` VALUES (1, 39000, 000012, 000031);
 
 -- ----------------------------
 -- Table structure for payment
@@ -1091,16 +1094,16 @@ CREATE TABLE `users`  (
   PRIMARY KEY (`userid`) USING BTREE,
   INDEX `fk_users_ward_1`(`addressid`) USING BTREE,
   CONSTRAINT `fk_users_ward_1` FOREIGN KEY (`addressid`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (000001, 'admin', 'admin', 1, 0, 'Administator', '', '', 1, NULL, NULL, NULL);
-INSERT INTO `users` VALUES (000002, 'hoaisan', 'hoaisan', 0, 0, 'Ho Hoai San', '0123456789', 'hahaha@gmail.com', 1, '03085', '34 Nguyễn Chí Thanh', NULL);
-INSERT INTO `users` VALUES (000003, 'ahahah', 'thisisdabezt', 0, 0, 'Dragon', '', '', 1, NULL, NULL, NULL);
-INSERT INTO `users` VALUES (000004, '123123', '123123', 0, 0, '', '', '', 1, NULL, NULL, NULL);
-INSERT INTO `users` VALUES (000006, 'hohoaisan', 'hohoaisan', 0, 0, '', '', '', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000001, 'c3284d0f94606de1fd2af172aba15bf3', 'admin', 1, 0, 'Administator', '', '', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000002, 'b6655d22f76fd10eab7b3aced95b4c77', 'hoaisan', 0, 0, 'Ho Hoai San', '0123456789', 'hahaha@gmail.com', 1, '03085', '34 Nguyễn Chí Thanh', NULL);
+INSERT INTO `users` VALUES (000006, 'b6655d22f76fd10eab7b3aced95b4c77', 'hohoaisan', 0, 0, '', '', '', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000007, '14e1b600b1fd579f47433b88e8d85291', 'kuroshukanade', 0, 0, 'Kuroshu Kanade', '0397556211', 'kuroshukanade@gmail.com', 1, NULL, NULL, '2003-06-12');
+INSERT INTO `users` VALUES (000008, '979066badd3e52803c7dd06e5c49993c', 'theminecraftdragon', 0, 0, 'theminecraftdragon', '+8493524536', 'theminecraftdragon@mc.com', 1, NULL, NULL, '2020-07-14');
 
 -- ----------------------------
 -- Table structure for ward
