@@ -1,14 +1,7 @@
 <?php
 include('../controllers/user.controller.php');
+include('../controllers/auth.controller.php');
 
-
-$requireLogin = function () {
-  if (isset($_COOKIE['userid'])) {
-  } else {
-
-    header('location: /auth/login');
-  }
-};
 
 $router->before('GET|POST', '*', $requireLogin);
 $router->before('GET|POST', '.*', $requireLogin);

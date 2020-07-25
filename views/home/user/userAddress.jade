@@ -27,3 +27,55 @@ block profile-content
           .col-6
             input.btn.btn-success.btn-sm.float-left(type="button" value="Lưu")
           .col-6
+append external
+  script.
+    function renderOptions(container, json) {
+    result = json.map((item, index) => {
+      option = document.createElement('option');
+      option.setAttribute('value', item.id);
+      option.innerText = item.name;
+      return option;
+    });
+    result.forEach(element => {
+      if (element.value != container.value) {
+        container.appendChild(element);
+      }
+
+    });
+    }
+
+
+    async function loadContent(url, container) {
+      result = await axios.get(url).then(function (res) {
+        return res.data;
+      });
+      renderOptions(container, result);
+    }
+    
+    initLoadContent = function() {
+      provinceEdit = document.querySelector('#provinceEdit');
+      districtEdit = document.querySelector('#districtEdit');
+      wardEdit = document.querySelector('#wardEdit');
+      loadContent('/api/locals/', provinceEdit);
+      loadContent(`/api/locals/${provinceEdit.value}`, districtEdit);
+      loadContent(`/api/locals/${provinceEdit.value}/${districtEdit.value}`, wardEdit);
+    }
+    //- assignValue = function() {
+    //-   province = document.querySelector('#provinceSelect');
+    //-   district = document.querySelector('#districtSelect');
+    //-   wardSelect = document.querySelector('#wardSelect');
+    //-   loadContent('/api/locals/', province);
+    //-   province.addEventListener('change', function () {
+    //-     district.innerHTML = "";
+    //-     wardSelect.innerHTML = "";
+    //-     loadContent(`/api/locals/${province.value}`, district);
+    //-   })
+    //-   district.addEventListener('change', function () {
+    //-     wardSelect.innerHTML = "";
+    //-     loadContent(`/api/locals/${province.value}/${district.value}`, wardSelect);
+    //-   })
+    //- }
+    window.addEventListener('DOMContentLoaded', function () {
+      initLoadContent();
+      //- assignValue();
+    });

@@ -1,23 +1,64 @@
 <?php
 include_once('../models/auth.model.php');
 
+
+use Chirp\Cryptor as Cryptor;
 use Status\Status as Status;
 use AuthModel\AuthModel as AuthModel;
 use Pug\Facade as PugFacade;
 
+$encryption_key = 'CKXH2U9RPY3EFD70TLS1ZG4N8WQBOVI6AMJ5';
 
-$getUserInfo = function() {
-  if (isset($_COOKIE['userid'])) {
-    $userid = $_COOKIE['userid'];
+$GLOBALS['cryptor'] = new Cryptor($encryption_key);
+
+
+
+$parseUser = function () {
+  if (isset($_COOKIE['authentication'])) {
+    $authen = $_COOKIE['authentication'];
+    $userid = $GLOBALS['cryptor']->decrypt($authen);
+    $result = AuthModel::checkUserId($userid);
+    if ($result) {
+      return $result;
+    }
+  } else return false;
+};
+
+
+$requireLogin = function() use($parseUser) {
+  $user = $parseUser();
+  if ($user) {
+    
+  }
+  else {
+    header('location: /auth/login');
+  }
+};
+
+$requireAdmin = function() use($parseUser) {
+  $user = $parseUser();
+  if ($user && $user['isadmin'] == '1') {
+    
+  }
+  else {
+    header('location: /auth/login');
+  }
+};
+
+$getUserInfo = function () use($parseUser) {
+  $user = $parseUser();
+  if ($user) {
+    $userid = $user['userid'];
     return AuthModel::getUserInfo($userid);
   }
   return false;
 };
 
-$login = function () {
+$login = function () use($parseUser) {
   $prompt = false;
-  if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {
-    if ($_COOKIE['admin'] == "1") {
+  $user = $parseUser();
+  if ($user) {
+    if ($user['isadmin'] == '1') {
       header('location: /admin');
       exit();
     }
@@ -32,15 +73,15 @@ $login = function () {
   ]);
 };
 
-$register = function () {
+$register = function () use($parseUser) {
   $prompt = false;
-  if (isset($_COOKIE['userid']) && isset($_COOKIE['admin'])) {
-    if ($_COOKIE['admin'] == "1") {
+  $user = $parseUser();
+  if ($user) {
+    if ($user['isadmin'] == '1') {
       header('location: /admin');
       exit();
     }
     $prompt = true;
-
   }
   $errors = Status::getErrors();
   $messages = Status::getMessages();
@@ -89,6 +130,7 @@ $postRegister = function () use ($postRegisterRequiredField) {
     $dob = $_POST["dob"];
     $result = AuthModel::regiserNewUser($username, $password, $email, $fullname, $male, $phone, $dob);
     if ($result) {
+      print_r("OK");
       Status::addMessage("Tạo tài khoản thành công");
     } else {
       Status::addError("Tạo tài khoản thất bại");
@@ -125,8 +167,11 @@ $postLogin = function () use ($postLoginRequiredField) {
   $password = $_POST["password"];
   $result = AuthModel::verifyCredential($username, $password);
   if ($result["status"] == 1) {
-    setcookie("userid", $result["userid"], time() + (1800), "/");
-    setcookie("admin", $result["isadmin"], time() + (1800), "/");
+    $authen = $GLOBALS['cryptor']->encrypt($result['userid']);
+    print_r($authen);
+    setcookie("authentication", $authen, time() + (1800), "/");
+    // setcookie("userid", $result["userid"], time() + (1800), "/");
+    // setcookie("admin", $result["isadmin"], time() + (1800), "/");
     header('location: /');
   } else {
     Status::addError($result["message"]);
@@ -137,7 +182,6 @@ $postLogin = function () use ($postLoginRequiredField) {
 
 
 $logout = function () {
-  setcookie('userid', null, -1, '/');
-  setcookie('admin', null, -1, '/');
+  setcookie('authentication', null, -1, '/');
   header('location: /auth/login');
 };

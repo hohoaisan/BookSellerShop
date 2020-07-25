@@ -33,3 +33,4 @@ $getFullAddressInfo = function($wardid) {
   $result = Database::querySingleResult($sql, array($wardid));
   return $result;
 };
+

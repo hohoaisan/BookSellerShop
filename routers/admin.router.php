@@ -3,15 +3,9 @@
 
 // Đưa các hàm trong controller vào router
 include_once('../controllers/admin.controller.php');
+include('../controllers/auth.controller.php');
 // $router chính là $router từ index.php truyền sang bằng use($router),
 //nhằm tiếp nhận những đưỡng dẫn phía sau /admin/... thông qua hàm mount
-$requireAdmin = function () {
-  if (isset($_COOKIE['userid']) && isset($_COOKIE['admin']) && $_COOKIE['admin'] == "1") {
-  } else {
-
-    header('location: /auth/login');
-  }
-};
 
 $router->before('GET|POST', '*', $requireAdmin);
 $router->before('GET|POST', '.*', $requireAdmin);
