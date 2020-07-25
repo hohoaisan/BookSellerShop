@@ -20,70 +20,72 @@ block content
                             div
                                 span.product_price= book.price + " VNĐ"
                             hr.singleline
-                            div
-                                span.product_info
-                                    | Tác giả: 
-                                    strong= book.authorname
-                                br
-                                span.product_info
-                                    | Nhà Xuất Bản: 
-                                    strong= book.publisher
-                                br
-                                span.product_info
-                                    | Hình thức bìa: 
-                                    strong= book.bookbinding 
-                                br
-                            hr.singleline
-                            .order_info.d-flex.flex-row.input-group.input-group-sm.addToCart
+                            .order_info.d-flex.flex-row.input-group.input-group-sm.addToCart.justify-content-center
                                 .input-group-prepend
                                     span.input-group-text Số lượng
-                                input.form-control.addToCartValue(type='number',min = 1, value=1)
-                                button.btn.btn-primary.btn-sm.add-to-cart(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
-                .row.row-underline
-                    .col-md-6
-                        span.deal-text Thông tin sách
-                    .col-md-6
-                        a(href='#', data-abc='true')
-                            span.ml-auto.view-all
+                                input.form-control.addToCartValue.col-3(type="text")(type='number',min = 1, value=1)
+                                button.btn.btn-primary.btn-sm.add-to-cart.ml-2(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
+                            hr.singleline
+                            
+                            table.col-md-12
+                                tbody
+                                    if (book.bookpages)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Số trang :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.bookpages + " trang"
+                                    if (book.bookweight)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Book weight :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.bookweight + " gram"
+                                    if (book.releasedate)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Ngày ra mắt :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.releasedate
+                                    if (book.authorname)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Tác giả :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.authorname
+                                    if (book.bookdescription)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Nội dung :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.bookdescription
+                                    if (book.publisher)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Nhà xuất bản :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.publisher
+                                    if (book.bookbinding)
+                                        tr.row.mt-10
+                                            td.col-md-5
+                                                span.p_specification Hình thức bìa :
+                                            td.col-md-7
+                                                ul
+                                                    li= book.bookbinding
                 .row
+                    .col-md-12.row-underline
+                        span.deal-text Đánh giá
                     .col-md-12
-                        table.col-md-12
-                            tbody
-                                tr.row.mt-10
-                                    td.col-md-4
-                                        span.p_specification Số trang :
-                                    td.col-md-8
-                                        ul
-                                            li= book.bookpages + " trang"
-                                tr.row.mt-10
-                                    td.col-md-4
-                                        span.p_specification Book weight :
-                                    td.col-md-8
-                                        ul
-                                            li= book.bookweight + " gram"
-                                tr.row.mt-10
-                                    td.col-md-4
-                                        span.p_specification Ngày ra mắt :
-                                    td.col-md-8
-                                        ul
-                                            li= book.releasedate
-                                tr.row.mt-10
-                                    td.col-md-4
-                                        span.p_specification Tác giả :
-                                    td.col-md-8
-                                        ul
-                                            li= book.authorname
-                                tr.row.mt-10
-                                    td.col-md-4
-                                        span.p_specification Nội dung :
-                                    td.col-md-8
-                                        ul
-                                            li= book.bookdescription
-                                tr.row.mt-10
-                                    td.col-md-4
-                                        span.p_specification Nhà xuất bản :
-                                    td.col-md-8
-                                        ul
-                                            li Kim Đồng
+                        
+                .row
+                    .col-md-12.row-underline
+                        span.deal-text Sách liên quan
+                    .col-md-12
     else
         .alert.alert-warning Có lỗi xảy ra
