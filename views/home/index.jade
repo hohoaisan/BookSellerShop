@@ -57,7 +57,10 @@ block content
                                                 .card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
+                                                if (mostPopular[i].quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -70,7 +73,10 @@ block content
                                                 .card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
+                                                if (mostPopular[i].quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -83,7 +89,10 @@ block content
                                                 .card-title= mostSeller[i].bookname
                                             .card-footer
                                                 small= mostSeller[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
+                                                if (mostPopular[i].quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
                                 -}           
     //Popular banner
     .container
@@ -113,7 +122,10 @@ block content
                                                 .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
+                                                if (mostPopular[i].quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -126,7 +138,10 @@ block content
                                                 .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY
+                                                if (mostPopular[i].quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
                                 -}
                         .carousel-item
                             .row.mb-2.ml-1.mr-1
@@ -139,7 +154,10 @@ block content
                                                 .card-title= mostPopular[i].bookname
                                             .card-footer
                                                 small= mostPopular[i].price + ' VNĐ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) BUY 
+                                                if (mostPopular[i].quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=mostPopular[i].bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
                                 -}          
     //book Show
     .container
@@ -162,7 +180,10 @@ block content
                                         .card-title= book.bookname
                                     .card-footer
                                         small= book.price + ' VNĐ'
-                                        button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
+                                        if (book.quantity)
+                                            button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) Mua 
+                                        else
+                                            p.p-0.m-0.text-danger Hết hàng
                     div.d-flex.justify-content-center.mt-4
                         ul.pagination
                             each page in pagination

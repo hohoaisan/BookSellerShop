@@ -48,15 +48,15 @@ class BookModel
         try {
             $sql = "
             
-                select bookid, bookname ,bookimageurl, price, categoryid, authorid
+                select bookid, bookname ,bookimageurl, price, categoryid, quantity, authorid
                 from
                 (
-                    select bookid, bookname ,bookimageurl, price, categoryid, books.authorid
+                    select bookid, bookname ,bookimageurl, price, categoryid, quantity, books.authorid
                     from books,`authors`
                     where books.authorid = `authors`.authorid
                     and `authors`.authorid = (select authorid from books WHERE bookid=?)
                     union	
-                    select bookid, bookname ,bookimageurl, price, books.categoryid, authorid
+                    select bookid, bookname ,bookimageurl, price, books.categoryid, quantity, authorid
                     from books,`categories`
                     where books.categoryid = `categories`.categoryid
                     and categories.categoryid = (select categoryid from books WHERE bookid=?)

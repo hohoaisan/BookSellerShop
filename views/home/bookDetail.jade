@@ -21,12 +21,14 @@ block content
                                 span.product_price= book.price + " VNĐ"
                             hr.singleline
                             .order_info.d-flex.flex-row.input-group.input-group-sm.addToCart.justify-content-center
-                                .input-group-prepend
-                                    span.input-group-text Số lượng
-                                input.form-control.addToCartValue.col-3(type="text")(type='number',min = 1, value=1)
-                                button.btn.btn-primary.btn-sm.add-to-cart.ml-2(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
+                                if (book.quantity)
+                                        .input-group-prepend
+                                            span.input-group-text Số lượng
+                                        input.form-control.addToCartValue.col-3(type="text")(type='number',min = 1, value=1)
+                                        button.btn.btn-primary.btn-sm.add-to-cart.ml-2(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
+                                else 
+                                    button.btn.btn-block.btn-primary.float-right.btn-danger Đã hết hàng
                             hr.singleline
-                            
                             table.col-md-12
                                 tbody
                                     if (book.bookpages)
@@ -142,6 +144,9 @@ block content
                                                 .card-title= book.bookname
                                             .card-footer
                                                 small= book.price + ' đ'
-                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
+                                                if (book.quantity)
+                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) Mua 
+                                                else
+                                                    p.p-0.m-0.text-danger Hết hàng
     else
         .alert.alert-warning Có lỗi xảy ra
