@@ -24,6 +24,7 @@ block content
                   label.col-sm-3.col-form-label Họ tên
                   .col-sm-9
                     input.form-control.form-control-sm(type='text', hidden name="userid" value=user.userid)
+                    input.form-control.form-control-sm(type='text', hidden name="json" value="")
                     input.form-control.form-control-sm(type='text' name="receivername" value=user.fullname readonly)
                 .form-group.row
                   label.col-sm-3.col-form-label Điện thoại
@@ -47,10 +48,10 @@ block content
                 .form-group.row
                   label.col-sm-3.col-form-label Số đường, số nhà
                   .col-sm-9
-                    textarea.form-control.form-control-sm(name="addresstext")= user.addresstext
+                    textarea.form-control.form-control-sm#addressTextEdit(name="addresstext")= user.addresstext
                 .row
                   .col-6
-                    input.btn.btn-success.btn-sm.float-left(type="button" value="Lưu")
+                    input.btn.btn-success.btn-sm.float-left#saveAddress(type="button" value="Lưu")
                   .col-6
                     input.btn.btn-primary.btn-sm.float-right(type="submit" value="Giao đến địa chỉ này")
         .col-12.col-md-6.p-2
@@ -141,6 +142,32 @@ append external
     window.addEventListener('DOMContentLoaded', function () {
       initLoadContent();
       assignValue();
+      provinceEdit = document.querySelector('#provinceEdit');
+      districtEdit = document.querySelector('#districtEdit');
+      wardEdit = document.querySelector('#wardEdit');
+      provinceEdit.addEventListener('change', function () {
+        districtEdit.innerHTML = "";
+        wardEdit.innerHTML = "";
+        loadContent(`/api/locals/${provinceEdit.value}`, districtEdit);
+      });
+      districtEdit.addEventListener('change', function () {
+        wardEdit.innerHTML = "";
+        loadContent(`/api/locals/${provinceEdit.value}/${districtEdit.value}`, wardEdit);
+      })
     });
-      
-      
+
+
+    $('#saveAddress').on('click', async function() {
+      form = document.querySelector('form#editAddress');
+      formdata = new FormData(form);
+      result = await axios( {
+        method: 'post',
+        url: '/user/address/edit',
+        method: 'post',
+        data: formdata,
+        withCredentials: true}
+      ).then(function (res) {       
+        return res.data;
+      });
+      alert(result.message);
+    })

@@ -3,7 +3,7 @@ block profile-content
   h5 Địa chỉ tài khoản
   .row.mt-2.p-2
     .col-12
-      form#editAddress(action="/cart/purchase/process" method="POST")
+      form#editAddress(action="/user/address/edit" method="POST")
         .form-group.row
           label.col-sm-3.col-form-label Tỉnh/Thành phố
           .col-sm-9
@@ -22,10 +22,10 @@ block profile-content
         .form-group.row
           label.col-sm-3.col-form-label Số đường, số nhà
           .col-sm-9
-            textarea.form-control.form-control-sm(name="addresstext")= user.addresstext
+            textarea.form-control.form-control-sm(name="addresstext")= addresstext
         .row
           .col-6
-            input.btn.btn-success.btn-sm.float-left(type="button" value="Lưu")
+            input.btn.btn-success.btn-sm.float-left(type="submit" value="Lưu")
           .col-6
 append external
   script.
@@ -51,7 +51,7 @@ append external
       });
       renderOptions(container, result);
     }
-    
+
     initLoadContent = function() {
       provinceEdit = document.querySelector('#provinceEdit');
       districtEdit = document.querySelector('#districtEdit');
@@ -60,22 +60,19 @@ append external
       loadContent(`/api/locals/${provinceEdit.value}`, districtEdit);
       loadContent(`/api/locals/${provinceEdit.value}/${districtEdit.value}`, wardEdit);
     }
-    //- assignValue = function() {
-    //-   province = document.querySelector('#provinceSelect');
-    //-   district = document.querySelector('#districtSelect');
-    //-   wardSelect = document.querySelector('#wardSelect');
-    //-   loadContent('/api/locals/', province);
-    //-   province.addEventListener('change', function () {
-    //-     district.innerHTML = "";
-    //-     wardSelect.innerHTML = "";
-    //-     loadContent(`/api/locals/${province.value}`, district);
-    //-   })
-    //-   district.addEventListener('change', function () {
-    //-     wardSelect.innerHTML = "";
-    //-     loadContent(`/api/locals/${province.value}/${district.value}`, wardSelect);
-    //-   })
-    //- }
+
     window.addEventListener('DOMContentLoaded', function () {
       initLoadContent();
-      //- assignValue();
+      provinceEdit = document.querySelector('#provinceEdit');
+      districtEdit = document.querySelector('#districtEdit');
+      wardEdit = document.querySelector('#wardEdit');
+      provinceEdit.addEventListener('change', function () {
+        districtEdit.innerHTML = "";
+        wardEdit.innerHTML = "";
+        loadContent(`/api/locals/${provinceEdit.value}`, districtEdit);
+      });
+      districtEdit.addEventListener('change', function () {
+        wardEdit.innerHTML = "";
+        loadContent(`/api/locals/${provinceEdit.value}/${districtEdit.value}`, wardEdit);
+      })
     });

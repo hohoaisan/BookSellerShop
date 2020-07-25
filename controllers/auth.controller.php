@@ -45,14 +45,6 @@ $requireAdmin = function() use($parseUser) {
   }
 };
 
-$getUserInfo = function () use($parseUser) {
-  $user = $parseUser();
-  if ($user) {
-    $userid = $user['userid'];
-    return AuthModel::getUserInfo($userid);
-  }
-  return false;
-};
 
 $login = function () use($parseUser) {
   $prompt = false;
@@ -130,7 +122,6 @@ $postRegister = function () use ($postRegisterRequiredField) {
     $dob = $_POST["dob"];
     $result = AuthModel::regiserNewUser($username, $password, $email, $fullname, $male, $phone, $dob);
     if ($result) {
-      print_r("OK");
       Status::addMessage("Tạo tài khoản thành công");
     } else {
       Status::addError("Tạo tài khoản thất bại");

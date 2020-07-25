@@ -2,6 +2,7 @@
 include('../models/cart.model.php');
 include_once('../controllers/auth.controller.php');
 include_once('../controllers/api.controller.php');
+include('../controllers/user.controller.php');
 
 use Status\Status as Status;
 use Pug\Facade as PugFacade;

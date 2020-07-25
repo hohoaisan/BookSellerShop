@@ -53,18 +53,6 @@ class AuthModel {
 
   }
 
-  public static function getUserInfo($userid) {
-    try {
-      $sql = "select userid,username, fullname, phone, email, male,addressid, addresstext, dob
-      from users
-      WHERE userid=?";
-      $result = Database::querySingleResult($sql, array($userid));
-      return $result;
-    }
-    catch(PDOException $e) {
-      return false;
-    }
-  }
 
   public static function checkUserId($userid) {
     try {
