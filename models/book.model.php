@@ -43,5 +43,35 @@ class BookModel
         return false;
         }
     }
+
+    public static function getBookRelated($bookid) {
+        try {
+            $sql = "
+            
+                select bookid, bookname ,bookimageurl, price, categoryid, authorid
+                from
+                (
+                    select bookid, bookname ,bookimageurl, price, categoryid, books.authorid
+                    from books,`authors`
+                    where books.authorid = `authors`.authorid
+                    and `authors`.authorid = (select authorid from books WHERE bookid=?)
+                    union	
+                    select bookid, bookname ,bookimageurl, price, books.categoryid, authorid
+                    from books,`categories`
+                    where books.categoryid = `categories`.categoryid
+                    and categories.categoryid = (select categoryid from books WHERE bookid=?)
+                ) as result
+
+                limit 12
+
+            ";
+            $result = Database::queryResults($sql,  array($bookid, $bookid));
+            return $result;
+        }
+        catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

@@ -40,8 +40,11 @@
 
     $bookDetail = function($bookid){
         $book = BookModel::getBookDetail($bookid);
+        $related = BookModel::getBookRelated($bookid);
+        shuffle($related);
         echo PugFacade::displayFile('../views/home/bookDetail.jade',[
-            'book' => $book
+            'book' => $book,
+            'related'=> $related
         ]);
         exit();
     };
