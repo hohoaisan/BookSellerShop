@@ -34,7 +34,7 @@ class BookModel
     }
     public static function getBookDetail($bookid){
         try {
-            $sql = "select b.bookid, b.bookname, b.bookimageurl, b.bookdescription, b.bookpages, b.bookweight, b.	releasedate, a.authorname, c.categoryname, b.price, publisher, bookbinding
+            $sql = "select b.bookid, b.bookname, b.bookimageurl, b.bookdescription, b.bookpages, b.bookweight, b.	releasedate, a.authorname, c.categoryname, b.price, publisher, bookbinding, quantity
             from books as b, authors as a, categories as c
             where b.bookid = ? and c.categoryid = b.categoryid and a.authorid = b.authorid ";
             $result = Database::querySingleResult($sql,  array($bookid));
