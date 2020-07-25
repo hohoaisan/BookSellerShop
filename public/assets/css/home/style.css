@@ -875,7 +875,7 @@ ul {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 5px 15px 0 15px;
+  padding: 15px 15px 0 15px;
   text-align: left;
   background: rgb(236, 236, 236);
 
@@ -901,4 +901,22 @@ ul {
 .our-team-main:hover {
   border-color: #777;
   transition: 0.5s;
+}
+.authorPic{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.authorBorder{
+  border-left:3px solid #ded4da;
+}
+.container .details p{
+  font-size:15px;
+}
+
+.img-rounded{
+  width: 100%;
+  height: auto;
 }

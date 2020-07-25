@@ -3,11 +3,14 @@ block content
     .container
         if (listAuthors)
             .row
+                //- - var id = Math.floor(Math.random() * (1 - 1300) + 1300);
+                - var id = 106 + pagination_current_page * 6;
                 each author in listAuthors
-                    .col-6.col-md-4
+                    a(href="/authors/" + author.authorid).col-6.col-md-4
                         .our-team-main
                             .team-front
-                                img.img-fluid(src='/assets/img/pipi.jpg')
+                                - id++;
+                                img.img-fluid(src='https://picsum.photos/id/' + id +'/200')
                                 h3= author.authorname
                             .team-back
                                 span= author.authordescription 
