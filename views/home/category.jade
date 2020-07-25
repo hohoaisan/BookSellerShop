@@ -1,31 +1,42 @@
 extends base
 block content
     .container
-        if (listBooks) 
-            nav(aria-label='breadcrumb')
-                ol.breadcrumb
-                    li.breadcrumb-item
-                        a(href='/') Home
-                    li.breadcrumb-item.active(aria-current='page')= category.categoryname
-            .row.mt-4
-                .col-12                                
-                    .row.mb-0.ml-1.mr-1
-                        each book in listBooks
-                            .col-6.col-sm-4.col-md-3.col-lg-2.pl-1.pr-1.mb-4
-                                .card.card-inverse.card-info
-                                    a(href='/books/' + book.bookid)
-                                        img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
-                                    .card-block(style="height: 4em; overflow:hidden;")
-                                        .card-title= book.bookname
-                                    .card-footer
-                                        small= book.price + ' đ'
-                                        button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
-            ul.pagination
-                if (pagination_pages>1)
-                    - for (i=1; i<=pagination_pages; i++)
-                        li.page-item(class=(i==pagination_current_page)?"active":"")
-                            a.page-link(href=pagination_url+'page='+i)=i
-        else
-            .alert.alert-warning Không tìm thấy sách theo danh mục
+        .row.mt-4
+            .col-md-4.col-lg-3
+                .navbar.navbar-expand-md.navbar-light.bg-light.d-md-block.position-relative.p-0
+                    .navbar-toggler.float-right.position-absolute.w-100.h-100.p-0.m-0(type='button', data-toggle='collapse', data-target='#categories', aria-controls='navbarText', aria-expanded='false', aria-label='Toggle navigation', style="z-index: 100")
+                    a(href='#').list-group-item.active.w-100 Danh mục sản phẩm
+                        i.fas.fa-angle-down.text-light.float-right.m-1
+                    #categories.collapse.navbar-collapse.collapse
+                        ul.list-group.w-100
+                            each category in listCategories
+                                a.list-group-item.list-group-item-action.list-group-item-light(href="/categories/" + category.categoryid)= category.categoryname 
+            .col-md-8.col-lg-9       
+                if (listBooks) 
+                    nav(aria-label='breadcrumb')
+                        ol.breadcrumb
+                            li.breadcrumb-item
+                                a(href='/') Home
+                            li.breadcrumb-item.active(aria-current='page')= category.categoryname
+                    .row.mt-4
+                        .col-12                                
+                            .row.mb-0.ml-1.mr-1
+                                each book in listBooks
+                                    .col-6.col-sm-4.col-md-3.pl-1.pr-1.mb-4
+                                        .card.card-inverse.card-info
+                                            a(href='/books/' + book.bookid)
+                                                img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
+                                            .card-block(style="height: 4em; overflow:hidden;")
+                                                .card-title= book.bookname
+                                            .card-footer
+                                                small= book.price + ' đ'
+                                                button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) BUY 
+                    ul.pagination
+                        if (pagination_pages>1)
+                            - for (i=1; i<=pagination_pages; i++)
+                                li.page-item(class=(i==pagination_current_page)?"active":"")
+                                    a.page-link(href=pagination_url+'page='+i)=i
+                else
+                    .alert.alert-warning Không tìm thấy sách theo danh mục
 
 

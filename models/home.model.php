@@ -40,7 +40,16 @@
 
         public static function getCategory(){
             try {
-                $sql = "select categoryid, categoryname from categories limit 1,7";
+                $sql = "select categoryid, categoryname from categories order by categoryid ASC limit 0,7";
+                $result = Database::queryResults($sql, array());
+                return $result;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+        public static function getAllCategory(){
+            try {
+                $sql = "select categoryid, categoryname from categories order by categoryid ASC";
                 $result = Database::queryResults($sql, array());
                 return $result;
             } catch (PDOException $e) {
