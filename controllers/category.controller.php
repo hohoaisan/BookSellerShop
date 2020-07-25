@@ -2,6 +2,7 @@
     include('../models/category.model.php');
     use Pug\Facade as PugFacade;
     use CategoryPage\CategoryPage as CategoryPage;  
+    use HomePage\HomePage as HomePage;
 
     $removeParam = function ($param) {
         $url = $_SERVER['REQUEST_URI'];
@@ -11,7 +12,6 @@
             return $url . '&';
         } else return $url . '?';
     };
-
     $categoryBook = function ($categoryid) use ($removeParam){ 
         //Pagination
         try {
@@ -21,6 +21,7 @@
         }
         $itemperpage = 12;
     
+        $listCategories = HomePage::getAllCategory();
         $currentCategory = CategoryPage::getSingleCategory($categoryid);
 
         $fetch = CategoryPage::getCategoryBooks($categoryid, $page, $itemperpage);
@@ -34,6 +35,7 @@
         }
     
         echo PugFacade::displayFile('../views/home/category.jade', [
+        'listCategories' => $listCategories,
         'listBooks' => $result,
         'category' => $currentCategory,
         'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới

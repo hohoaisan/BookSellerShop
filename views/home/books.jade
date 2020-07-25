@@ -1,6 +1,12 @@
 extends base
 block content
     .container
+        nav(aria-label='breadcrumb')
+                ol.breadcrumb
+                    li.breadcrumb-item
+                        a(href='/') Home
+                    li.breadcrumb-item.active(aria-current='page')
+                        a(href='/books') Books
         .row
             .col
                 h4 Danh sách sách
