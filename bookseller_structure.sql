@@ -1,5 +1,5 @@
 /*
- Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
  Source Server         : MYSQL
  Source Server Type    : MySQL
@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 25/07/2020 16:09:37
+ Date: 27/07/2020 18:23:29
 */
 
 SET NAMES utf8mb4;

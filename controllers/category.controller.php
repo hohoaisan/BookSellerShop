@@ -3,6 +3,9 @@
     use Pug\Facade as PugFacade;
     use CategoryPage\CategoryPage as CategoryPage;  
     use HomePage\HomePage as HomePage;
+    $index = function () {
+        header('location: /categories/1');
+    };
 
     $removeParam = function ($param) {
         $url = $_SERVER['REQUEST_URI'];

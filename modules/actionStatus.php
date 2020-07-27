@@ -8,9 +8,6 @@ class Status {
     if (!isset($_SESSION["errors"])) {
       $_SESSION["errors"] = [];
     };
-    if (!isset($_SESSION["shopping_cart"])) {
-      $_SESSION["shopping_cart"] = [];
-    };
   }
   public static function getErrors() {
     self::initalizeSession(); //Khởi tạo nếu session chưa có
