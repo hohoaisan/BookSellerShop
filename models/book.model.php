@@ -37,6 +37,11 @@ class BookModel
             $sql = "select b.bookid, b.bookname, b.bookimageurl, b.bookdescription, b.bookpages, b.bookweight, b.	releasedate, a.authorname, c.categoryname, b.price, publisher, bookbinding, quantity
             from books as b, authors as a, categories as c
             where b.bookid = ? and c.categoryid = b.categoryid and a.authorid = b.authorid ";
+            $sqlViewBooks = "update books set viewCount = ? where bookid = ?";
+            $sqlBooks = "select viewcount from books where bookid = ?";
+            $viewCount = Database::querySingleResult($sqlBooks, array($bookid));
+            $viewCount["viewcount"] += 1;
+            Database::queryExecute($sqlViewBooks, array($viewCount["viewcount"], $bookid));
             $result = Database::querySingleResult($sql,  array($bookid));
             return $result;
         } catch (PDOException $e) {
