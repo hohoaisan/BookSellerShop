@@ -19,5 +19,5 @@ use Chirp\Cryptor as Cryptor;
 $router->get('/locals',$getProvince);
 $router->get('/locals/{provinceid}/{districtid}',$getward);
 $router->get('/locals/{provinceid}',$getDistrict);
-// $router->get('/test', $test);
+//$router->get('/test', $test);
 

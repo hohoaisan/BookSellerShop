@@ -1,0 +1,26 @@
+extends base
+block content
+    h3.mt-4.mb-4 Quản lí sách
+    h4.mb-4 Thêm sách mới
+    if (messages)
+        each message in messages
+            .alert.alert-success= message
+    if (errors)
+        each error in errors
+            .alert.alert-warning= error
+    form(action="/admin/banner/add", method="POST", enctype="multipart/form-data")
+        .d-flex.flex-sm-row.flex-column
+            .col-md-4
+                .form-group
+                    label Chọn sách
+                    .d-flex
+                        select.form-control.custom-select-sm(name="bookid")
+                            each book in books
+                                option(value=book.bookid)= book.bookname
+            .col-md-8 
+                .form-group
+                    label Hình ảnh sách
+                    input(type="file", name="picture").form-control-file.form-control-sm
+        .form-group
+            .d-inline-flex.p-2
+                button(type="submit").btn.btn-success.btn-block Thêm banner

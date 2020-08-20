@@ -47,3 +47,9 @@ $router->get('/categories', $categories);
 $router->post('/categories/add', $categoryAdd);
 $router->post('/categories/{categoryid}/edit', $categoryEdit);
 $router->post('/categories/{categoryid}/delete', $categoryDelete);
+
+$router->get('/banner', $banners);
+$router->get('/banner/add', $bannerAdd);
+$router->post('/banner/add', $postBannerAdd);
+$router->post('/banner/{bookid}/delete', $bannerDelete);
+

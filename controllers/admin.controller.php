@@ -557,7 +557,7 @@ $authors = function () use ($paginationGenerator) {
   }
 
 
-  $fetch = AdminModel::getAuthors("$query",$currentPage, $itemperpage);
+  $fetch = AdminModel::getAuthors($query,$currentPage, $itemperpage);
   if (!$fetch) {
     array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
     $result = [];
@@ -708,5 +708,123 @@ $categoryDelete = function ($categoryid) {
     Status::addError("Có lỗi xảy ra, xin thử lại");
   }
   header('location: /admin/categories');
+  exit();
+};
+
+//For Banner
+$banners = function () {
+  $result = AdminModel::getBanners();
+  //Khởi tạo session
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  if ($result) {
+    echo PugFacade::displayFile('../views/admin/banner.jade', [
+      'banners' => $result,
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  } else {
+    array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
+    echo PugFacade::displayFile('../views/admin/banner.jade', [
+      'banners' => [],
+      'errors' => $errors,
+      'messages' => $messages
+    ]);
+  }
+  exit();
+};
+
+$bannerAdd = function () {
+  $books = AdminModel::getBooksForBanner();
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  echo PugFacade::displayFile('../views/admin/banner.add.jade', [
+    'books' => $books,
+    'errors' => $errors,
+    'messages' => $messages
+  ]);
+};
+
+$postBannerMiddleware =  function ($redirecturl = "/admin/banner/add", $requireImage = true) {
+  $errors = [];
+  if (!isset($_POST["bookid"]) || $_POST["bookid"] == "") {
+    array_push($errors, "ID sách không được để trống");
+  };
+  
+  if ($requireImage == true) {
+    if (!isset($_FILES['picture']['error']) || is_array($_FILES['picture']['error'] || $_FILES['picture']['error'] != UPLOAD_ERR_OK)) {
+      array_push($errors, "Phải có ảnh minh hoạ cho banner");
+    } else {
+      if ($_FILES['picture']['size'] > 5242880) {
+        array_push($errors, "Hình minh hoạ không được vượt quá 5MB");
+      } else {
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        if (false === $ext = array_search(
+          $finfo->file($_FILES['picture']['tmp_name']),
+          array(
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+          ),
+          true
+        )) {
+          array_push($errors, "Phải có hình minh hoạ hoặc phải là ảnh");
+        }
+      }
+    }
+  }
+  if (count($errors)) {
+    Status::addErrors($errors);
+    header('location: ' . $redirecturl);
+    exit();
+  }
+};
+
+$postBannerMoveFile = function ($redirecturl = "/admin/banner/add") {
+  $finfo = new finfo(FILEINFO_MIME_TYPE);
+  $ext = array_search(
+    $finfo->file($_FILES['picture']['tmp_name']),
+    array(
+      'jpg' => 'image/jpeg',
+      'png' => 'image/png',
+      'gif' => 'image/gif',
+    ),
+    true
+  );
+  $newfile = sha1_file($_FILES['picture']['tmp_name']) . "." . $ext;
+  if (move_uploaded_file(
+    $_FILES['picture']['tmp_name'],
+    sprintf('../public/assets/img/banner/' . $newfile)
+  )) {
+    return $newfile;
+  } else {
+    Status::addError("Có sự cố trong việc xử lí ảnh");
+    header('location: ' . $redirecturl);
+    exit();
+  }
+};
+
+$postBannerAdd = function () use ($postBannerMiddleware, $postBannerMoveFile) {
+  $postBannerMiddleware();
+  $bookid = $_POST["bookid"];;
+  $customimage = $postBannerMoveFile();
+  $result = AdminModel::addbanner($bookid, $customimage);
+  if ($result) {
+    Status::addMessage("Đã thêm banner vào cơ sở dữ liệu");
+  } else {
+    Status::addError("Lỗi, không thể thêm banner, hãy thử lại");
+  }
+  header('location: /admin/banner/add');
+  exit();
+};
+
+$bannerDelete = function ($bookid) {
+  $result = AdminModel::removeBanner($bookid);
+  if ($result) {
+    Status::addMessage("Đã xoá banner của sách có ID: " . $bookid . " khỏi cơ sở dữ liệu");
+  } else {
+    Status::addError("Có lỗi xảy ra, xin thử lại");
+  }
+  header('location: /admin/banner');
   exit();
 };
