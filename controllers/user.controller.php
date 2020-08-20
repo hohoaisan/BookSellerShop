@@ -20,9 +20,64 @@ $index  = function () {
   header('location: /user/profile');
   exit();
 };
-$user_profile  = function () {
-  echo PugFacade::displayFile('../views/home/user/userInfo.jade');
+$user_profile  = function () use($getUserInfo) {
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  $userInfo = $getUserInfo();
+  echo PugFacade::displayFile('../views/home/user/userInfo.jade', [
+    'user' => $userInfo,
+    'errors' => $errors,
+    'messages' => $messages
+  ]);
 };
+
+$user_profile_edit_middleware = function () {
+  $errors = [];
+  if (!isset($_POST["fullname"]) || !$_POST["fullname"]) {
+    array_push($errors, "Tên không được để trống");
+  }
+  if (!isset($_POST["phone"]) || !$_POST["phone"]) {
+    array_push($errors, "Điện thoại không được để trống");
+  }
+  if (!isset($_POST["email"]) || !$_POST["email"]) {
+    array_push($errors, "Email không được để trống");
+  }
+  if (!isset($_POST["male"]) || !in_array($_POST["male"], ["0", "1"])) {
+    array_push($errors, "Giới tính phải hợp lệ");
+  }
+  if (count($errors)) {
+    Status::addErrors($errors);
+    header('location: /user/profile');
+    exit();
+  }
+
+  
+};
+
+
+$user_profile_edit = function () use ($user_profile_edit_middleware, $getUserInfo) {
+  $userInfo = $getUserInfo();
+  $user_profile_edit_middleware();
+  $fullname = $_POST["fullname"];
+  $phone = $_POST["phone"];
+  $email = $_POST["email"];
+  $male = $_POST["male"];
+  $dob = $_POST["dob"];
+  $result  = UserModel::editUserInfo($userInfo["userid"], $fullname, $email, $phone, $male, $dob);
+  if ($result) {
+    Status::addMessage("Đã sửa thông tin thành công");
+  }
+  else {
+    Status::addError("Có lỗi xảy ra trong quá trình sửa thông tin");
+  }
+
+  header('location: /user/profile');
+  exit();
+
+};
+
+
+
 $user_address  = function () use ($getFullAddressInfo, $getUserInfo) {
   $errors = Status::getErrors();
   $messages = Status::getMessages();

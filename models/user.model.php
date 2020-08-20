@@ -21,8 +21,20 @@ class UserModel
     }
   }
 
-  public static function editUserInfo()
-  {
+  public static function editUserInfo($userid, $fullname, $email, $phone, $male, $dob) {
+    try {
+      $sql = "update users
+      set fullname=?,email=?, phone=?, male=?, dob=?
+      where userid=? 
+      ";
+      $result = Database::queryExecute($sql, array($fullname, $email, $phone, $male, $dob, $userid));
+      return $result;
+    }
+
+    catch (PDOException $e) {
+      print_r($e->getMessage());
+      return false;
+    }
   }
   public static function getUserAddress($userid)
   {
