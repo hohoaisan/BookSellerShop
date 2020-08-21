@@ -65,7 +65,8 @@ and bookid = ?";
       return false;
     }
   }
-  public static function getRating($ratingid) {
+  public static function getRating($ratingid)
+  {
     $sql = "select * from rating
     where ratingid = ?";
     try {
@@ -76,7 +77,8 @@ and bookid = ?";
       return false;
     }
   }
-  public static function removeRating($ratingid) {
+  public static function removeRating($ratingid)
+  {
     $sql = "delete from rating
     where ratingid = ?";
     try {
@@ -85,6 +87,48 @@ and bookid = ?";
     } catch (PDOException $e) {
       print_r($e->getMessage());
       return false;
+    }
+  }
+  public static function createRating($userid, $bookid, $rating, $content) {
+    $sql = "insert into rating (userid, timestamp, bookid, rating, content)
+    values (?,CURRENT_TIMESTAMP(), ?,?,?)
+    ";
+
+    try {
+      $result = Database::queryExecute($sql, array($userid, $bookid, $rating, $content));
+      return $result;
+    } catch (PDOException $e) {
+      print_r($e->getMessage());
+      return false;
+    }
+  }
+
+  public static function checkUserHasRated($userid, $bookid) {
+    $sql = "
+    select ratingid
+from rating
+where userid = ?
+and bookid = ?";
+    try {
+      $result = Database::querySingleResult($sql, array($userid, $bookid));
+      return isset($result['ratingid']);
+    } catch (PDOException $e) {
+      print_r($e->getMessage());
+    }
+  }
+  public static function checkUserHasBoughtBook($userid, $bookid)
+  {
+    $sql = "
+    select count(ordersdetails.bookid) as COUNT
+from ordersdetails, orders
+WHERE ordersdetails.orderid = orders.orderid
+and orders.userid = ?
+and ordersdetails.bookid = ?";
+    try {
+      $result = Database::querySingleResult($sql, array($userid, $bookid));
+      return $result['COUNT'] > 0;
+    } catch (PDOException $e) {
+      print_r($e->getMessage());
     }
   }
 }

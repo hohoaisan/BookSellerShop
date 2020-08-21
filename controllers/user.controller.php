@@ -168,10 +168,14 @@ $user_orderJSON = function ($orderid) {
 };
 
 $user_rating  = function () use($getUserInfo) {
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
   $user = $getUserInfo();
   $userid = $user["userid"];
   $ratinglist = RatingModel::getPurchasedBooksWithRating($userid);
   echo PugFacade::displayFile('../views/home/user/userRating.jade', [
-    'ratinglist' => $ratinglist
+    'ratinglist' => $ratinglist,
+    'messages' => $messages,
+    'errors' => $errors,
   ]);
 };
