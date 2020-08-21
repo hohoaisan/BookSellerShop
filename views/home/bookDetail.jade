@@ -1,152 +1,124 @@
 extends base
 block content
-    if (book)
-        .single_product.p-0(style="margin: 0 10%;")
-            .container-fluid(style=' background-color: #fff; padding: 11px;')
-                .row
-                    .col-lg-6.order-lg-2.order-1
-                        .image_selected
-                            img(src='/assets/img/books/' + book.bookimageurl, alt='')
-                    .col-lg-6.order-3
-                        .product_description
-                            nav
-                                ol.breadcrumb
-                                    li.breadcrumb-item
-                                        a(href='/') Home
-                                    li.breadcrumb-item
-                                        a(href='/books') Books
-                                    li.breadcrumb-item.active= book.categoryname
-                            div.product_name= book.bookname;
-                            div
-                                span.product_price= book.price + " VNĐ"
-                            hr.singleline
-                            .order_info.d-flex.flex-row.input-group.input-group-sm.addToCart.justify-content-center
-                                if (book.quantity)
-                                        .input-group-prepend
-                                            span.input-group-text Số lượng
-                                        input.form-control.addToCartValue.col-3(type="text")(type='number',min = 1, value=1)
-                                        button.btn.btn-primary.btn-sm.add-to-cart.ml-2(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
-                                else 
-                                    button.btn.btn-block.btn-primary.float-right.btn-danger Đã hết hàng
-                            hr.singleline
-                            table.col-md-12
-                                tbody
-                                    if (book.bookpages)
-                                        tr.row.mt-10
-                                            td.col-md-5
-                                                span.p_specification Số trang :
-                                            td.col-md-7
-                                                ul
-                                                    li= book.bookpages + " trang"
-                                    if (book.bookweight)
-                                        tr.row.mt-10
-                                            td.col-md-5
-                                                span.p_specification Book weight :
-                                            td.col-md-7
-                                                ul
-                                                    li= book.bookweight + " gram"
-                                    if (book.releasedate)
-                                        tr.row.mt-10
-                                            td.col-md-5
-                                                span.p_specification Ngày ra mắt :
-                                            td.col-md-7
-                                                ul
-                                                    li= book.releasedate
-                                    if (book.authorname)
-                                        tr.row.mt-10
-                                            td.col-md-5
-                                                span.p_specification Tác giả :
-                                            td.col-md-7
-                                                ul
-                                                    li= book.authorname
-                                    if (book.publisher)
-                                        tr.row.mt-10
-                                            td.col-md-5
-                                                span.p_specification Nhà xuất bản :
-                                            td.col-md-7
-                                                ul
-                                                    li= book.publisher
-                                    if (book.bookbinding)
-                                        tr.row.mt-10
-                                            td.col-md-5
-                                                span.p_specification Hình thức bìa :
-                                            td.col-md-7
-                                                ul
-                                                    li= book.bookbinding
-                if (book.bookdescription)
-                    .row.mt-10
-                        .col-md-12
-                            span.p_specification Nội dung
-                        .col-md-12.p-2
-                            p= book.bookdescription
-                .row
-                    .col-md-12.row-underline
-                        span.deal-text Đánh giá
-                    .col-md-12
-                        .card.mb-2
-                            .card-body
-                                a
-                                    strong Võ Đình Hoàng Long
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                p
-                                | Cuốn sách này rất hay và rất đáng đọc
-                        .card.mb-2
-                            .card-body
-                                a
-                                    strong Võ Đình Hoàng Long
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                p
-                                | Cuốn sách này rất hay và rất đáng đọc
-                        .card.mb-2
-                            .card-body
-                                a
-                                    strong Võ Đình Hoàng Long
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                span.float-right
-                                    i.text-warning.fa.fa-star
-                                p
-                                | Cuốn sách này rất hay và rất đáng đọc
-                        //- if (rating)
-
-                        //- else
-                        //-     .alert.alert-warning Hiện tại chưa có đánh giá nào
-                if (related)        
-                    .row
-                        .col-md-12.row-underline
-                            span.deal-text Sách liên quan
-                        .col-12                                
-                            .row.mb-0.ml-1.mr-1
-                                each book in related
-                                    .col-6.col-sm-4.col-md-3.col-lg-2.pl-1.pr-1.mb-4
-                                        .card.card-inverse.card-info
-                                            a(href='/books/' + book.bookid)
-                                                img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
-                                            .card-block(style="height: 4em; overflow:hidden;")
-                                                .card-title= book.bookname
-                                            .card-footer
-                                                small= book.price + ' đ'
-                                                if (book.quantity)
-                                                    button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) Mua 
-                                                else
-                                                    p.p-0.m-0.text-danger Hết hàng
-    else
-        .alert.alert-warning Có lỗi xảy ra
+  if (book)
+    .single_product.p-0(style="margin: 0 10%;")
+      .container-fluid(style=' background-color: #fff; padding: 11px;')
+        .row
+          .col-lg-6.order-lg-2.order-1
+            .image_selected
+              img(src='/assets/img/books/' + book.bookimageurl, alt='')
+          .col-lg-6.order-3
+            .product_description
+              nav
+                ol.breadcrumb
+                  li.breadcrumb-item
+                    a(href='/') Home
+                  li.breadcrumb-item
+                    a(href='/books') Books
+                  li.breadcrumb-item.active= book.categoryname
+              div.product_name= book.bookname;
+              div
+                span.product_price= book.price + " VNĐ"
+              hr.singleline
+              .order_info.d-flex.flex-row.input-group.input-group-sm.addToCart.justify-content-center
+                if (book.quantity)
+                    .input-group-prepend
+                      span.input-group-text Số lượng
+                    input.form-control.addToCartValue.col-3(type="text")(type='number',min = 1, value=1)
+                    button.btn.btn-primary.btn-sm.add-to-cart.ml-2(type='button', data-bookid=book.bookid, data-hasvalue=1) Mua
+                else 
+                  button.btn.btn-block.btn-primary.float-right.btn-danger Đã hết hàng
+              hr.singleline
+              table.col-md-12
+                tbody
+                  if (book.bookpages)
+                    tr.row.mt-10
+                      td.col-md-5
+                        span.p_specification Số trang :
+                      td.col-md-7
+                        ul
+                          li= book.bookpages + " trang"
+                  if (book.bookweight)
+                    tr.row.mt-10
+                      td.col-md-5
+                        span.p_specification Book weight :
+                      td.col-md-7
+                        ul
+                          li= book.bookweight + " gram"
+                  if (book.releasedate)
+                    tr.row.mt-10
+                      td.col-md-5
+                        span.p_specification Ngày ra mắt :
+                      td.col-md-7
+                        ul
+                          li= book.releasedate
+                  if (book.authorname)
+                    tr.row.mt-10
+                      td.col-md-5
+                        span.p_specification Tác giả :
+                      td.col-md-7
+                        ul
+                          li= book.authorname
+                  if (book.publisher)
+                    tr.row.mt-10
+                      td.col-md-5
+                        span.p_specification Nhà xuất bản :
+                      td.col-md-7
+                        ul
+                          li= book.publisher
+                  if (book.bookbinding)
+                    tr.row.mt-10
+                      td.col-md-5
+                        span.p_specification Hình thức bìa :
+                      td.col-md-7
+                        ul
+                          li= book.bookbinding
+        if (book.bookdescription)
+          .row.mt-10
+            .col-md-12
+              span.p_specification Nội dung
+            .col-md-12.p-2
+              p= book.bookdescription
+        .row
+          .col-md-12.row-underline
+            span.deal-text Đánh giá
+          .col-md-12
+            if (ratings)
+              for item in ratings
+                .card.mb-2
+                  .card-body
+                    a
+                      strong= item.fullname
+                    .float-right
+                      - for (i=1; i<= item.rating; i++)
+                        span
+                          i.text-warning.fa.fa-star
+                      
+                    p.text-muted.m-1.font-italic
+                      | "
+                      = item.content
+                      | "
+                    
+            else
+              .alert.alert-info Hiện tại chưa có đánh giá nào
+        if (related)    
+          .row
+            .col-md-12.row-underline
+              span.deal-text Sách liên quan
+            .col-12                
+              .row.mb-0.ml-1.mr-1
+                each book in related
+                  .col-6.col-sm-4.col-md-3.col-lg-2.pl-1.pr-1.mb-4
+                    .card.card-inverse.card-info
+                      a(href='/books/' + book.bookid)
+                        img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
+                      .card-block(style="height: 4em; overflow:hidden;")
+                        .card-title= book.bookname
+                      .card-footer
+                        small= book.price + ' đ'
+                        if (book.quantity)
+                          button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) Mua 
+                        else
+                          p.p-0.m-0.text-danger Hết hàng
+  else
+    .alert.alert-warning Có lỗi xảy ra

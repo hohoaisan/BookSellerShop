@@ -2,10 +2,11 @@
 include_once('../models/user.model.php');
 include('api.controller.php');
 include('auth.controller.php');
-
+include_once('../models/rating.model.php');
 use Pug\Facade as PugFacade;
 use UserModel\UserModel as UserModel;
 use Status\Status as Status;
+use RatingModel\RatingModel as RatingModel;
 
 $getUserInfo = function () use ($parseUser) {
   $user = $parseUser();
@@ -145,6 +146,11 @@ $user_address_edit = function () use ($parseUser, $user_address_edit_middleware)
 $user_orders  = function () {
   echo PugFacade::displayFile('../views/home/user/userOrders.jade');
 };
-$user_rating  = function () {
-  echo PugFacade::displayFile('../views/home/user/userRating.jade');
+$user_rating  = function () use($getUserInfo) {
+  $user = $getUserInfo();
+  $userid = $user["userid"];
+  $ratinglist = RatingModel::getPurchasedBooksWithRating($userid);
+  echo PugFacade::displayFile('../views/home/user/userRating.jade', [
+    'ratinglist' => $ratinglist
+  ]);
 };

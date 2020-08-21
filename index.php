@@ -33,6 +33,7 @@ $router->mount('/auth', function () use($router) {include('routers/auth.router.p
 $router->mount('/admin', function () use($router) {include('routers/admin.router.php');});
 $router->mount('/api', function () use($router) {include('routers/api.router.php');});
 $router->mount('/user', function () use($router) {include('routers/user.router.php');});
+$router->mount('/rating', function () use($router) {include('routers/rating.router.php');});
 
 
 // Hiển thị trang 404 nếu không tìm thấy

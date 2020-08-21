@@ -11,7 +11,7 @@ class UserModel
   public static function getUserInfo($userid)
   {
     try {
-      $sql = "select userid,username, fullname, phone, email, male,addressid, addresstext, dob
+      $sql = "select userid,username, fullname, phone, email, male,addressid, addresstext, dob, isadmin
           from users
           WHERE userid=?";
       $result = Database::querySingleResult($sql, array($userid));

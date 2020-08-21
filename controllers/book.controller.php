@@ -2,6 +2,8 @@
 
     include('../models/book.model.php');
     include('../modules/pagination.php');
+    include_once('../models/rating.model.php');
+    use RatingModel\RatingModel as RatingModel;
     use Pug\Facade as PugFacade;
     use BookModel\BookModel as BookModel;   
     
@@ -41,10 +43,13 @@
     $bookDetail = function($bookid){
         $book = BookModel::getBookDetail($bookid);
         $related = BookModel::getBookRelated($bookid);
+        $ratings = RatingModel::getBookRatings($bookid);
+
         shuffle($related);
         echo PugFacade::displayFile('../views/home/bookDetail.jade',[
             'book' => $book,
-            'related'=> $related
+            'related'=> $related,
+            'ratings' => $ratings
         ]);
         exit();
     };

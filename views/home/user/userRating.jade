@@ -3,48 +3,32 @@ block profile-content
   h5 Đánh giá sản phầm đã mua
   .row.mt-2.p-2
     .col-12
-      .card.mb-2
-        .card-body.row
-          .col-3.col-md-3.col-lg-2
-            img.img-fluid.rounded.shadow-sm(src='/assets/img/books/anh3.jpg', alt='' width='70')
-          .col.row
-            .col
-              a(href="/books/" + item.bookid)
-                .card-title.mb-2 Tôi tài giỏi bạn cũng thế
-              .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
-              .card-subtitle.text-success= item.price+" đ"
-              a.text-danger.cartRemoveItem(data-bookid=item.bookid)
-                i.fa.fa-trash.p-1
-                | Xoá
-            .col-12.col-md-7.col-sm-12.col-lg-4.mt-2
-              button.btn.btn-sm.btn-success.float-right Đánh giá
-      .card.mb-2
-        .card-body.row
-          .col-3.col-md-3.col-lg-2
-            img.img-fluid.rounded.shadow-sm(src='/assets/img/books/anh3.jpg', alt='' width='70')
-          .col.row
-            .col
-              a(href="/books/" + item.bookid)
-                .card-title.mb-2 Tôi tài giỏi bạn cũng thế
-              .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
-              .card-subtitle.text-success= item.price+" đ"
-              a.text-danger.cartRemoveItem(data-bookid=item.bookid)
-                i.fa.fa-trash.p-1
-                | Xoá
-            .col-12.col-md-7.col-sm-12.col-lg-4.mt-2
-              button.btn.btn-sm.btn-success.float-right Đánh giá
-      .card.mb-2
-        .card-body.row
-          .col-3.col-md-3.col-lg-2
-            img.img-fluid.rounded.shadow-sm(src='/assets/img/books/anh3.jpg', alt='' width='70')
-          .col.row
-            .col
-              a(href="/books/" + item.bookid)
-                .card-title.mb-2 Tôi tài giỏi bạn cũng thế
-              .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
-              .card-subtitle.text-success= item.price+" đ"
-              a.text-danger.cartRemoveItem(data-bookid=item.bookid)
-                i.fa.fa-trash.p-1
-                | Xoá
-            .col-12.col-md-7.col-sm-12.col-lg-4.mt-2
-              button.btn.btn-sm.btn-success.float-right Đánh giá
+      if (ratinglist)
+        for item in ratinglist
+          .card.mb-2
+            .card-body.row
+              .col-3.col-md-3.col-lg-2
+                img.img-fluid.rounded.shadow-sm(src='/assets/img/books/'+item.bookimageurl, alt='' width='70')
+              .col.row
+                .col
+                  a(href="/books/" + item.bookid)
+                    .card-title.mb-2= item.bookname
+                  .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
+                  .card-subtitle.text-success= item.price+" đ"
+                  if (item.ratingid)
+                    .card-subtitle.card-title.font-italic.m-2
+                      | "
+                      = item.content
+                      | "
+                .col-12.col-md-7.col-sm-12.col-lg-4.mt-2.d-flex.flex-column
+                  if (item.ratingid)
+                    button.btn.btn-sm.btn-primary.btn-block Sửa đánh giá
+                    form(action="/rating/"+item.ratingid+"/delete", method="POST")
+                      input(hidden, name="redirecturl", value="/user/rating")
+                      button.btn.btn-sm.btn-danger.mt-2.btn-block(type="submit")
+                        i.fa.fa-trash.p-1
+                        | Xoá đánh giá
+                  else 
+                    button.btn.btn-sm.btn-success.float-right Đánh giá
+      else
+        .alert.alert-info Bạn chưa có sản phẩm nào đã mua, hãy mua và đánh giá!
