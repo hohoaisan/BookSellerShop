@@ -61,7 +61,17 @@ class UserModel
     }
   }
 
-  public static function getUserOrders()
+  public static function getUserOrders($userid)
   {
+    try {
+      $sql = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, orderstatus, timestamp, totalmoney
+          from orders
+          WHERE userid=?
+          order by timestamp";
+      $result = Database::queryResults($sql, array($userid));
+      return $result;
+    } catch (PDOException $e) {
+      return false;
+    }
   }
 }

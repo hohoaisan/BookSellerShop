@@ -13,5 +13,6 @@ $router->post('/profile', $user_profile_edit);
 $router->get('/address', $user_address);
 $router->post('/address/edit', $user_address_edit);
 $router->get('/orders', $user_orders);
+$router->get('/orders/{orderid}', $user_orderJSON);
 $router->get('/rating', $user_rating);
 ?>

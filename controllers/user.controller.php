@@ -7,6 +7,7 @@ use Pug\Facade as PugFacade;
 use UserModel\UserModel as UserModel;
 use Status\Status as Status;
 use RatingModel\RatingModel as RatingModel;
+use AdminModel\AdminModel as AdminModel;
 
 $getUserInfo = function () use ($parseUser) {
   $user = $parseUser();
@@ -143,9 +144,29 @@ $user_address_edit = function () use ($parseUser, $user_address_edit_middleware)
   
 };
 
-$user_orders  = function () {
-  echo PugFacade::displayFile('../views/home/user/userOrders.jade');
+$user_orders  = function () use ($parseUser){
+  $errors = Status::getErrors();
+  $messages = Status::getMessages();
+  $user = $parseUser();
+  $userid = $user['userid'];
+  $result = UserModel::getUserOrders($userid);
+  if(!isset($result)){
+    Status::addError("Có lỗi xảy ra");
+  }
+  //print_r($result);
+  echo PugFacade::displayFile('../views/home/user/userOrders.jade',[
+    'errors' => $errors,
+    'messages' => $messages,
+    'orders' => $result
+  ]);
 };
+
+$user_orderJSON = function ($orderid) {
+  $result = AdminModel::getOrder($orderid);
+  $result["books"] =  AdminModel::getOrderDetail($orderid);
+  echo json_encode($result, JSON_UNESCAPED_UNICODE);
+};
+
 $user_rating  = function () use($getUserInfo) {
   $user = $getUserInfo();
   $userid = $user["userid"];

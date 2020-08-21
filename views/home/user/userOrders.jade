@@ -1,71 +1,114 @@
 extends base
 block profile-content
-  h5 Danh sách đơn hàng
-  .row.mt-2.p-2
-    .col-12
-      table.table.table-sm
-        thead
-          tr
-            th Tình trạng
-            th Mã đơn hàng
-            th Người nhận
-            th Ngày đặt
-            th Tổng giá trị
-            th Thao tác
-        tbody
-          tr
-            td.text-success Đã thanh toán
-            td 3242
-            td Hồ Hoài Sản
-            td 29/12/2020
-            td 18000  0
-            td.tablecell-action
-              .btn-group
-                button.btn.btn-sm.btn-outline-primary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                  | Action
-                .dropdown-menu
-                  button.dropdown-item.btn.btn-primary(type='button' data-toggle='modal' data-target='#orderModal', data-id=order.orderid) Xem thông tin chi tiết đơn hàng
-                  .dropdown-divider
-                  form(action="" method="post")
-                    button(type="submit").dropdown-item.text-primary Huỷ đơn hàng
-                  
-          
-          tr
-            td.text-warning Chờ thanh toán
-            td 3423
-            td Hồ Hoài Sản
-            td 23/4/2020
-            td 19120
-            
-          tr
-            td.text-success Đã thanh toán
-            td 4342
-            td Hồ Hoài Sản
-            td 1/6/2020
-            td 140000
-            
-          tr
-            td.text-primary Chờ xác nhận
-            td 3234
-            td Hồ Hoài Sản
-            td 29/12/2019
-            td 320000
-            
-          //- each order in orders
-          //-   tr(class=order.orderstatus)
-          //-     case order.orderstatus
-          //-       when 'p'
-          //-         td.text-primary Chờ xác nhận
-          //-       when 'c'
-          //-         td.text-success Đã thanh toán
-          //-       when 'a'
-          //-         td.text-warning Chờ thanh toán
-          //-       when 'r'
-          //-         td.text-danger Đã từ chối
-          //-       when 'e'
-          //-         td.text-danger Lỗi 
-          //-     td= order.orderid
-          //-     td= order.fullname
-          //-     td= order.receivername
-          //-     td= order.timestamp
-          //-     td= order.totalmoney
+  #orderModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='orderModal' aria-hidden='true')
+    .modal-dialog.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          h5#orderModalLabel.modal-title Xem thông tin đơn hàng
+            span.ml-2#orderID
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          div
+            p.detail-title.mb-0 Tên người nhận
+            p#orderName
+            p.detail-title.mb-0 Địa chỉ
+            p#orderAddress
+            p.detail-title.mb-0 Số điện thoại
+            p#orderPhone
+            p.detail-title.mb-0 Tổng số tiền
+            p#orderTotal
+            p.detail-title.mb-0 Hình thức giao hàng
+            p#orderShipping
+            p.detail-title.mb-0 Hình thức thanh toán
+            p#orderPayment
+            p.detail-title.mb-0 Chi tiết đơn hàng
+          table.table.table-sm.table-bordered.mt-2.table-striped
+            thead
+              tr
+                th Mã sách
+                th Tên sách
+                th Số lượng
+                th Tổng tiền
+            tbody#orderList 
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng
+  if (messages)
+    each message in messages
+      .alert.alert-success= message
+  if (errors)
+    each error in errors
+      .alert.alert-warning= error
+  if (orders)
+    h5 Danh sách đơn hàng
+    .row.mt-2.p-2
+      .col-12
+        table.table.table-sm
+          thead
+            tr
+              th Tình trạng
+              th Mã đơn hàng
+              th Người nhận
+              th Ngày đặt
+              th Tổng giá trị
+              th 
+          tbody
+            each order in orders
+              tr(class= order.orderstatus)
+                case order.orderstatus
+                  when 'p'
+                    td.text-primary Chờ xác nhận
+                  when 'c'
+                    td.text-success Đã thanh toán
+                  when 'a'
+                    td.text-warning Chờ thanh toán
+                  when 'r'
+                    td.text-danger Đã từ chối
+                  when 'e'
+                    td.text-danger Lỗi 
+                td= order.orderid
+                td= order.fullname
+                td= order.timestamp
+                td= order.totalmoney
+                td.tablecell-action
+                  button.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#orderModal', data-id=order.orderid, style="padding: .3rem; font-size: 14px") Xem chi tiết
+  else
+    .alert.alert-warning Danh sách đơn đặt trống
+append external
+  script.
+    renderOrderDetailList = function(list) {
+
+      let table = document.querySelector('#orderList');
+      table.innerHTML = "";
+      for (book of list) {
+        console.log(book);
+        let row = document.createElement('tr');
+        row.innerHTML = `
+        <td>${book.bookid}</td>
+        <td>${book.bookname}</td>
+        <td>${book.qtyordered}</td>
+        <td>${book.amount}</td>
+        `;
+        table.appendChild(row);
+
+      }
+    }
+    $('#orderModal').on('show.bs.modal', async function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    console.log(id);
+    $('#orderID').text(id);
+    
+      let data = await axios.get('/user/orders/'+id).then((res)=>{
+      return res.data;
+    });
+    let name = (!!data.receivername)?data.receivername:data.fullname;
+    $('#orderName').text(name);
+    $('#orderPhone').text(data.phone);
+    $('#orderAddress').text(data.address);
+    $('#orderTotal').text(data.totalmoney);
+    $('#orderPayment').text(data.payment);
+    $('#orderShipping').text(data.shipping);
+    renderOrderDetailList(data.books);
+    var modal = $(this);
+    })          
