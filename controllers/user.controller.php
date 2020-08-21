@@ -185,15 +185,34 @@ $user_orderJSON = function ($orderid) {
   echo json_encode($result, JSON_UNESCAPED_UNICODE);
 };
 
-$user_rating  = function () use($getUserInfo) {
+$user_rating  = function () use($getUserInfo, $paginationGenerator) {
+  //pagination
+  try {
+    $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+  } catch (Exception $e) {
+    $currentPage = 1;
+  }
+  $itemperpage = 2;
+
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $user = $getUserInfo();
   $userid = $user["userid"];
-  $ratinglist = RatingModel::getPurchasedBooksWithRating($userid);
+  
+  $fetch = RatingModel::getPurchasedBooksWithRating($userid, $currentPage, $itemperpage);
+  if (!$fetch) {
+    array_push($errors, "Có lỗi xảy ra");
+    $ratinglist = [];
+  }
+  $ratinglist = $fetch['result']; 
+  $num_records = $fetch['rowcount']; 
+  $num_page = ceil($num_records / $itemperpage); 
+  $pagination = $paginationGenerator($currentPage, $num_page);
   echo PugFacade::displayFile('../views/home/user/userRating.jade', [
     'ratinglist' => $ratinglist,
     'messages' => $messages,
     'errors' => $errors,
+    'pagination' => $pagination,
+    'pagination_current_page' => $currentPage
   ]);
 };

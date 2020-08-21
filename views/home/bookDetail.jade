@@ -98,7 +98,10 @@ block content
                         | "
                         = item.content
                         | "
-                    
+              ul.pagination.float-right
+                each page in pagination
+                  li.page-item(class=(page.index==pagination_current_page)?"active":"")
+                      a.page-link(href=page.url)= page.index      
             else
               .alert.alert-info Hiện tại chưa có đánh giá nào
         if (related)    

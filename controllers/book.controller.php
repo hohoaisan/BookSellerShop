@@ -40,16 +40,28 @@
         exit();
     };
 
-    $bookDetail = function($bookid){
+    $bookDetail = function($bookid) use ($paginationGenerator){
+        try {
+            $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+        } catch (Exception $e) {
+            $currentPage = 1;
+        }
+        $itemperpage = 2;
+
         $book = BookModel::getBookDetail($bookid);
         $related = BookModel::getBookRelated($bookid);
-        $ratings = RatingModel::getBookRatings($bookid);
-
+        $fetch_ratings = RatingModel::getBookRatings($bookid,  $currentPage, $itemperpage);
+        $ratings = $fetch_ratings['result'];
+        $num_records = $fetch_ratings['rowcount'];
+        $num_page = ceil($num_records / $itemperpage);
+        $pagination = $paginationGenerator($currentPage, $num_page);
         shuffle($related);
         echo PugFacade::displayFile('../views/home/bookDetail.jade',[
             'book' => $book,
             'related'=> $related,
-            'ratings' => $ratings
+            'ratings' => $ratings,
+            'pagination' => $pagination,
+            'pagination_current_page' => $currentPage
         ]);
         exit();
     };

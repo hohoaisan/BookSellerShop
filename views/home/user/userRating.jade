@@ -59,6 +59,10 @@ block profile-content
                         | Xoá đánh giá
                   else 
                     button.btn.btn-sm.btn-success.float-right(type='button', data-toggle='modal', data-target='#ratingModal', data-bookname= item.bookname, data-bookid= item.bookid) Đánh giá
+        ul.pagination.float-right
+          each page in pagination
+            li.page-item(class=(page.index==pagination_current_page)?"active":"")
+                a.page-link(href=page.url)= page.index     
       else
         .alert.alert-info Bạn chưa có sản phẩm nào đã mua, hãy mua và đánh giá!
 append external
