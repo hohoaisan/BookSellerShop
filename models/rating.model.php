@@ -28,7 +28,8 @@ FROM
 	books,
 	`authors` 
 WHERE
-	ordersdetails.orderid = orders.orderid 
+  orders.orderstatus = 'c'
+  AND ordersdetails.orderid = orders.orderid 
 	AND orders.userid = :userid 
 	AND ordersdetails.bookid IN ( SELECT DISTINCT ordersdetails.bookid FROM ordersdetails, orders WHERE ordersdetails.orderid = orders.orderid AND orders.userid = :userid ) 
 	AND ordersdetails.bookid = books.bookid 
@@ -102,7 +103,22 @@ and bookid = ?";
       return false;
     }
   }
+  public static function editRating($ratingid, $rating, $content) {
+    $sql = "update rating
+    set rating=?,
+        content=?,
+        timestamp=CURRENT_TIMESTAMP()
+    where ratingid=?
+    ";
 
+    try {
+      $result = Database::queryExecute($sql, array($rating, $content, $ratingid));
+      return $result;
+    } catch (PDOException $e) {
+      print_r($e->getMessage());
+      return false;
+    }
+  }
   public static function checkUserHasRated($userid, $bookid) {
     $sql = "
     select ratingid
@@ -131,4 +147,5 @@ and ordersdetails.bookid = ?";
       print_r($e->getMessage());
     }
   }
+
 }

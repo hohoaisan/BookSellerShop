@@ -29,7 +29,7 @@ $postSetRating = function() {
     exit();
   }
 
-  if (!isset($_POST["bookid"]) || !$_POST["bookid"]) {
+  if (!isset($_POST["content"]) || !$_POST["content"]) {
     array_push($errors, "Phải có nội dung đánh giá");
   }
   if (count($errors)) {
@@ -102,5 +102,42 @@ $removeRating = function ($ratingid) use ($verifyRatingOwner) {
     http_response_code(500);
   }
 };
-$editRating = function ($ratingid) {
+$editRating = function ($ratingid) use ($verifyRatingOwner) {
+  $errors = [];
+  if (!isset($_POST["rating"]) || $_POST["rating"] < 1 || $_POST["rating"] > 5) {
+    http_response_code(403);
+    exit();
+  }
+
+  if (!isset($_POST["content"]) || !$_POST["content"]) {
+    array_push($errors, "Phải có nội dung đánh giá");
+  }
+  if (count($errors)) {
+    if ($_POST["redirecturl"]) {
+      Status::addErrors($errors);
+      header('location: ' . $_POST["redirecturl"]);
+    }
+    http_response_code(403);
+  }
+  else {
+    $verifyRatingOwner($ratingid);
+    $rating = $_POST["rating"];
+    $content = isset($_POST["content"])?$_POST["content"]:"";
+    $result = RatingModel::editRating($ratingid, $rating, $content);
+    if ($result) {
+      if ($_POST["redirecturl"]) {
+        Status::addMessage("Đã sửa đánh giá");
+        header('location: ' . $_POST["redirecturl"]);
+        exit();
+      }
+    }
+    else {
+      if ($_POST["redirecturl"]) {
+        Status::addError("Có lỗi xảy ra khi sửa đánh giá");
+        // header('location: ' . $_POST["redirecturl"]);
+        exit();
+      }
+      http_response_code(500);
+    }
+  }
 };
