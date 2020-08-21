@@ -160,7 +160,6 @@ $user_orders  = function () use ($parseUser, $paginationGenerator){
   $itemperpage = 4;
 
   $fetch = UserModel::getUserOrders($userid, $currentPage, $itemperpage);
-  //print_r($fetch);
   if (!$fetch) {
     array_push($errors, "Có lỗi xảy ra");
     $result = [];
