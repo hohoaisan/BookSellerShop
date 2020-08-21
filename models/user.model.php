@@ -65,17 +65,14 @@ class UserModel
   {
     try {
       $sql = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, orderstatus, timestamp, totalmoney
-          from orders
-          WHERE userid=?
-          order by timestamp";
-
-        $queryFull = Database::queryResults($sql, array($userid));
-        $rowcount = count($queryFull);
+          from orders WHERE userid=? order by timestamp ASC";
+      $queryFull = Database::queryResults($sql, array($userid));
+      $rowcount = count($queryFull);
 
       //pagination
       $begin = ($currentPage - 1) * $itemperpage;
       $sqlPagination = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, orderstatus, timestamp, totalmoney
-      from orders WHERE userid=? order by timestamp limit $begin, $itemperpage";
+      from orders WHERE userid=? order by timestamp ASC limit $begin, $itemperpage";
       $result = Database::queryResults($sqlPagination, array($userid));
       return [
         'result' => $result,
