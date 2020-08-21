@@ -93,11 +93,11 @@ block content
                       - for (i=1; i<= item.rating; i++)
                         span
                           i.text-warning.fa.fa-star
-                      
-                    p.text-muted.m-1.font-italic
-                      | "
-                      = item.content
-                      | "
+                    if (item.content)  
+                      p.text-muted.m-1.font-italic
+                        | "
+                        = item.content
+                        | "
                     
             else
               .alert.alert-info Hiện tại chưa có đánh giá nào

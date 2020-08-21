@@ -1,5 +1,30 @@
 extends base
 block profile-content
+  #ratingModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ratingModal', aria-hidden='true')
+    form#ratingModalForm(action="/rating/create", method="POST")
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#ratingModalLabel.modal-title Đánh giá sản phẩm
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body
+            input(hidden, name="bookid", value="")
+            input(hidden, name="redirecturl", value="/user/rating")
+            .form-group
+              label Đánh giá
+              select.form-control(name="rating")
+                option(value=5) 5 sao
+                option(value=4) 4 sao
+                option(value=3) 3 sao
+                option(value=2) 2 sao
+                option(value=1) 1 sao
+            .form-group
+              label Nhận xét
+              textarea.form-control(placeholder="Ghi nhận xét", name="content")
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-primary(type='submit') Lưu
   h5 Đánh giá sản phầm đã mua
   .row.mt-2.p-2
     .col-12
@@ -16,19 +41,51 @@ block profile-content
                   .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
                   .card-subtitle.text-success= item.price+" đ"
                   if (item.ratingid)
-                    .card-subtitle.card-title.font-italic.m-2
-                      | "
-                      = item.content
-                      | "
+                    - for (i=1; i<= item.rating; i++)
+                      span
+                        i.text-warning.fa.fa-star
+                    if (item.content)
+                      .card-subtitle.card-title.font-italic.m-2
+                        | "
+                        = item.content
+                        | "
                 .col-12.col-md-7.col-sm-12.col-lg-4.mt-2.d-flex.flex-column
                   if (item.ratingid)
-                    button.btn.btn-sm.btn-primary.btn-block Sửa đánh giá
+                    button.btn.btn-sm.btn-primary.btn-block(type='button', data-toggle='modal', data-target='#ratingModal', data-id= item.ratingid, data-bookname= item.bookname, data-bookid= item.bookid, data-rating= item.rating, data-content= item.content) Sửa đánh giá
                     form(action="/rating/"+item.ratingid+"/delete", method="POST")
                       input(hidden, name="redirecturl", value="/user/rating")
                       button.btn.btn-sm.btn-danger.mt-2.btn-block(type="submit")
                         i.fa.fa-trash.p-1
                         | Xoá đánh giá
                   else 
-                    button.btn.btn-sm.btn-success.float-right Đánh giá
+                    button.btn.btn-sm.btn-success.float-right(type='button', data-toggle='modal', data-target='#ratingModal', data-bookname= item.bookname, data-bookid= item.bookid) Đánh giá
       else
         .alert.alert-info Bạn chưa có sản phẩm nào đã mua, hãy mua và đánh giá!
+append external
+  script.
+    let abc;
+    $('#ratingModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    var bookname = button.data('bookname');
+    var bookid = button.data('bookid');
+    var content = button.data('content');
+    var rating = button.data('rating');
+    var modal = $(this);
+    if (id) {
+      modal.find('.modal-title').text('Sửa đánh giá sách '+bookname);
+      modal.find('.modal-body textarea[name="content"]').val(content);
+      modal.find('.modal-body select[name="rating"]').val(rating);
+      modal.find('.modal-body input[name="bookid"]').prop('disabled', true);
+      modal.find('#ratingModalForm').attr('action', `/rating/${id}/edit`);
+    }
+    else {
+      modal.find('.modal-title').text('Đánh giá sách '+bookname);
+      modal.find('#ratingModalForm').attr('action', `/rating/create`);
+      modal.find('.modal-body select[name="rating"]').val(5);
+      modal.find('.modal-body textarea[name="content"]').val("");
+      modal.find('.modal-body input[name="bookid"]').prop('disabled', false);
+      modal.find('.modal-body input[name="bookid"]').val(bookid);
+      abc = modal.find('.modal-body input[name="bookid"]');
+    }
+    })
