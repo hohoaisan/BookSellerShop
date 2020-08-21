@@ -72,8 +72,14 @@ block profile-content
                 td= order.totalmoney
                 td.tablecell-action
                   button.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#orderModal', data-id=order.orderid, style="padding: .3rem; font-size: 14px") Xem chi tiết
+    .d-flex.justify-content-center
+      ul.pagination
+        each page in pagination
+          li.page-item(class=(page.index==pagination_current_page)?"active":"")
+            a.page-link(href=page.url)= page.index     
   else
     .alert.alert-warning Danh sách đơn đặt trống
+  
 append external
   script.
     renderOrderDetailList = function(list) {

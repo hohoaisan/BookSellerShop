@@ -3,6 +3,7 @@ include_once('../models/user.model.php');
 include('api.controller.php');
 include('auth.controller.php');
 include_once('../models/rating.model.php');
+include('../modules/pagination.php');
 use Pug\Facade as PugFacade;
 use UserModel\UserModel as UserModel;
 use Status\Status as Status;
@@ -144,20 +145,38 @@ $user_address_edit = function () use ($parseUser, $user_address_edit_middleware)
   
 };
 
-$user_orders  = function () use ($parseUser){
+$user_orders  = function () use ($parseUser, $paginationGenerator){
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $user = $parseUser();
   $userid = $user['userid'];
-  $result = UserModel::getUserOrders($userid);
-  if(!isset($result)){
-    Status::addError("Có lỗi xảy ra");
+  
+  //pagination
+  try {
+    $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
+  } catch (Exception $e) {
+    $currentPage = 1;
   }
-  //print_r($result);
+  $itemperpage = 4;
+
+  $fetch = UserModel::getUserOrders($userid, $currentPage, $itemperpage);
+  //print_r($fetch);
+  if (!$fetch) {
+    array_push($errors, "Có lỗi xảy ra");
+    $result = [];
+  }
+
+  $result = $fetch['result']; 
+  $num_records = $fetch['rowcount']; 
+  $num_page = ceil($num_records / $itemperpage); 
+  $pagination = $paginationGenerator($currentPage, $num_page);
+
   echo PugFacade::displayFile('../views/home/user/userOrders.jade',[
     'errors' => $errors,
     'messages' => $messages,
-    'orders' => $result
+    'orders' => $result,
+    'pagination' => $pagination,
+    'pagination_current_page' => $currentPage
   ]);
 };
 
