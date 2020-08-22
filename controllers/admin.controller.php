@@ -1,29 +1,24 @@
 <?php
-include_once('../models/banner.model.php');
-include_once('../models/author.model.php');
-include_once('../models/category.model.php');
-include_once('../models/book.model.php');
-include_once('../models/user.model.php');
-include_once('../models/order.model.php');
 
-include('../modules/pagination.php');
+
 
 use AuthorModel\AuthorModel as AuthorModel;
 use CategoryModel\CategoryModel as CategoryModel;
 use BookModel\BookModel as BookModel;
 use OrderModel\OrderModel as OrderModel;
 use BannerModel\BannerModel as BannerModel;
-
 use UserModel\UserModel as UserModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
+
+use Pagination\Pagination as Pagination;
 
 
 $index = function () {
   echo PugFacade::displayFile('../views/admin/index.jade');
 };
 
-$orders = function () use ($paginationGenerator) {
+$orders = function () {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   // Xác định có ?filter= hay không, nếu có thì
@@ -67,7 +62,7 @@ $orders = function () use ($paginationGenerator) {
 
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-  $pagination = $paginationGenerator($currentPage, $num_page);
+  $pagination = Pagination::generate($currentPage, $num_page);
   if (!$fetch) {
     array_push($errors, "Có vấn đề xảy ra hoặc danh sách trống");
     $result = [];
@@ -138,7 +133,7 @@ $orderError = function ($orderid) {
 
 
 
-$users = function () use ($paginationGenerator) {
+$users = function () {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
 
@@ -184,7 +179,7 @@ $users = function () use ($paginationGenerator) {
 
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-  $pagination = $paginationGenerator($currentPage, $num_page);
+  $pagination = Pagination::generate($currentPage, $num_page);
 
 
   echo PugFacade::displayFile('../views/admin/users.jade', [
@@ -265,7 +260,7 @@ $getUserJSON = function ($userid) {
 };
 
 
-$books = function () use ($paginationGenerator) {
+$books = function () {
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $title = false;
@@ -295,7 +290,7 @@ $books = function () use ($paginationGenerator) {
   $result = $fetch['result'];
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-  $pagination = $paginationGenerator($currentPage, $num_page);
+  $pagination = Pagination::generate($currentPage, $num_page);
 
   echo PugFacade::displayFile('../views/admin/books.jade', [
     'books' => $result,
@@ -549,7 +544,7 @@ $bookDelete = function ($bookid) {
 };
 
 
-$authors = function () use ($paginationGenerator) {
+$authors = function () {
   //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
@@ -578,7 +573,7 @@ $authors = function () use ($paginationGenerator) {
   $result = $fetch['result'];
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
   $num_page = ceil($num_records / $itemperpage); //Số trang
-  $pagination = $paginationGenerator($currentPage, $num_page);
+  $pagination = Pagination::generate($currentPage, $num_page);
 
   echo PugFacade::displayFile('../views/admin/authors.jade', [
     'authors' => $result,
@@ -747,7 +742,7 @@ $banners = function () {
 };
 
 $bannerAdd = function () {
-  $books = BannerModel::getBooksForBanner();
+  $books = BookModel::getAllBooks();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   echo PugFacade::displayFile('../views/admin/banner.add.jade', [

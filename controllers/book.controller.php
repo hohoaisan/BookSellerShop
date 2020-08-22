@@ -1,14 +1,11 @@
 <?php
 
-    include('../models/book.model.php');
-    include('../modules/pagination.php');
-    include_once('../models/rating.model.php');
     use RatingModel\RatingModel as RatingModel;
     use Pug\Facade as PugFacade;
     use BookModel\BookModel as BookModel;   
-    
+    use Pagination\Pagination as Pagination;
 
-    $index = function () use ($paginationGenerator){ 
+    $index = function () { 
         $query = "";
         if (isset($_GET["query"]) && $_GET["query"] != "") {
             $query = $_GET["query"];
@@ -21,12 +18,12 @@
         }
         $itemperpage = 12;
     
-        $fetch = BookModel::getFullBooks($query, $currentPage, $itemperpage);
+        $fetch = BookModel::getBooks($query, "",  $currentPage, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
         $num_page = ceil($num_records / $itemperpage); //Số trang
-        $pagination = $paginationGenerator($currentPage, $num_page);
+        $pagination = Pagination::generate($currentPage, $num_page);
         if (!$fetch) {
             $result = [];
         }
@@ -40,7 +37,7 @@
         exit();
     };
 
-    $bookDetail = function($bookid) use ($paginationGenerator){
+    $bookDetail = function($bookid) {
         try {
             $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
         } catch (Exception $e) {
@@ -48,13 +45,13 @@
         }
         $itemperpage = 2;
 
-        $book = BookModel::getBookDetail($bookid);
-        $related = BookModel::getBookRelated($bookid);
+        $book = BookModel::getBookDetailAndIncreaseView($bookid);
+        $related = BookModel::getBooksRelated($bookid);
         $fetch_ratings = RatingModel::getBookRatings($bookid,  $currentPage, $itemperpage);
         $ratings = $fetch_ratings['result'];
         $num_records = $fetch_ratings['rowcount'];
         $num_page = ceil($num_records / $itemperpage);
-        $pagination = $paginationGenerator($currentPage, $num_page);
+        $pagination = Pagination::generate($currentPage, $num_page);
         shuffle($related);
         echo PugFacade::displayFile('../views/home/bookDetail.jade',[
             'book' => $book,

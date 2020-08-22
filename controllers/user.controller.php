@@ -1,14 +1,14 @@
 <?php
-include_once('../models/user.model.php');
 include('api.controller.php');
 include('auth.controller.php');
-include_once('../models/rating.model.php');
-include('../modules/pagination.php');
+
 use Pug\Facade as PugFacade;
 use UserModel\UserModel as UserModel;
 use Status\Status as Status;
 use RatingModel\RatingModel as RatingModel;
-use AdminModel\AdminModel as AdminModel;
+use OrderModel\OrderModel as OrderModel;
+use Pagination\Pagination as Pagination;
+
 
 $getUserInfo = function () use ($parseUser) {
   $user = $parseUser();
@@ -145,7 +145,7 @@ $user_address_edit = function () use ($parseUser, $user_address_edit_middleware)
   
 };
 
-$user_orders  = function () use ($parseUser, $paginationGenerator){
+$user_orders  = function () use ($parseUser){
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $user = $parseUser();
@@ -168,7 +168,7 @@ $user_orders  = function () use ($parseUser, $paginationGenerator){
   $result = $fetch['result']; 
   $num_records = $fetch['rowcount']; 
   $num_page = ceil($num_records / $itemperpage); 
-  $pagination = $paginationGenerator($currentPage, $num_page);
+  $pagination = Pagination::generate($currentPage, $num_page);
 
   echo PugFacade::displayFile('../views/home/user/userOrders.jade',[
     'errors' => $errors,
@@ -180,12 +180,12 @@ $user_orders  = function () use ($parseUser, $paginationGenerator){
 };
 
 $user_orderJSON = function ($orderid) {
-  $result = AdminModel::getOrder($orderid);
-  $result["books"] =  AdminModel::getOrderDetail($orderid);
+  $result = OrderModel::getOrder($orderid);
+  $result["books"] =  OrderModel::getOrderDetail($orderid);
   echo json_encode($result, JSON_UNESCAPED_UNICODE);
 };
 
-$user_rating  = function () use($getUserInfo, $paginationGenerator) {
+$user_rating  = function () use($getUserInfo) {
   //pagination
   try {
     $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
@@ -207,7 +207,7 @@ $user_rating  = function () use($getUserInfo, $paginationGenerator) {
   $ratinglist = $fetch['result']; 
   $num_records = $fetch['rowcount']; 
   $num_page = ceil($num_records / $itemperpage); 
-  $pagination = $paginationGenerator($currentPage, $num_page);
+  $pagination = Pagination::generate($currentPage, $num_page);
   echo PugFacade::displayFile('../views/home/user/userRating.jade', [
     'ratinglist' => $ratinglist,
     'messages' => $messages,

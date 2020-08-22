@@ -45,37 +45,14 @@ class AuthorModel
         }
     }
 
-    public static function getSingleAuthor($authorid)
+    public static function getAuthor($authorid)
     {
         $sql = "select authorid, authorname, authordescription from authors where authorid=" . $authorid;
         $result = Database::querySingleResult($sql, array());
         return $result;
     }
 
-    public static function getAuthorBooks($authorid, $page, $itemperpage)
-    {
-        try {
-            //pagination
-            $begin = ($page - 1) * $itemperpage;
-            $sqlfull = "select * from books where authorid like :authorid";
-            $queryFull = Database::queryResults($sqlfull, array(
-                'authorid' => "%" . $authorid . "%"
-            ));
-            $rowcount = count($queryFull);
-
-            $sql = "select * from books where authorid like :authorid limit $begin, $itemperpage";
-            $result = Database::queryResults($sql, array(
-                'authorid' => "%" . $authorid . "%",
-            ));
-            return [
-                'result' => $result,
-                'rowcount' => $rowcount
-            ];
-        } catch (PDOException $e) {
-            print_r($e->getMessage());
-            return false;
-        }
-    }
+    
 
     public static function addAuthor($authorname, $authordescription)
     {

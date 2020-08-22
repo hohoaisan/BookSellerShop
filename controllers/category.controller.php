@@ -1,7 +1,7 @@
 <?php
-    include('../models/category.model.php');
     use Pug\Facade as PugFacade;
     use CategoryModel\CategoryModel as CategoryModel;  
+    use BookModel\BookModel as BookModel;  
     $index = function () {
         header('location: /categories/1');
     };
@@ -26,7 +26,7 @@
         $listCategories = CategoryModel::getCategories();
         $currentCategory = CategoryModel::getSingleCategory($categoryid);
 
-        $fetch = CategoryModel::getCategoryBooks($categoryid, $page, $itemperpage);
+        $fetch = BookModel::getBooksByCategory($categoryid, $page, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng

@@ -1,8 +1,8 @@
 <?php 
-    include('../models/author.model.php');
-    include('../modules/pagination.php');
     use Pug\Facade as PugFacade;
     use AuthorModel\AuthorModel as AuthorModel; 
+    use BookModel\BookModel as BookModel;
+    use Pagination\Pagination as Pagination;
 
     $removeParam = function ($param) {
         $url = $_SERVER['REQUEST_URI'];
@@ -13,7 +13,7 @@
         } else return $url . '?';
     };
 
-    $index = function() use ($paginationGenerator){
+    $index = function() {
         //Pagination
         try {
             $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
@@ -27,7 +27,7 @@
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
         $num_page = ceil($num_records / $itemperpage); //Số trang
-        $pagination = $paginationGenerator($currentPage, $num_page);
+        $pagination = Pagination::generate($currentPage, $num_page);
         if (!$fetch) {
             $result = [];
         }
@@ -49,9 +49,9 @@
         }
         $itemperpage = 12;
     
-        $currentAuthor = AuthorModel::getSingleAuthor($authorid);
+        $currentAuthor = AuthorModel::getAuthor($authorid);
 
-        $fetch = AuthorModel::getAuthorBooks($authorid, $page, $itemperpage);
+        $fetch = BookModel::getBooksByAuthor($authorid, $page, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng

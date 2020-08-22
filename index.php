@@ -6,9 +6,20 @@ if (!isset($_SESSION["cart"])) {
 
 include_once('modules/actionStatus.php');
 include_once('vendor/autoload.php');
-include_once('models/connect.php');
 include_once('modules/Cypher.php');
+include_once('modules/pagination.php');
 
+
+include_once('models/connect.php');
+include_once('models/author.model.php');
+include_once('models/banner.model.php');
+include_once('models/book.model.php');
+include_once('models/category.model.php');
+include_once('models/order.model.php');
+include_once('models/payment.model.php');
+include_once('models/rating.model.php');
+include_once('models/shipping.model.php');
+include_once('models/user.model.php');
 
 
 $router = new \Bramus\Router\Router();

@@ -1,11 +1,8 @@
 <?php
-include_once('../models/payment.model.php');
-include_once('../models/shipping.model.php');
-include_once('../models/order.model.php');
 // include_once('../models/book.model.php');
 include_once('../controllers/auth.controller.php');
 include_once('../controllers/api.controller.php');
-include('../controllers/user.controller.php');
+include_once('../controllers/user.controller.php');
 use BookModel\BookModel as BookModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;

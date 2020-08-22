@@ -220,7 +220,7 @@ class UserModel
   }
 
   #TODO:Auth
-  public static function verifyCredential($username, $password)
+  public static function verifyUser($username, $password)
   {
     try {
       $password =md5(md5($password));

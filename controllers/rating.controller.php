@@ -1,14 +1,10 @@
 <?php
-include_once('../models/rating.model.php');
-include_once('../models/order.model.php');
 include_once('../modules/pagination.php');
 include('user.controller.php');
 
 use RatingModel\RatingModel as RatingModel;
 use OrderModel\OrderModel as OrderModel;
-use Phug\Lexer\State;
 use Status\Status as Status;
-use Pug\Facade as PugFacade;
 
 $getRating = function ($ratingid) {
   $result = RatingModel::getRating($ratingid);

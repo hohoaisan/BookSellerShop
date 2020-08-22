@@ -35,33 +35,6 @@ class CategoryModel
         return $result;
     }
 
-    #TODO: chuyển sang BookModel
-
-    public static function getCategoryBooks($categoryid, $page, $itemperpage)
-    {
-        try {
-            //pagination
-            $begin = ($page - 1) * $itemperpage;
-            $sqlfull = "select * from books where categoryid like :categoryid";
-            $queryFull = Database::queryResults($sqlfull, array(
-                'categoryid' => "%" . $categoryid . "%"
-            ));
-            $rowcount = count($queryFull);
-
-            $sql = "select * from books where categoryid like :categoryid limit $begin, $itemperpage";
-            $result = Database::queryResults($sql, array(
-                'categoryid' => "%" . $categoryid . "%",
-            ));
-            return [
-                'result' => $result,
-                'rowcount' => $rowcount
-            ];
-        } catch (PDOException $e) {
-            print_r($e->getMessage());
-            return false;
-        }
-    }
-
     public static function addCategories($categoryname)
     {
         $sql = "insert into categories (categoryname) value (?)";

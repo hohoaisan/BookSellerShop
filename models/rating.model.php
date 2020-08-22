@@ -3,7 +3,6 @@
 namespace RatingModel;
 
 use Database\Database as Database;
-use Status\Status as Status;
 use PDOException;
 
 class RatingModel

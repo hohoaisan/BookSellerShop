@@ -3,7 +3,6 @@
 namespace OrderModel;
 
 use Database\Database as Database;
-use Status\Status as Status;
 use PDOException;
 
 class OrderModel

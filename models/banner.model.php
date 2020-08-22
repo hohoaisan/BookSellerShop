@@ -18,17 +18,6 @@ class BannerModel
     }
   }
 
-  public static function getBooksForBanner()
-  {
-    try {
-      $sql = "select bookid, bookname from books";
-      $result = Database::queryResults($sql, array());
-      return $result;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
   public static function addBanner($bookid, $customimage)
   {
     $sql = "insert into banner (bookid, customimage) value (?, ?)";

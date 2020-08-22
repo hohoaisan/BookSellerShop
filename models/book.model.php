@@ -7,30 +7,27 @@ use PDOException;
 
 class BookModel
 {
-    public static function getFullBooks($query, $page, $itemperpage)
+    public static function getBook($bookid)
     {
         try {
-            if (!$query || $query == "") {
-                $query = '%';
-            };
-            //pagination
-            $begin = ($page - 1) * $itemperpage;
-            $sqlfull = "select * from books where LOWER(bookname) like LOWER(:query)";
-            $queryFull = Database::queryResults($sqlfull, array(
-                'query' => "%" . $query . "%"
-            ));
-            $rowcount = count($queryFull);
-
-            $sql = "select * from books where LOWER(bookname) like LOWER(:query) order by releasedate desc limit $begin, $itemperpage";
-            $result = Database::queryResults($sql, array(
-                'query' => "%" . $query . "%",
-            ));
-            return [
-                'result' => $result,
-                'rowcount' => $rowcount
-            ];
+            $sql = "select bookid, bookname,bookdescription,bookpages,bookweight,releasedate,authorname, `authors`.authorid,categoryid, price,quantity,bookimageurl, timestamp, publisher, bookbinding
+            from books, `authors`
+            where books.authorid=`authors`.authorid
+            and bookid = ?";
+            $result = Database::querySingleResult($sql, array($bookid));
+            return $result;
         } catch (PDOException $e) {
-            print_r($e->getMessage());
+            return false;
+        }
+    }
+
+    public static function getAllBooks()
+    {
+        try {
+            $sql = "select * from books";
+            $result = Database::queryResults($sql, array());
+            return $result;
+        } catch (PDOException $e) {
             return false;
         }
     }
@@ -39,21 +36,21 @@ class BookModel
         try {
 
             $begin = ($page - 1) * $itemperpage;
-            $sqlCount = "select bookid, bookname, authorname, books.authorid, books.categoryid
-      from books,`authors`,categories
-      WHERE books.authorid = `authors`.authorid
-      and books.categoryid = categories.categoryid
-      having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
-      ";
+            $sqlCount = "select bookid, bookname, authorname, books.authorid, books.categoryid, bookimageurl
+            from books,`authors`,categories
+            WHERE books.authorid = `authors`.authorid
+            and books.categoryid = categories.categoryid
+            having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
+            ";
 
-            $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price
-      from books,`authors`,categories
-      WHERE books.authorid = `authors`.authorid
-      and books.categoryid = categories.categoryid
-      having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
-      order by bookid asc
-      limit $begin, $itemperpage
-      ";
+            $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price, bookimageurl
+            from books,`authors`,categories
+            WHERE books.authorid = `authors`.authorid
+            and books.categoryid = categories.categoryid
+            having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
+            order by bookid asc
+            limit $begin, $itemperpage
+            ";
 
             $queryFull = Database::queryResults($sqlCount, array(
                 ':query' => $query ? "%" . $query . "%" : "%", //Nếu không có từ khoá thì đặt là %
@@ -76,26 +73,26 @@ class BookModel
     }
 
     public static function getLastestBooks($page, $itemperpage)
-        {
-            try {
-                //pagination
-                $begin = ($page - 1) * $itemperpage;
-                $sqlfull = "select * from books";
-                $queryFull = Database::queryResults($sqlfull, array());
-                $rowcount = count($queryFull);
-                //show books each page
-                $sql = "select * from books order by releasedate desc limit $begin, $itemperpage";
-                $result = Database::queryResults($sql, array());
-                return [
+    {
+        try {
+            //pagination
+            $begin = ($page - 1) * $itemperpage;
+            $sqlfull = "select * from books";
+            $queryFull = Database::queryResults($sqlfull, array());
+            $rowcount = count($queryFull);
+            //show books each page
+            $sql = "select * from books order by releasedate desc limit $begin, $itemperpage";
+            $result = Database::queryResults($sql, array());
+            return [
                 'result' => $result,
                 'rowcount' => $rowcount
-                ];
-            } catch (PDOException $e) {
-                print_r($e->getMessage());
-                return false;
-            }
+            ];
+        } catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
         }
-    public static function getBookDetail($bookid)
+    }
+    public static function getBookDetailAndIncreaseView($bookid)
     {
         try {
             $sql = "select b.bookid, b.bookname, b.bookimageurl, b.bookdescription, b.bookpages, b.bookweight, b.	releasedate, a.authorname, c.categoryname, b.price, publisher, bookbinding, quantity
@@ -113,7 +110,7 @@ class BookModel
         }
     }
 
-    public static function getBookRelated($bookid)
+    public static function getBooksRelated($bookid)
     {
         try {
             $sql = "
@@ -155,20 +152,7 @@ class BookModel
             return false;
         }
     }
-    public static function getBook($bookid)
-    {
-        try {
-            $sql = "select bookid, bookname,bookdescription,bookpages,bookweight,releasedate,authorname, `authors`.authorid,categoryid, price,quantity,bookimageurl, timestamp, publisher, bookbinding
-            from books, `authors`
-            where books.authorid=`authors`.authorid
-            and bookid = ?";
-            $result = Database::querySingleResult($sql, array($bookid));
-            return $result;
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
+    
     public static function editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher, $bookbind)
     {
         try {
@@ -211,7 +195,8 @@ class BookModel
         }
     }
 
-    public static function getMostSeller(){
+    public static function getMostSeller()
+    {
         try {
             $sql = "select * from books ORDER BY purchasedcount DESC limit 1,18";
             $result = Database::queryResults($sql, array());
@@ -220,7 +205,8 @@ class BookModel
             return false;
         }
     }
-    public static function getMostPopular(){
+    public static function getMostPopular()
+    {
         try {
             $sql = "select * from books ORDER BY viewcount DESC limit 1,18";
             $result = Database::queryResults($sql, array());
@@ -229,6 +215,53 @@ class BookModel
             return false;
         }
     }
+    public static function getBooksByAuthor($authorid, $page, $itemperpage)
+    {
+        try {
+            //pagination
+            $begin = ($page - 1) * $itemperpage;
+            $sqlfull = "select * from books where authorid like :authorid";
+            $queryFull = Database::queryResults($sqlfull, array(
+                'authorid' => "%" . $authorid . "%"
+            ));
+            $rowcount = count($queryFull);
 
-    
+            $sql = "select * from books where authorid like :authorid limit $begin, $itemperpage";
+            $result = Database::queryResults($sql, array(
+                'authorid' => "%" . $authorid . "%",
+            ));
+            return [
+                'result' => $result,
+                'rowcount' => $rowcount
+            ];
+        } catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+    }
+
+    public static function getBooksByCategory($categoryid, $page, $itemperpage)
+    {
+        try {
+            //pagination
+            $begin = ($page - 1) * $itemperpage;
+            $sqlfull = "select * from books where categoryid like :categoryid";
+            $queryFull = Database::queryResults($sqlfull, array(
+                'categoryid' => "%" . $categoryid . "%"
+            ));
+            $rowcount = count($queryFull);
+
+            $sql = "select * from books where categoryid like :categoryid limit $begin, $itemperpage";
+            $result = Database::queryResults($sql, array(
+                'categoryid' => "%" . $categoryid . "%",
+            ));
+            return [
+                'result' => $result,
+                'rowcount' => $rowcount
+            ];
+        } catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+    }
 }

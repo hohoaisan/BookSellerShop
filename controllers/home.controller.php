@@ -1,15 +1,15 @@
 <?php
-// include_once('../models/book.model.php');
-include_once('../models/banner.model.php');
-include('../modules/pagination.php');
+
 
 use CategoryModel\CategoryModel as CategoryModel;
 use Pug\Facade as PugFacade;
 
 use BannerModel\BannerModel as BannerModel;
 use BookModel\BookModel as BookModel;
+use Pagination\Pagination as Pagination;
 
-$index = function () use ($paginationGenerator) {
+
+$index = function () {
     //Pagination
     try {
         $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
@@ -23,7 +23,7 @@ $index = function () use ($paginationGenerator) {
 
     $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
     $num_page = ceil($num_records / $itemperpage); //Số trang
-    $pagination = $paginationGenerator($currentPage, $num_page);
+    $pagination = Pagination::generate($currentPage, $num_page);
 
     if (!$fetch) {
         $result = [];

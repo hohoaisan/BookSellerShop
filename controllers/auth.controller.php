@@ -1,6 +1,5 @@
 <?php
 
-include_once('../models/user.model.php');
 
 
 use UserModel\UserModel as UserModel;
@@ -157,7 +156,7 @@ $postLogin = function () use ($postLoginRequiredField) {
   $postLoginRequiredField();
   $username = $_POST["username"];
   $password = $_POST["password"];
-  $result = UserModel::verifyCredential($username, $password);
+  $result = UserModel::verifyUser($username, $password);
   if ($result["status"] == 1) {
     $authen = $GLOBALS['cryptor']->encrypt($result['userid']);
     print_r($authen);
