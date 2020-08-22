@@ -47,7 +47,7 @@ use Pug\Facade as PugFacade;
 include_once('controllers/home.controller.php');
 use Home\HomeController;
 
-$router->get('/',Closure::fromCallable('Home\HomeController::index'));
+$router->get('/', 'Home\HomeController@index');
 
 
 // Điều hướng (router) tới các khu vực khác nhau trong website

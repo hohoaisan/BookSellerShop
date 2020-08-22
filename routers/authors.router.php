@@ -1,6 +1,6 @@
 <?php
 use Author\AuthorController;
-$router->get('/', Closure::fromCallable('Author\AuthorController::index'));
-$router->get('/{authorID}', Closure::fromCallable('Author\AuthorController::authorDetail'));
+$router->get('/', 'Author\AuthorController@index');
+$router->get('/{authorID}', 'Author\AuthorController@authorDetail');
 
 ?>
