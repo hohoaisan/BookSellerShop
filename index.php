@@ -22,6 +22,19 @@ include_once('models/shipping.model.php');
 include_once('models/user.model.php');
 
 
+include_once('controllers/admin.controller.php');
+include_once('controllers/api.controller.php');
+include_once('controllers/auth.controller.php');
+include_once('controllers/author.controller.php');
+include_once('controllers/book.controller.php');
+include_once('controllers/cart.controller.php');
+include_once('controllers/category.controller.php');
+include_once('controllers/home.controller.php');
+include_once('controllers/rating.controller.php');
+include_once('controllers/user.controller.php');
+
+
+
 $router = new \Bramus\Router\Router();
 $_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
 use Pug\Facade as PugFacade;
@@ -32,7 +45,9 @@ use Pug\Facade as PugFacade;
 
 // Hiển thị trang chủ
 include_once('controllers/home.controller.php');
-$router->get('/', $index);
+use Home\HomeController;
+
+$router->get('/',Closure::fromCallable('Home\HomeController::index'));
 
 
 // Điều hướng (router) tới các khu vực khác nhau trong website

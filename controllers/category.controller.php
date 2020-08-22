@@ -1,24 +1,28 @@
-<?php
+<?php namespace Category;
+
     use Pug\Facade as PugFacade;
     use CategoryModel\CategoryModel as CategoryModel;  
     use BookModel\BookModel as BookModel;  
-    $index = function () {
-        header('location: /categories/1');
-    };
+    class CategoryController {
 
-    $removeParam = function ($param) {
+    
+    public static function index () {
+        header('location: /categories/1');
+    }
+// TODO:Pagination?
+    public static function removeParam ($param) {
         $url = $_SERVER['REQUEST_URI'];
         $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*$/', '', $url);
         $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*&/', '$1', $url);
         if (strpos($url, '?')) {
             return $url . '&';
         } else return $url . '?';
-    };
-    $categoryBook = function ($categoryid) use ($removeParam){ 
+    }
+    public static function categoryBook ($categoryid){ 
         //Pagination
         try {
             $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $page = 1;
         }
         $itemperpage = 12;
@@ -40,10 +44,11 @@
         'listCategories' => $listCategories,
         'listBooks' => $result,
         'category' => $currentCategory,
-        'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
+        'pagination_url' => self::removeParam('page'), //Lấy url cũ và render mới
         'pagination_pages' => $num_page,
         'pagination_current_page' => $page
         ]);
         exit();
-    };
-?>
+    }
+
+}

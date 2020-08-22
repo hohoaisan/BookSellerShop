@@ -1,23 +1,24 @@
-<?php 
+<?php namespace Author;
     use Pug\Facade as PugFacade;
     use AuthorModel\AuthorModel as AuthorModel; 
     use BookModel\BookModel as BookModel;
     use Pagination\Pagination as Pagination;
-
-    $removeParam = function ($param) {
+class AuthorController {
+    // TODO:switch to new Pagination
+    public static function removeParam($param) {
         $url = $_SERVER['REQUEST_URI'];
         $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*$/', '', $url);
         $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*&/', '$1', $url);
         if (strpos($url, '?')) {
             return $url . '&';
         } else return $url . '?';
-    };
+    } 
 
-    $index = function() {
+    public static function index() {
         //Pagination
         try {
             $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $currentPage = 1;
         }
         $itemperpage = 6;
@@ -39,12 +40,12 @@
         'pagination_current_page' => $currentPage
         ]);
         exit();
-    };
+    } 
 
-    $authorDetail = function($authorid) use ($removeParam){
+    public static function authorDetail($authorid){
         try {
             $page = intval(isset($_GET['page']) ? $_GET['page'] : 1);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $page = 1;
         }
         $itemperpage = 12;
@@ -64,11 +65,12 @@
         echo PugFacade::displayFile('../views/home/authorDetail.jade', [
         'listBooks' => $result,
         'author' => $currentAuthor,
-        'pagination_url' => $removeParam('page'), //Lấy url cũ và render mới
+        'pagination_url' => self::removeParam('page'), //Lấy url cũ và render mới
         'pagination_pages' => $num_page,
         'pagination_current_page' => $page
         ]);
         exit();
         // echo PugFacade::displayFile('../views/home/authorDetail.jade');
-    };
-?>
+    } 
+
+}

@@ -1,7 +1,6 @@
 <?php
-include('../controllers/author.controller.php');
-
-$router->get('/', $index);
-$router->get('/{authorID}', $authorDetail);
+use Author\AuthorController;
+$router->get('/', Closure::fromCallable('Author\AuthorController::index'));
+$router->get('/{authorID}', Closure::fromCallable('Author\AuthorController::authorDetail'));
 
 ?>

@@ -1,21 +1,23 @@
-<?php
-include_once('../modules/pagination.php');
+<?php namespace Rating;
 include('user.controller.php');
 
 use RatingModel\RatingModel as RatingModel;
 use OrderModel\OrderModel as OrderModel;
 use Status\Status as Status;
+use User\UserController;
 
-$getRating = function ($ratingid) {
+
+class RatingController {
+public static function getRating($ratingid) {
   $result = RatingModel::getRating($ratingid);
   if ($result) {
     echo json_encode($result, JSON_UNESCAPED_UNICODE);
   } else {
     http_response_code(404);
   }
-};
+}
 
-$postSetRating = function() {
+public static function postSetRating() {
   $errors = [];
   if (!isset($_POST["bookid"]) || !$_POST["bookid"]) {
     http_response_code(403);
@@ -37,12 +39,12 @@ $postSetRating = function() {
     }
     http_response_code(403);
   }
-};
+}
 
-$setRating = function () use ($getUserInfo, $postSetRating) {
-  $postSetRating();
+public static function setRating() {
+  self::postSetRating();
   $bookid = $_POST["bookid"];
-  $user = $getUserInfo();
+  $user = UserController::getUserInfo();
   $checkBoughtBook = OrderModel::checkUserHasBoughtBook($user['userid'], $bookid);
   $checkHasComment = RatingModel::checkUserHasRated($user['userid'], $bookid);
   if ($checkBoughtBook && !$checkHasComment) {
@@ -68,21 +70,21 @@ $setRating = function () use ($getUserInfo, $postSetRating) {
   http_response_code(403);
   exit();
 
-};
+}
 
 
-$verifyRatingOwner = function ($ratingid) use ($getUserInfo) {
-  $user = $getUserInfo();
+public static function verifyRatingOwner($ratingid){
+  $user = UserController::getUserInfo();
   $rating = RatingModel::getRating($ratingid);
   if ($rating['userid'] == $user['userid'] || $user['isadmin'] == '1') {
   } else {
     http_response_code(403);
     exit();
   }
-};
+}
 
-$removeRating = function ($ratingid) use ($verifyRatingOwner) {
-  $verifyRatingOwner($ratingid);
+public static function removeRating ($ratingid){
+  self::verifyRatingOwner($ratingid);
   $result = RatingModel::removeRating($ratingid);
   if ($result) {
     if ($_POST["redirecturl"]) {
@@ -99,8 +101,8 @@ $removeRating = function ($ratingid) use ($verifyRatingOwner) {
     }
     http_response_code(500);
   }
-};
-$editRating = function ($ratingid) use ($verifyRatingOwner) {
+}
+public static function editRating ($ratingid){
   $errors = [];
   if (!isset($_POST["rating"]) || $_POST["rating"] < 1 || $_POST["rating"] > 5) {
     http_response_code(403);
@@ -118,7 +120,7 @@ $editRating = function ($ratingid) use ($verifyRatingOwner) {
     http_response_code(403);
   }
   else {
-    $verifyRatingOwner($ratingid);
+    self::verifyRatingOwner($ratingid);
     $rating = $_POST["rating"];
     $content = isset($_POST["content"])?$_POST["content"]:"";
     $result = RatingModel::editRating($ratingid, $rating, $content);
@@ -138,4 +140,5 @@ $editRating = function ($ratingid) use ($verifyRatingOwner) {
       http_response_code(500);
     }
   }
-};
+}
+}

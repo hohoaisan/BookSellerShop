@@ -1,6 +1,7 @@
 <?php
-include('../controllers/book.controller.php');
+// include('../controllers/book.controller.php');
 
-$router->get('/', $index);
-$router->get('/{bookid}', $bookDetail);
+use Book\BookController;
+$router->get('/', Closure::fromCallable('Book\BookController::index'));
+$router->get('/{bookid}', Closure::fromCallable('Book\BookController::bookDetail'));
 ?>

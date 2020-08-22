@@ -1,7 +1,8 @@
 <?php 
-    include('../controllers/rating.controller.php');
-    $router->post('/{ratingid}/delete', $removeRating);
-    $router->post('/{ratingid}/edit', $editRating);
-    $router->post('/create', $setRating);
-    $router->get('/{ratingid}/', $getRating);
+use Rating\RatingController;
+
+    $router->post('/{ratingid}/delete', Closure::fromCallable('Rating\RatingController::removeRating'));
+    $router->post('/{ratingid}/edit', Closure::fromCallable('Rating\RatingController::editRating'));
+    $router->post('/create', Closure::fromCallable('Rating\RatingController::setRating'));
+    $router->get('/{ratingid}/', Closure::fromCallable('Rating\RatingController::getRating'));
 ?>

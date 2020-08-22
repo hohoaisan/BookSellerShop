@@ -1,11 +1,11 @@
-<?php
+<?php namespace Book;
 
     use RatingModel\RatingModel as RatingModel;
     use Pug\Facade as PugFacade;
     use BookModel\BookModel as BookModel;   
     use Pagination\Pagination as Pagination;
-
-    $index = function () { 
+class BookController {
+    public static function index() { 
         $query = "";
         if (isset($_GET["query"]) && $_GET["query"] != "") {
             $query = $_GET["query"];
@@ -13,7 +13,7 @@
         //Pagination
         try {
             $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $currentPage = 1;
         }
         $itemperpage = 12;
@@ -35,12 +35,12 @@
         'pagination_current_page' => $currentPage
         ]);
         exit();
-    };
+    }
 
-    $bookDetail = function($bookid) {
+    public static function bookDetail($bookid) {
         try {
             $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $currentPage = 1;
         }
         $itemperpage = 2;
@@ -61,4 +61,5 @@
             'pagination_current_page' => $currentPage
         ]);
         exit();
-    };
+    }
+}
