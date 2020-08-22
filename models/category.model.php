@@ -1,40 +1,97 @@
 <?php
-    namespace CategoryPage;
 
-    use Database\Database as Database;  
-    use Status\Status as Status;
-    use PDOException;
+namespace CategoryModel;
 
-    class CategoryPage
+use Database\Database as Database;
+use PDOException;
+
+class CategoryModel
+{
+    public static function getCategories()
     {
-        public static function getSingleCategory($categoryid){
-            $sql = "select categoryname, categoryid from categories where categoryid=".$categoryid;
-            $result = Database::querySingleResult($sql, array());
+        try {
+            $sql = "select categoryid, categoryname from categories";
+            $result = Database::queryResults($sql, array());
             return $result;
-        }
-        public static function getCategoryBooks($categoryid, $page, $itemperpage)
-        {
-            try {
-                //pagination
-                $begin = ($page - 1) * $itemperpage;
-                $sqlfull = "select * from books where categoryid like :categoryid";
-                $queryFull = Database::queryResults($sqlfull, array(
-                'categoryid' => "%" . $categoryid . "%"
-                ));
-                $rowcount = count($queryFull);
-    
-                $sql = "select * from books where categoryid like :categoryid limit $begin, $itemperpage";
-                $result = Database::queryResults($sql, array(
-                'categoryid' => "%" . $categoryid . "%",
-                ));
-                return [
-                'result' => $result,
-                'rowcount' => $rowcount
-                ];
-            } catch (PDOException $e) {
-                print_r($e->getMessage());
-                return false;
-            }
+        } catch (PDOException $e) {
+            return false;
         }
     }
-?>
+
+    public static function getLimitedCategory($limit = 7)
+    {
+        try {
+            $sql = "select categoryid, categoryname from categories order by categoryid ASC limit 0," . $limit;
+            $result = Database::queryResults($sql, array());
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public static function getSingleCategory($categoryid)
+    {
+        $sql = "select categoryname, categoryid from categories where categoryid=" . $categoryid;
+        $result = Database::querySingleResult($sql, array());
+        return $result;
+    }
+
+    #TODO: chuyển sang BookModel
+
+    public static function getCategoryBooks($categoryid, $page, $itemperpage)
+    {
+        try {
+            //pagination
+            $begin = ($page - 1) * $itemperpage;
+            $sqlfull = "select * from books where categoryid like :categoryid";
+            $queryFull = Database::queryResults($sqlfull, array(
+                'categoryid' => "%" . $categoryid . "%"
+            ));
+            $rowcount = count($queryFull);
+
+            $sql = "select * from books where categoryid like :categoryid limit $begin, $itemperpage";
+            $result = Database::queryResults($sql, array(
+                'categoryid' => "%" . $categoryid . "%",
+            ));
+            return [
+                'result' => $result,
+                'rowcount' => $rowcount
+            ];
+        } catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+    }
+
+    public static function addCategories($categoryname)
+    {
+        $sql = "insert into categories (categoryname) value (?)";
+        try {
+            Database::queryExecute($sql, array($categoryname));
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function editCategories($categoryid, $categoryname)
+    {
+        $sql = "update categories set categoryname=? where categoryid=?";
+        try {
+            Database::queryExecute($sql, array($categoryname, $categoryid));
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function removeCategories($categoryid)
+    {
+        $sql = "delete from categories where categoryid=?";
+        try {
+            $result = Database::queryExecute($sql, array($categoryid));
+            return !!$result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+}

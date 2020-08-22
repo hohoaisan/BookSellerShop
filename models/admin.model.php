@@ -9,95 +9,6 @@ use PDOException;
 class AdminModel
 {
 
-  //for banner
-  public static function getBanners()
-  {
-    try {
-      $sql = "select bookid, customimage from banner";
-      $result = Database::queryResults($sql, array());
-      return $result;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
-  public static function getBooksForBanner()
-  {
-    try {
-      $sql = "select bookid, bookname from books";
-      $result = Database::queryResults($sql, array());
-      return $result;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
-  public static function addBanner($bookid, $customimage)
-  {
-    $sql = "insert into banner (bookid, customimage) value (?, ?)";
-    try {
-      Database::queryExecute($sql, array($bookid, $customimage));
-      return true;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
-  public static function removeBanner($bookid)
-  {
-    $sql = "delete from banner where bookid=?";
-    try {
-      $result = Database::queryExecute($sql, array($bookid));
-      return !!$result;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
-  //for categories
-  public static function getCategories()
-  {
-    try {
-      $sql = "select categoryid, categoryname from categories";
-      $result = Database::queryResults($sql, array());
-      return $result;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-  public static function addCategories($categoryname)
-  {
-    $sql = "insert into categories (categoryname) value (?)";
-    try {
-      Database::queryExecute($sql, array($categoryname));
-      return true;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
-  public static function editCategories($categoryid, $categoryname)
-  {
-    $sql = "update categories set categoryname=? where categoryid=?";
-    try {
-      Database::queryExecute($sql, array($categoryname, $categoryid));
-      return true;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
-  public static function removeCategories($categoryid)
-  {
-    $sql = "delete from categories where categoryid=?";
-    try {
-      $result = Database::queryExecute($sql, array($categoryid));
-      return !!$result;
-    } catch (PDOException $e) {
-      return false;
-    }
-  }
-
   public static function getBooks($query, $authorid, $page, $itemperpage)
   {
     try {
@@ -481,4 +392,49 @@ class AdminModel
       return false;
     }
   }
+
+  public static function getBanners()
+  {
+    try {
+      $sql = "select bookid, customimage from banner";
+      $result = Database::queryResults($sql, array());
+      return $result;
+    } catch (PDOException $e) {
+      return false;
+    }
+  }
+
+  public static function getBooksForBanner()
+  {
+    try {
+      $sql = "select bookid, bookname from books";
+      $result = Database::queryResults($sql, array());
+      return $result;
+    } catch (PDOException $e) {
+      return false;
+    }
+  }
+
+  public static function addBanner($bookid, $customimage)
+  {
+    $sql = "insert into banner (bookid, customimage) value (?, ?)";
+    try {
+      Database::queryExecute($sql, array($bookid, $customimage));
+      return true;
+    } catch (PDOException $e) {
+      return false;
+    }
+  }
+
+  public static function removeBanner($bookid)
+  {
+    $sql = "delete from banner where bookid=?";
+    try {
+      $result = Database::queryExecute($sql, array($bookid));
+      return !!$result;
+    } catch (PDOException $e) {
+      return false;
+    }
+  }
+
 }

@@ -4,6 +4,7 @@ include('../modules/pagination.php');
 
 
 use HomePage\HomePage as HomePage;
+use CategoryModel\CategoryModel as CategoryModel;
 use Phug\Lexer\State;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
@@ -29,7 +30,7 @@ $index = function () use ($paginationGenerator) {
         $result = [];
     }
     $listBooks = HomePage::getBooks();
-    $listCategories = HomePage::getCategory();
+    $listCategories = CategoryModel::getLimitedCategory();
     $mostSeller = HomePage::mostSeller();
     $mostPopular = HomePage::mostPopular();
     $banner = HomePage::getBanner();

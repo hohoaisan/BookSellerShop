@@ -1,8 +1,7 @@
 <?php
     include('../models/category.model.php');
     use Pug\Facade as PugFacade;
-    use CategoryPage\CategoryPage as CategoryPage;  
-    use HomePage\HomePage as HomePage;
+    use CategoryModel\CategoryModel as CategoryModel;  
     $index = function () {
         header('location: /categories/1');
     };
@@ -24,10 +23,10 @@
         }
         $itemperpage = 12;
     
-        $listCategories = HomePage::getAllCategory();
-        $currentCategory = CategoryPage::getSingleCategory($categoryid);
+        $listCategories = CategoryModel::getCategories();
+        $currentCategory = CategoryModel::getSingleCategory($categoryid);
 
-        $fetch = CategoryPage::getCategoryBooks($categoryid, $page, $itemperpage);
+        $fetch = CategoryModel::getCategoryBooks($categoryid, $page, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
     
         $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng

@@ -47,15 +47,6 @@
                 return false;
             }
         }
-        public static function getAllCategory(){
-            try {
-                $sql = "select categoryid, categoryname from categories order by categoryid ASC";
-                $result = Database::queryResults($sql, array());
-                return $result;
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
         public static function mostSeller(){
             try {
                 $sql = "select * from books ORDER BY purchasedcount DESC limit 1,18";

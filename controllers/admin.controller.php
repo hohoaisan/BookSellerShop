@@ -1,11 +1,13 @@
 <?php
 include_once('../models/admin.model.php');
 include_once('../models/author.model.php');
+include_once('../models/category.model.php');
 
 include('../modules/pagination.php');
 
 use AdminModel\AdminModel as AdminModel;
 use AuthorModel\AuthorModel as AuthorModel;
+use CategoryModel\CategoryModel as CategoryModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
@@ -301,7 +303,7 @@ $books = function () use ($paginationGenerator) {
   exit();
 };
 $bookAdd = function () {
-  $categories = AdminModel::getCategories();
+  $categories = CategoryModel::getCategories();
   $authors = AuthorModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
@@ -450,7 +452,7 @@ $postBookAdd = function () use ($postBookMiddleware, $postBookMoveFile) {
 };
 
 $bookEdit = function ($bookid) {
-  $categories = AdminModel::getCategories();
+  $categories = CategoryModel::getCategories();
   $authors = AuthorModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
@@ -642,7 +644,7 @@ $authorDelete = function ($authorid) {
 
 //For Categories
 $categories = function () {
-  $result = AdminModel::getCategories();
+  $result = CategoryModel::getCategories();
   //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
@@ -679,7 +681,7 @@ $categoryFieldRequired = function () use ($categories) {
 $categoryAdd = function () use ($categoryFieldRequired) {
   $categoryFieldRequired();
   $name = $_POST["name"];
-  $result = AdminModel::addCategories($name);
+  $result = CategoryModel::addCategories($name);
   if ($result) {
     Status::addMessage("Đã thêm vào cơ sở dữ liệu");
   } else {
@@ -693,7 +695,7 @@ $categoryEdit = function ($categoryid) use ($categoryFieldRequired) {
   $categoryFieldRequired();
   $name = $_POST["name"];
 
-  $result = AdminModel::editCategories($categoryid, $name);
+  $result = CategoryModel::editCategories($categoryid, $name);
   if ($result) {
     Status::addMessage("Đã sửa danh mục ID: " . $categoryid . " vào cơ sở dữ liệu");
   } else {
@@ -704,7 +706,7 @@ $categoryEdit = function ($categoryid) use ($categoryFieldRequired) {
 };
 
 $categoryDelete = function ($categoryid) {
-  $result = AdminModel::removeCategories($categoryid);
+  $result = CategoryModel::removeCategories($categoryid);
   if ($result) {
     Status::addMessage("Đã xoá danh mục ID: " . $categoryid . " khỏi cơ sở dữ liệu");
   } else {
