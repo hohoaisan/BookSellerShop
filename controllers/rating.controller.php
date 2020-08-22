@@ -1,9 +1,11 @@
 <?php
 include_once('../models/rating.model.php');
+include_once('../models/order.model.php');
 include_once('../modules/pagination.php');
 include('user.controller.php');
 
 use RatingModel\RatingModel as RatingModel;
+use OrderModel\OrderModel as OrderModel;
 use Phug\Lexer\State;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
@@ -45,7 +47,7 @@ $setRating = function () use ($getUserInfo, $postSetRating) {
   $postSetRating();
   $bookid = $_POST["bookid"];
   $user = $getUserInfo();
-  $checkBoughtBook = RatingModel::checkUserHasBoughtBook($user['userid'], $bookid);
+  $checkBoughtBook = OrderModel::checkUserHasBoughtBook($user['userid'], $bookid);
   $checkHasComment = RatingModel::checkUserHasRated($user['userid'], $bookid);
   if ($checkBoughtBook && !$checkHasComment) {
     $rating = $_POST["rating"];

@@ -1,16 +1,43 @@
 <?php
-include('../models/cart.model.php');
+include_once('../models/payment.model.php');
+include_once('../models/shipping.model.php');
+include_once('../models/order.model.php');
+// include_once('../models/book.model.php');
 include_once('../controllers/auth.controller.php');
 include_once('../controllers/api.controller.php');
 include('../controllers/user.controller.php');
-
+use BookModel\BookModel as BookModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
-use CartModel\CartModel as CartModel;
+use PaymentModel\PaymentModel as PaymentModel;
+use ShippingModel\ShippingModel as ShippingModel;
+use OrderModel\OrderModel as OrderModel;
 
+$getItemsDetail = function($cart)
+  {
+    try {
+      $totalMoney = 0;
+      $books = [];
+      foreach ($cart as $bookid => $quantity) {
+        $book = BookModel::getBook($bookid);
+        $book["quantity"] = $quantity;
+        $book["amount"] = $book["quantity"] * $book["price"];
+        $totalMoney += $book["amount"];
+        // $book["price"] = number_format($book["price"], 0, ",", ".");
+        array_push($books, $book);
+      }
+      // $totalMoney = number_format($totalMoney, 0, ",", ".");
+      return [
+        'totalmoney' => $totalMoney,
+        'books' => $books
+      ];
+    } catch (PDOException  $e) {
+      return false;
+    }
+  };
 
-$index = function () {
-  $fetch = CartModel::getItemsDetail($_SESSION["cart"]);
+$index = function () use($getItemsDetail) {
+  $fetch = $getItemsDetail($_SESSION["cart"]);
   $result = [];
   if ($fetch) {
     $result = $fetch["books"];
@@ -30,14 +57,14 @@ $removeAllItem = function () {
   exit();
 };
 
-$removeItem = function () {
+$removeItem = function () use($getItemsDetail){
   $_POST = json_decode(file_get_contents("php://input"), true);
   if (isset($_POST["bookid"])) {
     $bookid = $_POST["bookid"];
     $condition = true;
     if ($condition) {
       unset($_SESSION["cart"][$bookid]);
-      $fetch = CartModel::getItemsDetail($_SESSION["cart"]);
+      $fetch = $getItemsDetail($_SESSION["cart"]);
       $totalMoney = $fetch["totalmoney"];
       http_response_code(201);
       echo json_encode(array('status' => true, 'bookid' => $bookid, 'totalMoney' => $totalMoney), JSON_UNESCAPED_UNICODE);
@@ -86,7 +113,7 @@ $addItem = function () {
 };
 
 
-$editItem = function () {
+$editItem = function () use($getItemsDetail) {
   $_POST = json_decode(file_get_contents("php://input"), true);
   if (isset($_POST["bookid"]) && isset($_POST["quantity"])) {
     $bookid = $_POST["bookid"];
@@ -95,7 +122,7 @@ $editItem = function () {
       $condition = true;
       if ($condition) {
         $_SESSION["cart"][$bookid] = $quantity;
-        $fetch = CartModel::getItemsDetail($_SESSION["cart"]);
+        $fetch = $getItemsDetail($_SESSION["cart"]);
         $totalMoney = $fetch["totalmoney"];
         http_response_code(201);
         echo json_encode(array('status' => true, 'bookid' => $bookid, 'totalMoney' => $totalMoney), JSON_UNESCAPED_UNICODE);
@@ -175,15 +202,15 @@ $purchaseProcessMiddleWare = function () {
   }
 };
 
-$purchaseProcess = function () use ($checkCartIsReady, $purchaseProcessMiddleWare, $getFullAddressInfo) {
+$purchaseProcess = function () use ($checkCartIsReady, $purchaseProcessMiddleWare, $getFullAddressInfo, $getItemsDetail) {
   unset($_SESSION['orderInfo']);
   $checkCartIsReady();
   $purchaseProcessMiddleWare();
-  $fetch = CartModel::getItemsDetail($_SESSION["cart"]);
+  $fetch = $getItemsDetail($_SESSION["cart"]);
   $result = $fetch["books"];
   $totalMoney = $fetch["totalmoney"];
-  $payment = CartModel::getPaymentMethod();
-  $shipping = CartModel::getShippingMethod();
+  $payment = PaymentModel::getPaymentMethod();
+  $shipping = ShippingModel::getShippingMethod();
 
 
 
@@ -198,8 +225,8 @@ $purchaseProcess = function () use ($checkCartIsReady, $purchaseProcessMiddleWar
   ];
   $addressInfo = $getFullAddressInfo($_SESSION['orderInfo']['addressid']);
   $_SESSION['orderInfo']['fullAddress'] = $_SESSION['orderInfo']['addresstext'] . ", " . $addressInfo["wardname"] . ", " . $addressInfo["districtname"] . ", " . $addressInfo["provincename"];
-  $defaultShippingMethod = CartModel::getDefaultShippingMethod();
-  $defaultPaymentMethod = CartModel::getDefaultPaymentMethod();
+  $defaultShippingMethod = ShippingModel::getDefaultShippingMethod();
+  $defaultPaymentMethod = PaymentModel::getDefaultPaymentMethod();
   $_SESSION['orderInfo']['paymentid'] = $defaultPaymentMethod['id'];
   $_SESSION['orderInfo']['shippingid'] = $defaultShippingMethod['id'];
   $_SESSION['orderInfo']['shippingprice'] = $defaultShippingMethod['pricing'];
@@ -220,7 +247,7 @@ $purchaseProcessEdit = function () {
   if (isset($_POST['shippingid']) && $_POST['shippingid'] != "") {
     //Get price of new shipping method
     $shippingid = $_POST['shippingid'];
-    $shippingmethods = CartModel::getShippingMethod();
+    $shippingmethods = ShippingModel::getShippingMethod();
     $findMethod = current(array_filter($shippingmethods, function ($item) use ($shippingid) {
       return ($item['id'] == $shippingid);
     }));
@@ -242,7 +269,7 @@ $purchaseProcessEdit = function () {
 };
 
 
-$purchaseComplete = function () {
+$purchaseComplete = function () use($getItemsDetail) {
   if (isset($_POST['confirm']) && isset($_SESSION['cart']) && count($_SESSION['cart']) && isset($_SESSION['orderInfo']) && count($_SESSION['orderInfo'])) {
     $userid = $_SESSION['orderInfo']['userid'];
     $receivername = $_SESSION['orderInfo']['receivername'];
@@ -254,10 +281,10 @@ $purchaseComplete = function () {
     $addresstext = $_SESSION['orderInfo']['addresstext'];
 
 
-    $orderId = CartModel::savePurchasedOrder($userid,  $receivername,  $addressid,  $totalmoney,  $phone,  $shippingid,  $paymentid,  $addresstext);
+    $orderId = OrderModel::savePurchasedOrder($userid,  $receivername,  $addressid,  $totalmoney,  $phone,  $shippingid,  $paymentid,  $addresstext);
     if ($orderId) {
-      $cart = CartModel::getItemsDetail($_SESSION["cart"]);
-      $result = CartModel::savePurchasedOrderDetail($orderId, $cart);
+      $cart = $getItemsDetail($_SESSION["cart"]);
+      $result = OrderModel::savePurchasedOrderDetail($orderId, $cart);
       unset($_SESSION['cart']);
       unset($_SESSION['orderInfo']);
       echo PugFacade::displayFile('../views/home/cart/cart.purchaseComplete.jade', [

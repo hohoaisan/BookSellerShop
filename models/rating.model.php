@@ -188,20 +188,6 @@ and bookid = ?";
       print_r($e->getMessage());
     }
   }
-  public static function checkUserHasBoughtBook($userid, $bookid)
-  {
-    $sql = "
-    select count(ordersdetails.bookid) as COUNT
-from ordersdetails, orders
-WHERE ordersdetails.orderid = orders.orderid
-and orders.userid = ?
-and ordersdetails.bookid = ?";
-    try {
-      $result = Database::querySingleResult($sql, array($userid, $bookid));
-      return $result['COUNT'] > 0;
-    } catch (PDOException $e) {
-      print_r($e->getMessage());
-    }
-  }
+  
 
 }

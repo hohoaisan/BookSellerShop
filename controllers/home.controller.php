@@ -1,14 +1,13 @@
 <?php
-include('../models/home.model.php');
+// include_once('../models/book.model.php');
+include_once('../models/banner.model.php');
 include('../modules/pagination.php');
 
-
-use HomePage\HomePage as HomePage;
 use CategoryModel\CategoryModel as CategoryModel;
-use Phug\Lexer\State;
-use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
+use BannerModel\BannerModel as BannerModel;
+use BookModel\BookModel as BookModel;
 
 $index = function () use ($paginationGenerator) {
     //Pagination
@@ -19,7 +18,7 @@ $index = function () use ($paginationGenerator) {
     }
     $itemperpage = 18;
 
-    $fetch = HomePage::getShowBooks($currentPage, $itemperpage);
+    $fetch = BookModel::getLastestBooks($currentPage, $itemperpage);
     $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
 
     $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
@@ -29,18 +28,16 @@ $index = function () use ($paginationGenerator) {
     if (!$fetch) {
         $result = [];
     }
-    $listBooks = HomePage::getBooks();
     $listCategories = CategoryModel::getLimitedCategory();
-    $mostSeller = HomePage::mostSeller();
-    $mostPopular = HomePage::mostPopular();
-    $banner = HomePage::getBanner();
+    $mostSeller = BookModel::getMostSeller();
+    $mostPopular = BookModel::getMostPopular();
+    $banner = BannerModel::getBanners();
 
     echo PugFacade::displayFile('../views/home/index.jade', [
-        'listBooks' => $listBooks,
         'listCategories' => $listCategories,
         'mostSeller' => $mostSeller,
         'mostPopular' => $mostPopular,
-        'showBooks' => $result, // Xác đỊnh mục nào đang được chọn
+        'lastestBooks' => $result, // Xác đỊnh mục nào đang được chọn
         'pagination' => $pagination,
         'pagination_current_page' => $currentPage,
         'banner' => $banner

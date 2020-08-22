@@ -161,31 +161,30 @@ block content
                                 -}          
     //book Show
     .container
-        if (listBooks) 
-            .row.mt-4
-                .col-12
-                    .list-group.d-flex.justify-content-center.mb-2
-                        li#newBook.list-group-item.list-group-item-primary(style='background-color: #7952b3;color:white;')
-                            div.d-flex.justify-content-center.align-items-center.mr-1
-                                i.fa.fa-heart
-                                    span &nbsp;
-                                    span Sách mới                                 
-                    .row.mb-0.ml-1.mr-1
-                        each book in showBooks
-                            .col-6.col-md-2.pl-1.pr-1.mt-2
-                                .card.card-inverse.card-info
-                                    a(href='/books/' + book.bookid)
-                                        img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
-                                    .card-block(style="height: 4em; overflow:hidden;")
-                                        .card-title= book.bookname
-                                    .card-footer
-                                        small= book.price + ' VNĐ'
-                                        if (book.quantity)
-                                            button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) Mua 
-                                        else
-                                            p.p-0.m-0.text-danger Hết hàng
-                    div.d-flex.justify-content-center.mt-4
-                        ul.pagination
-                            each page in pagination
-                                li.page-item(class=(page.index==pagination_current_page)?"active":"")
-                                    a.page-link(href=page.url+'#newBook')= page.index       
+        .row.mt-4
+            .col-12
+                .list-group.d-flex.justify-content-center.mb-2
+                    li#newBook.list-group-item.list-group-item-primary(style='background-color: #7952b3;color:white;')
+                        div.d-flex.justify-content-center.align-items-center.mr-1
+                            i.fa.fa-heart
+                                span &nbsp;
+                                span Sách mới                                 
+                .row.mb-0.ml-1.mr-1
+                    each book in lastestBooks
+                        .col-6.col-md-2.pl-1.pr-1.mt-2
+                            .card.card-inverse.card-info
+                                a(href='/books/' + book.bookid)
+                                    img.card-img-top(src='/assets/img/books/' + book.bookimageurl)
+                                .card-block(style="height: 4em; overflow:hidden;")
+                                    .card-title= book.bookname
+                                .card-footer
+                                    small= book.price + ' VNĐ'
+                                    if (book.quantity)
+                                        button.btn.btn-primary.float-right.btn-sm.select_product.add-to-cart(data-bookid=book.bookid) Mua 
+                                    else
+                                        p.p-0.m-0.text-danger Hết hàng
+                div.d-flex.justify-content-center.mt-4
+                    ul.pagination
+                        each page in pagination
+                            li.page-item(class=(page.index==pagination_current_page)?"active":"")
+                                a.page-link(href=page.url+'#newBook')= page.index       

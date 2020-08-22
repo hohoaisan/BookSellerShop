@@ -1,13 +1,20 @@
 <?php
-include_once('../models/admin.model.php');
+include_once('../models/banner.model.php');
 include_once('../models/author.model.php');
 include_once('../models/category.model.php');
+include_once('../models/book.model.php');
+include_once('../models/user.model.php');
+include_once('../models/order.model.php');
 
 include('../modules/pagination.php');
 
-use AdminModel\AdminModel as AdminModel;
 use AuthorModel\AuthorModel as AuthorModel;
 use CategoryModel\CategoryModel as CategoryModel;
+use BookModel\BookModel as BookModel;
+use OrderModel\OrderModel as OrderModel;
+use BannerModel\BannerModel as BannerModel;
+
+use UserModel\UserModel as UserModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
@@ -55,7 +62,7 @@ $orders = function () use ($paginationGenerator) {
   }
   $itemperpage = 5;
 
-  $fetch = AdminModel::getOrders($filter, $query, $currentPage, $itemperpage);
+  $fetch = OrderModel::getOrders($filter, $query, $currentPage, $itemperpage);
   $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
 
   $num_records = $fetch['rowcount']; //Lấy số kết quả trong toàn bộ bảng
@@ -81,13 +88,13 @@ $orders = function () use ($paginationGenerator) {
 
 
 $orderJSON = function ($orderid) {
-  $result = AdminModel::getOrder($orderid);
-  $result["books"] =  AdminModel::getOrderDetail($orderid);
+  $result = OrderModel::getOrder($orderid);
+  $result["books"] =  OrderModel::getOrderDetail($orderid);
   echo json_encode($result, JSON_UNESCAPED_UNICODE);
 };
 
 $orderReject = function ($orderid) {
-  $result = AdminModel::rejectOrder($orderid);
+  $result = OrderModel::rejectOrder($orderid);
   if ($result) {
     Status::addMessage("Đã từ chối đơn hàng có id " . $orderid);
   } else {
@@ -98,7 +105,7 @@ $orderReject = function ($orderid) {
 };
 
 $orderAccept = function ($orderid) {
-  $result = AdminModel::acceptOrder($orderid);
+  $result = OrderModel::acceptOrder($orderid);
   if ($result) {
     Status::addMessage("Đã chấp nhận đơn hàng có id " . $orderid);
   } else {
@@ -108,7 +115,7 @@ $orderAccept = function ($orderid) {
   exit();
 };
 $orderComplete = function ($orderid) {
-  $result = AdminModel::completeOrder($orderid);
+  $result = OrderModel::completeOrder($orderid);
   if ($result) {
     Status::addMessage("Đã đánh dấu đơn hàng có id " . $orderid . " là đã thanh toán");
   } else {
@@ -119,7 +126,7 @@ $orderComplete = function ($orderid) {
 };
 
 $orderError = function ($orderid) {
-  $result = AdminModel::makeOrderError($orderid);
+  $result = OrderModel::makeOrderError($orderid);
   if ($result) {
     Status::addMessage("Đã đánh dấu đơn hàng có id " . $orderid . " là lỗi");
   } else {
@@ -167,7 +174,7 @@ $users = function () use ($paginationGenerator) {
 
 
   $itemperpage = 4;
-  $fetch = AdminModel::getUsers($filter, $query, $currentPage, $itemperpage);
+  $fetch = UserModel::getUsers($filter, $query, $currentPage, $itemperpage);
   //Khởi tạo session
   if ($fetch == false) {
     array_push($errors, "Có vấn đề xảy ra hoặc danh sách trống");
@@ -193,7 +200,7 @@ $users = function () use ($paginationGenerator) {
   exit();
 };
 $userDisable = function ($userid) {
-  $result = AdminModel::disableUser($userid);
+  $result = UserModel::disableUser($userid);
   if ($result) {
     Status::addMessage("Đã vô hiệu hoá người dùng có id " . $userid . ", người dùng sẽ không thể đăng nhập");
   } else {
@@ -203,7 +210,7 @@ $userDisable = function ($userid) {
   exit();
 };
 $userEnable = function ($userid) {
-  $result = AdminModel::enableUser($userid);
+  $result = UserModel::enableUser($userid);
   if ($result) {
     Status::addMessage("Đã gỡ vô hiệu hoá người dùng có id " . $userid . ", giờ đây người dùng đã có thể đăng nhập");
   } else {
@@ -213,7 +220,7 @@ $userEnable = function ($userid) {
   exit();
 };
 $userDelete = function ($userid) {
-  $result = AdminModel::removeUser($userid);
+  $result = UserModel::removeUser($userid);
   if ($result) {
     Status::addMessage("Đã xoá người dùng có id " . $userid . " khỏi cơ sở dữ liệu");
   } else {
@@ -226,7 +233,7 @@ $userDelete = function ($userid) {
 
 
 $userMakeAdmin = function ($userid) {
-  $result = AdminModel::makeUserAdmin($userid);
+  $result = UserModel::makeUserAdmin($userid);
   if ($result) {
     Status::addMessage("Đã đặt người dùng có id " . $userid . " làm quản trị viên, giờ đây người này đã có thể quản trị website");
   } else {
@@ -236,7 +243,7 @@ $userMakeAdmin = function ($userid) {
   exit();
 };
 $userRemoveAdmin = function ($userid) {
-  $result = AdminModel::removeUserAdmin($userid);
+  $result = UserModel::removeUserAdmin($userid);
   if ($result) {
     Status::addMessage("Đã xoá người dùng có id " . $userid . " khỏi quyền quản trị viên");
   } else {
@@ -247,7 +254,7 @@ $userRemoveAdmin = function ($userid) {
 };
 
 $getUserJSON = function ($userid) {
-  $result = AdminModel::getUserJSON($userid);
+  $result = UserModel::getUserJSON($userid);
   if ($result) {
     echo json_encode($result, JSON_UNESCAPED_UNICODE);
     exit();
@@ -281,7 +288,7 @@ $books = function () use ($paginationGenerator) {
     $currentPage = 1;
   }
 
-  $fetch = AdminModel::getBooks($query, $authorid, $currentPage, $itemperpage);
+  $fetch = BookModel::getBooks($query, $authorid, $currentPage, $itemperpage);
   if ($fetch == false) {
     array_push($errors, "Có vấn đề xảy ra hoặc cơ sở dữ liệu trống");
   }
@@ -441,7 +448,7 @@ $postBookAdd = function () use ($postBookMiddleware, $postBookMoveFile) {
   $quantity = $_POST["quantity"];
   $publisher = $_POST["publisher"];
   $bookbind = $_POST["bookbind"];
-  $result = AdminModel::addBook($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind);
+  $result = BookModel::addBook($bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind);
   if ($result) {
     Status::addMessage("Đã thêm sách vào cơ sở dữ liệu");
   } else {
@@ -456,7 +463,7 @@ $bookEdit = function ($bookid) {
   $authors = AuthorModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
-  $book = AdminModel::getBook($bookid);
+  $book = BookModel::getBook($bookid);
   echo PugFacade::displayFile('../views/admin/books.edit.jade', [
     'authors' => $authors,
     'categories' => $categories,
@@ -483,7 +490,7 @@ $postBookEdit = function ($bookid) use ($postBookMiddleware, $postBookMoveFile) 
   $bookbind = $_POST["bookbind"];
   echo $publisher;
   echo $bookbind;
-  $result = AdminModel::editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind);
+  $result = BookModel::editBook($bookid, $bookname, $bookdescription, $bookpages, $bookweight, $releasedate, $authorid, $categoryid, $bookprice, $quantity, $bookimageurl, $publisher,$bookbind);
   if ($result) {
     Status::addMessage("Đã chỉnh sửa thông tin của sách");
   } else {
@@ -519,7 +526,7 @@ $postBookEditSimple = function ($bookid) use ($postBookEditSimpleMiddleware) {
   $postBookEditSimpleMiddleware();
   $quantity = intval($_POST["quantity"]);
   $price = intval($_POST["price"]);
-  $result = AdminModel::editBookSimple($bookid, $quantity, $price);
+  $result = BookModel::editBookSimple($bookid, $quantity, $price);
   if ($result) {
     Status::addMessage("Đã sửa số lượng và giá tiền " . $quantity . " cho sách " . $bookid);
   } else {
@@ -531,7 +538,7 @@ $postBookEditSimple = function ($bookid) use ($postBookEditSimpleMiddleware) {
 
 
 $bookDelete = function ($bookid) {
-  $result = AdminModel::removeBook($bookid);
+  $result = BookModel::removeBook($bookid);
   if ($result) {
     Status::addMessage("Đã xoá sách có id " . $bookid . " khỏi cơ sở dữ liệu");
   } else {
@@ -718,7 +725,7 @@ $categoryDelete = function ($categoryid) {
 
 //For Banner
 $banners = function () {
-  $result = AdminModel::getBanners();
+  $result = BannerModel::getBanners();
   //Khởi tạo session
   $errors = Status::getErrors();
   $messages = Status::getMessages();
@@ -740,7 +747,7 @@ $banners = function () {
 };
 
 $bannerAdd = function () {
-  $books = AdminModel::getBooksForBanner();
+  $books = BannerModel::getBooksForBanner();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   echo PugFacade::displayFile('../views/admin/banner.add.jade', [
@@ -813,7 +820,7 @@ $postBannerAdd = function () use ($postBannerMiddleware, $postBannerMoveFile) {
   $postBannerMiddleware();
   $bookid = $_POST["bookid"];;
   $customimage = $postBannerMoveFile();
-  $result = AdminModel::addbanner($bookid, $customimage);
+  $result = BannerModel::addbanner($bookid, $customimage);
   if ($result) {
     Status::addMessage("Đã thêm banner vào cơ sở dữ liệu");
   } else {
@@ -824,7 +831,7 @@ $postBannerAdd = function () use ($postBannerMiddleware, $postBannerMoveFile) {
 };
 
 $bannerDelete = function ($bookid) {
-  $result = AdminModel::removeBanner($bookid);
+  $result = BannerModel::removeBanner($bookid);
   if ($result) {
     Status::addMessage("Đã xoá banner của sách có ID: " . $bookid . " khỏi cơ sở dữ liệu");
   } else {
