@@ -1,8 +1,11 @@
 <?php
-include('../models/admin.model.php');
+include_once('../models/admin.model.php');
+include_once('../models/author.model.php');
+
 include('../modules/pagination.php');
 
 use AdminModel\AdminModel as AdminModel;
+use AuthorModel\AuthorModel as AuthorModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
@@ -299,7 +302,7 @@ $books = function () use ($paginationGenerator) {
 };
 $bookAdd = function () {
   $categories = AdminModel::getCategories();
-  $authors = AdminModel::getAllAuthors();
+  $authors = AuthorModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   echo PugFacade::displayFile('../views/admin/books.add.jade', [
@@ -448,7 +451,7 @@ $postBookAdd = function () use ($postBookMiddleware, $postBookMoveFile) {
 
 $bookEdit = function ($bookid) {
   $categories = AdminModel::getCategories();
-  $authors = AdminModel::getAllAuthors();
+  $authors = AuthorModel::getAllAuthors();
   $errors = Status::getErrors();
   $messages = Status::getMessages();
   $book = AdminModel::getBook($bookid);
@@ -557,7 +560,7 @@ $authors = function () use ($paginationGenerator) {
   }
 
 
-  $fetch = AdminModel::getAuthors($query,$currentPage, $itemperpage);
+  $fetch = AuthorModel::getAuthors($query,$currentPage, $itemperpage);
   if (!$fetch) {
     array_push($errors, "Có vấn đề xảy ra xin vui lòng thử lại");
     $result = [];
@@ -603,7 +606,7 @@ $authorAdd = function () use ($authorFieldRequired) {
   $authorFieldRequired();
   $name = $_POST["name"];
   $description = $_POST["description"];
-  $result = AdminModel::addAuthor($name, $description);
+  $result = AuthorModel::addAuthor($name, $description);
   if ($result) {
     Status::addMessage("Đã thêm vào cơ sở dữ liệu");
   } else {
@@ -617,7 +620,7 @@ $authorEdit = function ($authorid) use ($authorFieldRequired) {
   $name = $_POST["name"];
   $description = $_POST["description"];
 
-  $result = AdminModel::editAuthor($authorid, $name, $description);
+  $result = AuthorModel::editAuthor($authorid, $name, $description);
   if ($result) {
     Status::addMessage("Đã sửa tác giả có id " . $authorid . " vào cơ sở dữ liệu");
   } else {
@@ -627,7 +630,7 @@ $authorEdit = function ($authorid) use ($authorFieldRequired) {
   exit();
 };
 $authorDelete = function ($authorid) {
-  $result = AdminModel::removeAuthor($authorid);
+  $result = AuthorModel::removeAuthor($authorid);
   if ($result) {
     Status::addMessage("Đã xoá tác giả có id " . $authorid . " khỏi cơ sở dữ liệu");
   } else {
