@@ -5,28 +5,37 @@ block head
 block body
   .navbar.navbar-light.navbar-expand-md.sticky-top(style="background-color: #f7f7f7;")
     .container-fluid
-      div
+      div.d-flex.align-items-center
         button.navbar-toggler.justify-content-end.mr-2(data-toggle='collapse', data-target='#navcol-1', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
           span.navbar-toggler-icon
         a.navbar-brand(href='/')
-          img(style='max-height:30px;', src="/assets/img/BS.png") 
-          span Chronicle Book 
+          .fas.fa-book-open.fa-fw.mr-2
+          span Chronicle Book
+      
       #navcol-1.collapse.navbar-collapse
         form(action="/books", method="get").form-inline.mb-0.mt-2.mt-sm-0.row.ml-2.mr-2
           input.col.form-control.mr-sm-2(type='search', placeholder='Nhập từ khoá', aria-label='Search', name="query", value= search)
           button.col-2.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
             .fas.fa-search
+        
         ul.nav.navbar-nav.ml-auto
           if (user)
             li.nav-item(role='presentation')
-              a.nav-link(href='/user') Trang cá nhân
-            li.nav-item(role='presentation')
               a.nav-link(href='/auth/logout') Đăng xuất
+            if (user.isadmin)
+              li.nav-item(role='presentation')
+                a.nav-link(href='/admin') Quản trị
           else
             li.nav-item(role='presentation')
               a.nav-link(href='/auth/register') Đăng ký
             li.nav-item(role='presentation')
               a.nav-link(href='/auth/login') Đăng nhập
+      if (user)
+        ul
+          li.nav-item(role='presentation')
+            a.nav-link(href='/user')
+              i.fas.fa-user
+              span.ml-2= user.fullname
       a.text-success(href="/cart")
         i.fas.fa-shopping-cart
         strong#cartIdentity.text-success.rounded.p-1 0

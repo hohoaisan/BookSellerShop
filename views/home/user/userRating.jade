@@ -1,4 +1,6 @@
 extends base
+block vars
+  - var user_list='rating';
 block profile-content
   #ratingModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ratingModal', aria-hidden='true')
     form#ratingModalForm(action="/rating/create", method="POST")

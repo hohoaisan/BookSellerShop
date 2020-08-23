@@ -12,22 +12,22 @@ block content
       .col-lg-3
         .profile-sidebar
           .profile-usertitle
-            .profile-usertitle-name Hồ Hoài Sản
+            .profile-usertitle-name= user.fullname
           .profile-usermenu.mt-4
             ul.d-flex.flex-row.flex-lg-column
-              li.active.nav-item
+              li.nav-item(class=(user_list=='profile'?"active":""))
                 a.nav-link(href='/user/profile')
                   i.glyphicon.glyphicon-home
                   | Thông tin
-              li.nav-item
+              li.nav-item(class=(user_list=='address'?"active":""))
                 a.nav-link(href='/user/address')
                   i.glyphicon.glyphicon-user
                   | Địa chỉ
-              li.nav-item
+              li.nav-item(class=(user_list=='orders'?"active":""))
                 a.nav-link(href='/user/orders')
                   i.glyphicon.glyphicon-user
                   | Hoá đơn
-              li.nav-item
+              li.nav-item(class=(user_list=='rating'?"active":""))
                 a.nav-link(href='/user/rating')
                   i.glyphicon.glyphicon-ok
                   | Đánh giá
