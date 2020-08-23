@@ -1,5 +1,4 @@
 <?php namespace Rating;
-include('user.controller.php');
 
 use RatingModel\RatingModel as RatingModel;
 use OrderModel\OrderModel as OrderModel;

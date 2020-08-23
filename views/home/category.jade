@@ -35,11 +35,10 @@ block content
                                                 else 
                                                     p.p-0.m-0.text-danger Hết hàng 
                                                     
-                    ul.pagination
-                        if (pagination_pages>1)
-                            - for (i=1; i<=pagination_pages; i++)
-                                li.page-item(class=(i==pagination_current_page)?"active":"")
-                                    a.page-link(href=pagination_url+'page='+i)=i
+                            ul.pagination.float-right
+                                each page in pagination
+                                    li.page-item(class=(page.index==pagination_current_page)?"active":"")
+                                        a.page-link(href=page.url)= page.index
                 else
                     .alert.alert-warning Không tìm thấy sách theo danh mục
 

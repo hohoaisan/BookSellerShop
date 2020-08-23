@@ -158,7 +158,7 @@ class UserController
     }
     $itemperpage = 4;
 
-    $fetch = UserModel::getUserOrders($userid, $currentPage, $itemperpage);
+    $fetch = OrderModel::getOrdersByUserId($userid, $currentPage, $itemperpage);
     if (!$fetch) {
       array_push($errors, "Có lỗi xảy ra");
       $result = [];
