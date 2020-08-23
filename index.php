@@ -44,6 +44,10 @@ use User\UserController;
 use Home\HomeController;
 
 
+use Chirp\Cryptor as Cryptor;
+$encryption_key = 'CKXH2U9RPY3EFD70TLS1ZG4N8WQBOVI6AMJ5';
+$GLOBALS['cryptor'] = new Cryptor($encryption_key);
+
 
 $_SESSION['authuser'] = UserController::getUserInfo();
 PugFacade::share(array('user' => $_SESSION['authuser']));

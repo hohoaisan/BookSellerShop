@@ -5,16 +5,13 @@ namespace Auth;
 
 
 use UserModel\UserModel as UserModel;
-use Chirp\Cryptor as Cryptor;
+
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
 
-$encryption_key = 'CKXH2U9RPY3EFD70TLS1ZG4N8WQBOVI6AMJ5';
-$GLOBALS['cryptor'] = new Cryptor($encryption_key);
+
 class AuthController
 {
-  public static $encryption_key = 'CKXH2U9RPY3EFD70TLS1ZG4N8WQBOVI6AMJ5';
-
   public static function parseUser()
   {
     if (isset($_COOKIE['authentication'])) {
