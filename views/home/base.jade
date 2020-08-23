@@ -17,13 +17,16 @@ block body
           button.col-2.btn.btn-outline-primary.my-2.my-sm-0(type='submit')
             .fas.fa-search
         ul.nav.navbar-nav.ml-auto
-          li.nav-item(role='presentation')
-            a.nav-link(href='/auth/register') Đăng ký
-          li.nav-item(role='presentation')
-            a.nav-link(href='/auth/login') Đăng nhập
-          li.nav-item(role='presentation')
-            a.nav-link(href='/user') Trang cá nhân
-          li.nav-item(role='presentation')
+          if (user)
+            li.nav-item(role='presentation')
+              a.nav-link(href='/user') Trang cá nhân
+            li.nav-item(role='presentation')
+              a.nav-link(href='/auth/logout') Đăng xuất
+          else
+            li.nav-item(role='presentation')
+              a.nav-link(href='/auth/register') Đăng ký
+            li.nav-item(role='presentation')
+              a.nav-link(href='/auth/login') Đăng nhập
       a.text-success(href="/cart")
         i.fas.fa-shopping-cart
         strong#cartIdentity.text-success.rounded.p-1 0

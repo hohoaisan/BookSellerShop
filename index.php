@@ -39,9 +39,9 @@ $router = new \Bramus\Router\Router();
 $_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
 use Pug\Facade as PugFacade;
 
+use User\UserController;
 
-
-
+PugFacade::share(array('user' => UserController::getUserInfo()));
 
 // Hiển thị trang chủ
 include_once('controllers/home.controller.php');
