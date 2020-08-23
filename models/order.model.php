@@ -122,7 +122,7 @@ class OrderModel
       //pagination
       $begin = ($currentPage - 1) * $itemperpage;
       $sqlPagination = "select orderid, orders.userid, (select users.fullname from users WHERE users.userid=orders.userid) as fullname, orderstatus, timestamp, totalmoney
-      from orders WHERE userid=? order by timestamp ASC limit $begin, $itemperpage";
+      from orders WHERE userid=? order by timestamp desc limit $begin, $itemperpage";
       $result = Database::queryResults($sqlPagination, array($userid));
       return [
         'result' => $result,

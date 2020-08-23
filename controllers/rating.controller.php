@@ -43,7 +43,7 @@ public static function postSetRating() {
 public static function setRating() {
   self::postSetRating();
   $bookid = $_POST["bookid"];
-  $user = UserController::getUserInfo();
+  $user = $_SESSION['authuser'];
   $checkBoughtBook = OrderModel::checkUserHasBoughtBook($user['userid'], $bookid);
   $checkHasComment = RatingModel::checkUserHasRated($user['userid'], $bookid);
   if ($checkBoughtBook && !$checkHasComment) {
@@ -73,7 +73,7 @@ public static function setRating() {
 
 
 public static function verifyRatingOwner($ratingid){
-  $user = UserController::getUserInfo();
+  $user = $_SESSION['authuser'];
   $rating = RatingModel::getRating($ratingid);
   if ($rating['userid'] == $user['userid'] || $user['isadmin'] == '1') {
   } else {

@@ -181,7 +181,7 @@ class CartController
   {
     $errors = Status::getErrors();
     self::checkCartIsReady();
-    $userInfo = UserController::getUserInfo();
+    $userInfo = $_SESSION['authuser'];
     $addressInfo = APIController::getFullAddressInfo($userInfo['addressid']);
     // select userid,username, fullname, phone, email, male,addressid, addresstext, dob
     echo PugFacade::displayFile('../views/home/cart/cart.purchase.jade', [

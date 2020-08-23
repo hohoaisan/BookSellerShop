@@ -31,7 +31,7 @@ class UserController
   {
     $errors = Status::getErrors();
     $messages = Status::getMessages();
-    $userInfo = self::getUserInfo();
+    $userInfo = $_SESSION['authuser'];
     echo PugFacade::displayFile('../views/home/user/userInfo.jade', [
       'user' => $userInfo,
       'errors' => $errors,
@@ -61,7 +61,7 @@ class UserController
   }
   public static function user_profile_edit()
   {
-    $userInfo = self::getUserInfo();
+    $userInfo = 
     self::user_profile_edit_middleware();
     $fullname = $_POST["fullname"];
     $phone = $_POST["phone"];
@@ -85,7 +85,7 @@ class UserController
   {
     $errors = Status::getErrors();
     $messages = Status::getMessages();
-    $userInfo = self::getUserInfo();
+    $userInfo = $_SESSION['authuser'];
     $addressInfo = APIController::getFullAddressInfo($userInfo['addressid']);
 
     echo PugFacade::displayFile('../views/home/user/userAddress.jade', [
@@ -147,7 +147,7 @@ class UserController
   {
     $errors = Status::getErrors();
     $messages = Status::getMessages();
-    $user = AuthController::parseUser();
+    $user = $_SESSION['authuser'];
     $userid = $user['userid'];
 
     //pagination
@@ -193,11 +193,11 @@ class UserController
     } catch (\Exception $e) {
       $currentPage = 1;
     }
-    $itemperpage = 2;
+    $itemperpage = 10;
 
     $errors = Status::getErrors();
     $messages = Status::getMessages();
-    $user = self::getUserInfo();
+    $user = $_SESSION['authuser'];
     $userid = $user["userid"];
 
     $fetch = RatingModel::getPurchasedBooksWithRating($userid, $currentPage, $itemperpage);

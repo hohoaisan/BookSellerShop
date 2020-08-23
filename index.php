@@ -37,19 +37,22 @@ include_once('controllers/user.controller.php');
 
 $router = new \Bramus\Router\Router();
 $_SERVER['REQUEST_URI'] = "/" . trim($_SERVER['REQUEST_URI'], "/");
+
+
 use Pug\Facade as PugFacade;
-
 use User\UserController;
-
-PugFacade::share(array('user' => UserController::getUserInfo()));
-
-// Hiển thị trang chủ
-include_once('controllers/home.controller.php');
 use Home\HomeController;
 
+
+
+$_SESSION['authuser'] = UserController::getUserInfo();
+PugFacade::share(array('user' => $_SESSION['authuser']));
+
+// Hiển thị trang chủ
+
+
+
 $router->get('/', 'Home\HomeController@index');
-
-
 // Điều hướng (router) tới các khu vực khác nhau trong website
 $router->mount('/cart', function () use($router) {include('routers/cart.router.php');});
 $router->mount('/authors', function () use($router) {include('routers/authors.router.php');});
