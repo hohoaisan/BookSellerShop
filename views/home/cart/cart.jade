@@ -18,7 +18,7 @@ block content
                         a(href="/books/" + item.bookid)
                           .card-title.mb-2= item.bookname
                         .card-subtitle.text-muted.mb-2= "Tác giả: "+item.authorname
-                        .card-subtitle.text-success= item.price+" đ"
+                        .card-subtitle.text-success= item.price + " đ"
                         a.text-danger.cartRemoveItem(data-bookid=item.bookid)
                           i.fa.fa-trash.p-1
                           | Xoá
@@ -32,12 +32,6 @@ block content
             .col-lg-4.col-md-5.col-12.p-2
               .card.mb-2
                 .card-body
-                  //- .row.mb-2
-                  //-   .col.mb-2
-                  //-     .card-subtitle.text-muted  Tạm tính
-                  //-   .col.float-right
-                  //-     .card-subtitle.text-muted= totalMoney+'đ'
-                  //- hr
                   .row
                     .col
                       .card-title Tổng tiền
