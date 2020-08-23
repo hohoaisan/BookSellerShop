@@ -292,7 +292,7 @@ class AdminController
       $title = 'Danh sách sách của tác giả';
     }
 
-    $itemperpage = 3;
+    $itemperpage = 7;
     try {
       $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
     } catch (\Exception $e) {
