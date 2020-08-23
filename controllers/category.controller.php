@@ -35,7 +35,7 @@
         echo PugFacade::displayFile('../views/home/category.jade', [
         'listCategories' => $listCategories,
         'listBooks' => $result,
-        'category' => $currentCategory,
+        'currentcategory' => $currentCategory,
         'pagination' => $pagination,
         'pagination_current_page' => $currentPage
         ]);

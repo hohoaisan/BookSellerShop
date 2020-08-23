@@ -10,14 +10,14 @@ block content
                     #categories.collapse.navbar-collapse.collapse
                         ul.list-group.w-100
                             each category in listCategories
-                                a.list-group-item.list-group-item-action.list-group-item-light(href="/categories/" + category.categoryid)= category.categoryname 
+                                a.list-group-item.list-group-item-action.list-group-item-light(href="/categories/" + category.categoryid, class=(currentcategory.categoryid==category.categoryid?"active":""))= category.categoryname 
             .col-md-8.col-lg-9       
                 if (listBooks) 
                     nav(aria-label='breadcrumb')
                         ol.breadcrumb
                             li.breadcrumb-item
                                 a(href='/') Home
-                            li.breadcrumb-item.active(aria-current='page')= category.categoryname
+                            li.breadcrumb-item.active(aria-current='page')= currentcategory.categoryname
                     .row.mt-4
                         .col-12                                
                             .row.mb-0.ml-1.mr-1
