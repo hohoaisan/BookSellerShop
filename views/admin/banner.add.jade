@@ -1,16 +1,21 @@
 extends base
 block vars
-  - var admin_list='banner';
+  - var admin_list='editor';
 block content
-    h3.mt-4.mb-4 Quản lí sách
-    h4.mb-4 Thêm sách mới
+    h3.mt-4.mb-4 Chỉnh sửa website
+    ul.nav.nav-tabs.mb-4
+        li.nav-item
+            a.nav-link(href='/admin/editor/banner').active Banner
+        li.nav-item
+            a.nav-link(href='/admin/editor/footer') Footer
+    h4.mt-4.mb-4 Thêm mục mới vào banner
     if (messages)
         each message in messages
             .alert.alert-success= message
     if (errors)
         each error in errors
             .alert.alert-warning= error
-    form(action="/admin/banner/add", method="POST", enctype="multipart/form-data")
+    form(action="/admin/editor/banner/add", method="POST", enctype="multipart/form-data")
         .d-flex.flex-sm-row.flex-column
             .col-md-4
                 .form-group
@@ -25,4 +30,4 @@ block content
                     input(type="file", name="picture").form-control-file.form-control-sm
         .form-group
             .d-inline-flex.p-2
-                button(type="submit").btn.btn-success.btn-block Thêm banner
+                button(type="submit").btn.btn-success.btn-block Thêm

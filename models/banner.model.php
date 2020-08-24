@@ -10,7 +10,7 @@ class BannerModel
   public static function getBanners()
   {
     try {
-      $sql = "select bookid, customimage from banner";
+      $sql = "select banner.bookid, books.bookname, customimage from banner, books where banner.bookid = books.bookid";
       $result = Database::queryResults($sql, array());
       return $result;
     } catch (PDOException $e) {

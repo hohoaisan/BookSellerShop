@@ -49,8 +49,12 @@ $router->post('/categories/add', 'Admin\AdminController@categoryAdd');
 $router->post('/categories/{categoryid}/edit', 'Admin\AdminController@categoryEdit');
 $router->post('/categories/{categoryid}/delete', 'Admin\AdminController@categoryDelete');
 
-$router->get('/banner', 'Admin\AdminController@banners');
-$router->get('/banner/add', 'Admin\AdminController@bannerAdd');
-$router->post('/banner/add', 'Admin\AdminController@postBannerAdd');
-$router->post('/banner/{bookid}/delete', 'Admin\AdminController@bannerDelete');
+$router->get('/editor', 'Admin\AdminController@editorindex');
+$router->get('/editor/banner', 'Admin\AdminController@banners');
+$router->get('/editor/banner/add', 'Admin\AdminController@bannerAdd');
+$router->post('/editor/banner/add', 'Admin\AdminController@postBannerAdd');
+$router->post('/editor/banner/{bookid}/delete', 'Admin\AdminController@bannerDelete');
+$router->get('/editor/footer', 'Admin\AdminController@footerEdit');
+$router->post('/editor/footer', 'Admin\AdminController@postFooterEdit');
+
 

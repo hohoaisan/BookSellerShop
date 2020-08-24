@@ -20,6 +20,7 @@ include_once('models/payment.model.php');
 include_once('models/rating.model.php');
 include_once('models/shipping.model.php');
 include_once('models/user.model.php');
+include_once('models/config.model.php');
 
 
 include_once('controllers/admin.controller.php');
@@ -45,12 +46,18 @@ use Home\HomeController;
 
 
 use Chirp\Cryptor as Cryptor;
+use Config\ConfigModel;
+
 $encryption_key = 'CKXH2U9RPY3EFD70TLS1ZG4N8WQBOVI6AMJ5';
 $GLOBALS['cryptor'] = new Cryptor($encryption_key);
 
 
 $_SESSION['authuser'] = UserController::getUserInfo();
-PugFacade::share(array('user' => $_SESSION['authuser']));
+$footer = ConfigModel::getFooterConfig();
+PugFacade::share([
+  'user' => $_SESSION['authuser'],
+  'footer' => $footer
+]);
 
 // Hiển thị trang chủ
 

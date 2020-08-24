@@ -1,33 +1,40 @@
 extends base
 block vars
-  - var admin_list='banner';
+  - var admin_list='editor';
 block content
-    h3.mt-4.mb-4 Quản lí Banner
+    h3.mt-4.mb-4 Chỉnh sửa website
+    ul.nav.nav-tabs.mb-4
+        li.nav-item
+            a.nav-link(href='/admin/editor/banner').active Banner
+        li.nav-item
+            a.nav-link(href='/admin/editor/footer') Footer
     if (title)
         h4.mt-4.mb-4= title
     .d-flex.justify-content-between.align-items-center.mb-2
-        a(href="/admin/banner/add")
-            .btn.btn-primary.mr-4 Thêm banner mới
+        a(href="/admin/editor/banner/add")
+            .btn.btn-primary.mr-4 Thêm mục mới vào banner
     .mb-4
         if (messages)
-        each message in messages
-            .alert.alert-success= message
+            each message in messages
+                .alert.alert-success= message
         if (errors)
-        each error in errors
-            .alert.alert-warning= error
-        if (books)
+            each error in errors
+                .alert.alert-warning= error
         table.table.table-sm
             thead
                 tr
-                    th Mã sách banner
-                    th Banner Image Url
+                    th Tên sách
+                    th Hình ảnh
+                    th Thao tác
             tbody
                 each val in banners
                     tr
-                        td= val.bookid
-                        td= val.customimage
+                        td
+                            a(href='/books/'+val.bookid)= val.bookname
+                        td
+                            img(src='/assets/img/banner/'+val.customimage width='100px')
                         td.tablecell-action
-                            form(action="/admin/banner/" + val.bookid + "/delete", method="POST")
-                                button(type="submit").btn.btn-danger Xoá banner          
+                            form(action="/admin/editor/banner/" + val.bookid + "/delete", method="POST")
+                                button(type="submit").btn.btn-sm.btn-danger Xoá         
     append external
     

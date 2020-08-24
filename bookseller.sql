@@ -1,5 +1,5 @@
 /*
- Navicat Premium Data Transfer
+ Navicat MySQL Data Transfer
 
  Source Server         : MYSQL
  Source Server Type    : MySQL
@@ -11,7 +11,7 @@
  Target Server Version : 100413
  File Encoding         : 65001
 
- Date: 27/07/2020 18:23:17
+ Date: 24/08/2020 12:41:39
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `authors`  (
   `authorname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `authordescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`authorid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of authors
@@ -43,6 +43,7 @@ INSERT INTO `authors` VALUES (000009, 'Vũ Trọng Phụng', 'là một nhà vă
 INSERT INTO `authors` VALUES (000010, 'Gotouge Koyoharu', 'mangaka nổi lên với bộ truyện thanh gươm diệt quỷ');
 INSERT INTO `authors` VALUES (000015, 'Shinkai Makoto', 'Shinkai Makoto (新海誠 Tân Hải Thành?), tên khai sinh là Nītsu Makoto (新津誠 Tân Tân Thành?), còn được biết đến với biệt danh phù thủy của những nỗi buồn, là một nhà làm phim, tiểu thuyết gia, đạo diễn');
 INSERT INTO `authors` VALUES (000016, 'Reki Kawahara', 'Tác giả nổi tiếng với thế giới ảo');
+INSERT INTO `authors` VALUES (000017, 'Test têm2', 'OK?no');
 
 -- ----------------------------
 -- Table structure for banner
@@ -60,7 +61,7 @@ CREATE TABLE `banner`  (
 -- Records of banner
 -- ----------------------------
 INSERT INTO `banner` VALUES (000008, '0205050257ec61af49d226d6cec3f50415a6298c.jpg');
-INSERT INTO `banner` VALUES (000033, 'tre-920x420.jpg');
+INSERT INTO `banner` VALUES (000009, 'b99644d77bf20369ecdce093ec2b26ffb52aa3f7.png');
 
 -- ----------------------------
 -- Table structure for books
@@ -93,18 +94,18 @@ CREATE TABLE `books`  (
 -- ----------------------------
 -- Records of books
 -- ----------------------------
-INSERT INTO `books` VALUES (000001, '5 Centimet Trên Giây', '2019_10_24_15_33_17_1.jpg', '5cm/s không chỉ là vận tốc của những cánh anh đào rơi, mà còn là vận tốc khi chúng ta lặng lẽ bước qua đời nhau, đánh mất bao cảm xúc thiết tha nhất của tình yêu.\r\n\r\nBằng giọng văn tinh tế, truyền cảm, Năm centimet trên giây mang đến những khắc họa mới về tâm hồn và khả năng tồn tại của cảm xúc, bắt đầu từ tình yêu trong sáng, ngọt ngào của một cô bé và cậu bé. Ba giai đoạn, ba mảnh ghép, ba ngôi kể chuyện khác nhau nhưng đều xoay quanh nhân vật nam chính, người luôn bị ám ảnh bởi kí ức và những điều đã qua…\r\n\r\nKhác với những câu chuyện cuốn bạn chạy một mạch, truyện này khó mà đọc nhanh. Ngón tay bạn hẳn sẽ ngừng lại cả trăm lần trên mỗi trang sách. Chỉ vì một cử động rất khẽ, một câu thoại, hay một xúc cảm bất chợt có thể sẽ đánh thức những điều tưởng chừng đã ngủ quên trong tiềm thức, như ngọn đèn vừa được bật sáng trong tâm trí bạn. Và rồi có lúc nó vượt quá giới hạn chịu đựng, bạn quyết định gấp cuốn sách lại chỉ để tận hưởng chút ánh sáng từ ngọn đèn, hay đơn giản là để vết thương trong lòng mình có thời gian tự tìm xoa dịu. ', 127, 300, '2014-12-01', 32333, 42342, 000015, 01, 345, 10000, '2020-07-12 11:49:56', NULL, NULL);
+INSERT INTO `books` VALUES (000001, '5 Centimet Trên Giây', '2019_10_24_15_33_17_1.jpg', '5cm/s không chỉ là vận tốc của những cánh anh đào rơi, mà còn là vận tốc khi chúng ta lặng lẽ bước qua đời nhau, đánh mất bao cảm xúc thiết tha nhất của tình yêu.\r\n\r\nBằng giọng văn tinh tế, truyền cảm, Năm centimet trên giây mang đến những khắc họa mới về tâm hồn và khả năng tồn tại của cảm xúc, bắt đầu từ tình yêu trong sáng, ngọt ngào của một cô bé và cậu bé. Ba giai đoạn, ba mảnh ghép, ba ngôi kể chuyện khác nhau nhưng đều xoay quanh nhân vật nam chính, người luôn bị ám ảnh bởi kí ức và những điều đã qua…\r\n\r\nKhác với những câu chuyện cuốn bạn chạy một mạch, truyện này khó mà đọc nhanh. Ngón tay bạn hẳn sẽ ngừng lại cả trăm lần trên mỗi trang sách. Chỉ vì một cử động rất khẽ, một câu thoại, hay một xúc cảm bất chợt có thể sẽ đánh thức những điều tưởng chừng đã ngủ quên trong tiềm thức, như ngọn đèn vừa được bật sáng trong tâm trí bạn. Và rồi có lúc nó vượt quá giới hạn chịu đựng, bạn quyết định gấp cuốn sách lại chỉ để tận hưởng chút ánh sáng từ ngọn đèn, hay đơn giản là để vết thương trong lòng mình có thời gian tự tìm xoa dịu. ', 127, 300, '2014-12-01', 32334, 42342, 000015, 01, 345, 10000, '2020-07-27 20:46:03', NULL, NULL);
 INSERT INTO `books` VALUES (000002, 'Khu Vườn Ngôn Từ', '2019_09_20_11_55_53_1.jpg', 'Khu vườn ngôn từ kể về một tình yêu còn xa xưa hơn cả tình yêu.\r\nKhái niệm tình yêu trong tiếng Nhật hiện đại là luyến hoặc ái, nhưng vào thời xưa nó được viết là cô bi, nghĩa là nỗi buồn một mình. Shinkai Makoto đã cấu tứ Khu vườn ngôn từ theo ý nghĩa cổ điển này, miêu tả tình yêu theo khái niệm ban sơ của nó, tức là cô bi - nỗi buồn khi một mình thương nhớ một người.\r\n\r\nNhững ngày mưa triền miên....\r\nNơi hàng hiên ngập tràn màu xanh của một khu vườn Nhật Bản...\r\nCó một cảm xúc êm dịu đến không thốt nên lời cứ thế manh nha, tựu hình và lửng lơ tồn tại.\r\nTrong lúc dòng đời cuồn cuộn chảy trôi, tất cả hối hả tiến về phía trước, thì cậu và cô lại dừng chân, chìm xuống trong tĩnh lặng riêng mình, và ở cái vũng tĩnh lặng đó, họ tìm thấy nhau. Dần dần và mạo hiểm, quên đi cả các chênh lệch về tuổi tác và vị trí, họ thả hồn mình trôi về nhau hòa điệu.\r\nLàm nền cho tất cả là mưa rơi không ngừng, là lá mướt mát rung rinh. Nhưng khi mưa tạnh và trời quang trở lại, mọi đường nét của hiện thực trở nên rõ rệt đến khắc nghiệt, thì những êm dịu và lửng lơ kia liệu còn khả năng tồn tại?', 231, 450, '2015-09-01', 431, 231, 000015, 01, 212, 92000, '2020-07-11 10:31:31', NULL, NULL);
-INSERT INTO `books` VALUES (000003, '5 Centimet Trên Giây - One More Side', 'image_195509_1_39879.jpg', '5 Centimet Trên Giây - One More Side\r\n\r\nNếu coi tiểu thuyết 5 CENTIMET TRÊN GIÂY là một bức tranh ghép hình, khắc họa chuyện đời, chuyện tình của Tono Takaki, thì 5 CENTIMET TRÊN GIÂY ONE MORE SIDE giống như phần mở rộng và hoàn thiện của bức tranh ấy.\r\n\r\nNhững mảnh ghép vốn có được thay mới cả về nội dung và cách thể hiện. Những mảnh ghép ẩn được hé lộ đầy đủ và sáng tỏ. Bức tranh tổng thể vì thế mà toàn vẹn hơn, đa chiều hơn.\r\n\r\nĐược chắp bút bởi tác giả quen thuộc Kanoh Arata, 5 CENTIMET TRÊN GIÂY ONE MORE SIDE sẽ đưa độc giả tiếp cận câu chuyện đượm buồn nhưng tuyệt đẹp của Shinkai Makoto một lần nữa, qua “một góc nhìn khác”.', 361, 250, '2020-05-01', 521, 332, 000015, 01, 323, 123000, '2020-07-11 10:31:41', NULL, NULL);
-INSERT INTO `books` VALUES (000004, 'Ba Ngày Hạnh Phúc', 'bia_1_3_ngay_hp.jpg', 'Thật vô vọng khi thích một người không còn trên thế gian này.\r\n\r\nXem ra từ nay về sau chẳng có một điều tốt lành nào đến với cuộc đời tôi. Chính vì thế mà mỗi năm sinh mệnh của tôi chỉ đáng giá 10.000 yên. Quá bi quan về tương lai, tôi đã bán đi gần hết sinh mệnh của mình. Dù có cố làm gì để được hạnh phúc trong quãng đời ngắn ngủi còn lại, thì tôi cũng chỉ nhận được kết quả trái ngược. Trong khi tôi đang tiếp tục sống vô định thì “người giám sát” Miyagi vẫn đăm đăm nhìn tôi với ánh mắt điềm tĩnh.\r\n\r\nTôi đã mất thêm hai tháng cuộc đời để nhận ra rằng tôi hạnh phúc nhất khi sống vì cô ấy.\r\n\r\nTập truyện nổi tiếng trên web này, cuối cùng cũng được xuất bản!\r\n\r\n(Tên ban đầu của nó là Tôi đã bán sinh mệnh của mình. Mỗi năm 10.000 yên.)', 127, 300, '2019-04-12', 354, 112, 000006, 01, 21, 83000, '2020-07-11 10:31:44', NULL, NULL);
+INSERT INTO `books` VALUES (000003, '5 Centimet Trên Giây - One More Side', 'image_195509_1_39879.jpg', '5 Centimet Trên Giây - One More Side\r\n\r\nNếu coi tiểu thuyết 5 CENTIMET TRÊN GIÂY là một bức tranh ghép hình, khắc họa chuyện đời, chuyện tình của Tono Takaki, thì 5 CENTIMET TRÊN GIÂY ONE MORE SIDE giống như phần mở rộng và hoàn thiện của bức tranh ấy.\r\n\r\nNhững mảnh ghép vốn có được thay mới cả về nội dung và cách thể hiện. Những mảnh ghép ẩn được hé lộ đầy đủ và sáng tỏ. Bức tranh tổng thể vì thế mà toàn vẹn hơn, đa chiều hơn.\r\n\r\nĐược chắp bút bởi tác giả quen thuộc Kanoh Arata, 5 CENTIMET TRÊN GIÂY ONE MORE SIDE sẽ đưa độc giả tiếp cận câu chuyện đượm buồn nhưng tuyệt đẹp của Shinkai Makoto một lần nữa, qua “một góc nhìn khác”.', 361, 250, '2020-05-01', 522, 332, 000015, 01, 323, 123000, '2020-07-27 21:21:10', NULL, NULL);
+INSERT INTO `books` VALUES (000004, 'Ba Ngày Hạnh Phúc', 'bia_1_3_ngay_hp.jpg', 'Thật vô vọng khi thích một người không còn trên thế gian này.\r\n\r\nXem ra từ nay về sau chẳng có một điều tốt lành nào đến với cuộc đời tôi. Chính vì thế mà mỗi năm sinh mệnh của tôi chỉ đáng giá 10.000 yên. Quá bi quan về tương lai, tôi đã bán đi gần hết sinh mệnh của mình. Dù có cố làm gì để được hạnh phúc trong quãng đời ngắn ngủi còn lại, thì tôi cũng chỉ nhận được kết quả trái ngược. Trong khi tôi đang tiếp tục sống vô định thì “người giám sát” Miyagi vẫn đăm đăm nhìn tôi với ánh mắt điềm tĩnh.\r\n\r\nTôi đã mất thêm hai tháng cuộc đời để nhận ra rằng tôi hạnh phúc nhất khi sống vì cô ấy.\r\n\r\nTập truyện nổi tiếng trên web này, cuối cùng cũng được xuất bản!\r\n\r\n(Tên ban đầu của nó là Tôi đã bán sinh mệnh của mình. Mỗi năm 10.000 yên.)', 127, 300, '2019-04-12', 373, 112, 000006, 01, 21, 83000, '2020-08-21 21:50:09', NULL, NULL);
 INSERT INTO `books` VALUES (000005, 'Sư Tử Tháng 3 - Tập 7', 'nah.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu. Rei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 1234, 200, '2017-06-06', 138, 1442, 000006, 05, 56, 300000, '2020-07-12 10:22:12', NULL, NULL);
-INSERT INTO `books` VALUES (000006, 'Sư Tử Tháng 3 - Tập 2', 'su_tu_thang_3___tap_2_1_2018_09_29_11_03_20.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu.\r\n\r\nRei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 154, 200, '2017-04-18', 545, 1421, 000001, 01, 212, 20000, '2020-07-11 10:31:49', NULL, NULL);
+INSERT INTO `books` VALUES (000006, 'Sư Tử Tháng 3 - Tập 2', 'su_tu_thang_3___tap_2_1_2018_09_29_11_03_20.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu.\r\n\r\nRei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 154, 200, '2017-04-18', 548, 1421, 000001, 01, 212, 20000, '2020-08-21 15:13:30', NULL, NULL);
 INSERT INTO `books` VALUES (000007, 'Sư Tử Tháng 3 - Tập 3', 'su_tu_thang_3___tap_3_1_2018_09_29_10_59_18.jpg', 'Truyện kể về Kiriyama Rei, kì thủ cờ Shogi, người đã đạt được cấp độ 5 đẳng ở tuổi 17 chưa từng thua trận nào. Bề ngoài là một cậu bé tài năng và thành công, nhưng ít ai có thể hiểu được nỗi cô đơn mà cậu đang phải ngày ngày gánh chịu.\r\n\r\nRei sống cuộc sống một mình, thiếu thốn tình cảm gia đình và không có nhiều bạn bè. Người thân nhất mà Rei xem như gia đình chính là Akari, Hinata, Momo và rất nhiều các chú mèo chung quanh mình.', 124, 200, '2017-05-12', 463, 413, 000001, 01, 32, 20000, '2020-07-11 10:31:51', NULL, NULL);
-INSERT INTO `books` VALUES (000008, 'Gửi Em Người Bất Tử 04', 'nxbtre_full_17152019_021532_1.jpg', 'Một \"thực thể\" bất tử được gửi đến trái đất, có thể bắt chước hình dạng của mọi sinh vật đã chết. Thế rồi, trong khi lần mò tìm hiểu mọi thứ xung quanh mình, \"nó\" tìm thấy một cậu bé... Điều gì sẽ xảy đến với \"nó\", \"nó\" sẽ đối mặt với những trải nghiệm gì, khi mà cuộc đời của \"nó\" kéo dài vĩnh viễn.', 186, 200, '2019-03-28', 341, 441, 000002, 01, 234, 17000, '2020-07-11 10:31:53', NULL, NULL);
+INSERT INTO `books` VALUES (000008, 'Gửi Em Người Bất Tử 04', 'nxbtre_full_17152019_021532_1.jpg', 'Một \"thực thể\" bất tử được gửi đến trái đất, có thể bắt chước hình dạng của mọi sinh vật đã chết. Thế rồi, trong khi lần mò tìm hiểu mọi thứ xung quanh mình, \"nó\" tìm thấy một cậu bé... Điều gì sẽ xảy đến với \"nó\", \"nó\" sẽ đối mặt với những trải nghiệm gì, khi mà cuộc đời của \"nó\" kéo dài vĩnh viễn.', 186, 200, '2019-03-28', 342, 441, 000002, 01, 234, 17000, '2020-08-24 10:48:29', NULL, NULL);
 INSERT INTO `books` VALUES (000009, 'Gửi Em Người Bất Tử 02', 'nxbtre_full_19012019_020149_1.jpg', 'Một \"thực thể\" bất tử được gửi đến trái đất, có thể bắt chước hình dạng của mọi sinh vật đã chết. Thế rồi, trong khi lần mò tìm hiểu mọi thứ xung quanh mình, \"nó\" tìm thấy một cậu bé... Điều gì sẽ xảy đến với \"nó\", \"nó\" sẽ đối mặt với những trải nghiệm gì, khi mà cuộc đời của \"nó\" kéo dài vĩnh viễn.', 186, 200, '2019-01-03', 242, 642, 000002, 01, 213, 19000, '2020-07-11 10:31:55', NULL, NULL);
 INSERT INTO `books` VALUES (000010, 'Sword Art Online 001', 'sao1.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 468, 200, '2015-04-17', 723, 516, 000016, 07, 213, 90000, '2020-07-11 10:31:55', NULL, NULL);
 INSERT INTO `books` VALUES (000011, 'Sword Art Online 002', 'sao2.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 568, 350, '2015-01-03', 622, 146, 000016, 07, 273, 100000, '2020-07-11 10:32:55', NULL, NULL);
-INSERT INTO `books` VALUES (000012, 'Sword Art Online 003', 'sao3.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 498, 230, '2016-02-03', 252, 516, 000016, 07, 613, 90000, '2020-07-11 10:33:55', NULL, NULL);
+INSERT INTO `books` VALUES (000012, 'Sword Art Online 003', 'sao3.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 498, 230, '2016-02-03', 254, 516, 000016, 07, 613, 90000, '2020-08-22 20:55:11', NULL, NULL);
 INSERT INTO `books` VALUES (000013, 'Sword Art Online 004', 'sao4.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 538, 300, '2017-03-04', 924, 265, 000016, 07, 713, 100000, '2020-07-11 10:41:55', NULL, NULL);
 INSERT INTO `books` VALUES (000014, 'Sword Art Online 005', 'sao5.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 738, 600, '2018-04-05', 2212, 512, 000016, 07, 253, 120000, '2020-07-11 10:51:55', NULL, NULL);
 INSERT INTO `books` VALUES (000015, 'Sword Art Online 006', 'sao6.jpg', 'Kirito, nhân vật chính, là người đầu tiên trong số game thủ SAO biết chấp nhận chân tướng ấy. Và ở hiện trường của trò chơi - một thành nổi khổng lồ mang tên Aincrad, cậu ta dần dà hiển lộ được tài năng trong vai trò game thủ solo. Kirito vốn định duy trì tình trạng chiến đấu đơn độc đầy mạo hiểm đó cho đến khi đạt mục tiêu là vươn tới tầng cao nhất để phá đảo game, nhưng sau lời mời giàu sức thuyết phục của nữ kiếm sĩ Asuna, cậu quyết định sát cánh cùng cô. Cuộc gặp gỡ ấy đã tạo nên bước ngoặt có thể gọi là định mệnh đối với Kirito…', 868, 800, '2019-05-06', 2275, 214, 000016, 07, 513, 150000, '2020-07-11 10:52:55', NULL, NULL);
@@ -118,15 +119,15 @@ INSERT INTO `books` VALUES (000022, 'Bản án chế độ thực dân Pháp', '
 INSERT INTO `books` VALUES (000023, 'Số Đỏ', 'phung1.jpg', 'Nhân vật chính của Số đỏ là Xuân - biệt danh là Xuân Tóc đỏ, từ chỗ là một kẻ bị coi là hạ lưu, bỗng nhảy lên tầng lớp danh giá của xã hội nhờ trào lưu Âu hóa của giới tiểu tư sản Hà Nội khi đó', 235, 400, '1936-10-03', 1223, 349, 000009, 01, 2000, 159000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000024, 'Làm Đĩ', 'phung2.jpg', 'Làm đĩ được viết dưới dạng tự truyện của nhân vật chính tên Huyền. Sinh ra trong một gia đình có cha làm việc cho Tây nhưng lại cực kỳ hủ bại, từ nhỏ Huyền đã luôn bị người lớn lảng tránh và nạt nộ khi cô bé thắc mắc về những vấn đề giới tính.', 244, 350, '1936-05-22', 142, 39, 000009, 01, 107, 39000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000025, 'Từ Ấy', 'huu1.jpg', 'Từ ấy gồm 71 bài thơ tập hợp trong 3 phần tương ứng với ba giai đoạn lịch sử: Máu lửa (27 bài), Xiềng xích (30 bài) và Giải phóng (14 bài), ghi lại một thời kỳ lịch sử cách mạng của nhân dân Việt Nam, thông qua chặng đường hoạt động 10 năm của người thanh niên cộng sản Tố Hữu', 175, 220, '1959-06-15', 122, 22, 000005, 08, 72, 42000, '2020-07-11 10:52:55', NULL, NULL);
-INSERT INTO `books` VALUES (000026, 'Đắc Nhân Tâm', 'dale1.jpg', 'Tác phẩm được đánh giá là cuốn sách đầu tiên và hay nhất trong thể loại này, có ảnh hưởng thay đổi cuộc đời đối với hàng triệu người trên thế giới.', 322, 400, '1936-10-12', 2021, 348, 000008, 07, 1500, 79000, '2020-07-11 10:52:55', NULL, NULL);
-INSERT INTO `books` VALUES (000027, 'Quẳng gánh lo đi và vui sống', 'dale2.jpg', 'Quyển sách này là một cẩm nang về cách làm việc và vui sống không bị lo âu.', 306, 400, '1948-03-08', 1898, 421, 000008, 07, 400, 79000, '2020-07-11 10:52:55', NULL, NULL);
+INSERT INTO `books` VALUES (000026, 'Đắc Nhân Tâm', 'dale1.jpg', 'Tác phẩm được đánh giá là cuốn sách đầu tiên và hay nhất trong thể loại này, có ảnh hưởng thay đổi cuộc đời đối với hàng triệu người trên thế giới.', 322, 400, '1936-10-12', 2027, 348, 000008, 07, 1500, 79000, '2020-08-21 23:30:51', NULL, NULL);
+INSERT INTO `books` VALUES (000027, 'Quẳng gánh lo đi và vui sống', 'dale2.jpg', 'Quyển sách này là một cẩm nang về cách làm việc và vui sống không bị lo âu.', 306, 400, '1948-03-08', 1899, 421, 000008, 07, 400, 79000, '2020-08-21 14:58:25', NULL, NULL);
 INSERT INTO `books` VALUES (000028, 'Thuật hùng biện', 'dale3.jpg', 'Sự thành công trong kinh doanh, trong các mối quan hệ xã hội, hay ngay cả tronglĩnh vực riêng tức của một người phụ thuộc rất nhiều vào khả năng giao tiếp của người đó, khả năng thể hiện, diễn đạt cho mọi người biết bạn là ai, bạn muốn gì, và bạn tin vào điều gì', 264, 300, '2010-12-22', 221, 49, 000008, 08, 7, 59000, '2020-07-11 10:52:55', NULL, NULL);
 INSERT INTO `books` VALUES (000029, 'Nàng và con mèo của nàng', 'shinkai1.png', 'là sự gặp gỡ giữa cô gái tên Miyu với một bé mèo trắng bị bỏ hoang. Miyu trầm tính, ít nói và sống độc thân trong một căn hộ nhỏ.', 175, 200, '1999-05-05', 298, 49, 000015, 01, 0, 89000, '2020-07-25 09:54:29', NULL, NULL);
 INSERT INTO `books` VALUES (000030, 'Your Name', 'shinkai2.jpg', 'Mitsuha - cô nữ sinh sống tại một vùng quê Nhật Bản, chán ngán cuộc sống hiện tại và luôn mong được lên Tokyo sống. Taki - một cậu nam sinh ở Tokyo, làm thêm tại một nhà hàng Ý sau giờ học, thích vẽ vời và quan tâm đến ngành kiến trúc.', 262, 200, '2016-06-18', 400, 158, 000015, 01, 0, 139000, '2020-07-25 09:54:31', NULL, NULL);
-INSERT INTO `books` VALUES (000031, 'Thanh Gươm Diệt Quỷ vol 1', 'guom1h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
+INSERT INTO `books` VALUES (000031, 'Thanh Gươm Diệt Quỷ vol 1', 'guom1h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1882, 420, 000010, 09, 349, 39000, '2020-08-21 17:25:39', NULL, NULL);
 INSERT INTO `books` VALUES (000032, 'Thanh Gươm Diệt Quỷ vol 2', 'guom2h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
-INSERT INTO `books` VALUES (000033, 'Thanh Gươm Diệt Quỷ vol 3', 'guom3.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-25 08:25:48', 'Nhà Xuất Bản Trẻ', 'Bìa mềm');
-INSERT INTO `books` VALUES (000034, 'Thanh Gươm Diệt Quỷ vol 4', 'guom4h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
+INSERT INTO `books` VALUES (000033, 'Thanh Gươm Diệt Quỷ vol 3', 'guom3.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1883, 420, 000010, 09, 349, 39000, '2020-08-23 14:49:02', 'Nhà Xuất Bản Trẻ', 'Bìa mềm');
+INSERT INTO `books` VALUES (000034, 'Thanh Gươm Diệt Quỷ vol 4', 'guom4h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1882, 420, 000010, 09, 349, 39000, '2020-08-22 23:20:58', NULL, NULL);
 INSERT INTO `books` VALUES (000035, 'Thanh Gươm Diệt Quỷ vol 6', 'guom6h.jpg', 'Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên Tanjiro. Những ngày yên bình đã chẳng còn khi Quỷ đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ.', 188, 200, '2020-01-01', 1881, 420, 000010, 09, 349, 39000, '2020-07-11 10:52:55', NULL, NULL);
 
 -- ----------------------------
@@ -151,6 +152,20 @@ INSERT INTO `categories` VALUES (06, 'Sách lịch sử');
 INSERT INTO `categories` VALUES (07, 'Sách ngoại văn');
 INSERT INTO `categories` VALUES (08, 'Thơ');
 INSERT INTO `categories` VALUES (09, 'Truyện tranh');
+
+-- ----------------------------
+-- Table structure for config
+-- ----------------------------
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config`  (
+  `config_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `config_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of config
+-- ----------------------------
+INSERT INTO `config` VALUES ('footer', '<footer class=\"footer mt-4\">\r\n  <div class=\"container bottom_border\">\r\n    <div class=\"row mt-4\">\r\n      <div class=\"col-sm-4 col-md col-12 col\">\r\n        <h5 class=\"headin5_amrc col_white_amrc pt-2 mb-4\">Thông tin</h5>\r\n        <p class=\"mb10\">Sách là tri thức của con người, đến với Chronicle Book là đến với một trong những nơi cung cấp\r\n          cho bạn một góc nhỏ của kho tàng tri thức ấy</p>\r\n        <p><i class=\"fa fa-location-arrow\"></i> Toà nhà số 5, 48 Cao Thắng, Quận Hải Châu, Đà Nẵng</p>\r\n        <p><i class=\"fa fa-phone\"></i> 01234567891011</p>\r\n        <p><i class=\"fa fa-envelope\"></i> chronicle@book.com</p>\r\n      </div>\r\n      <div class=\"col-sm-4 col-md col-12 col\">\r\n        <h5 class=\"headin5_amrc col_white_amrc pt-2 mb-4\">Theo dõi chúng tôi</h5>\r\n        <ul class=\"footer_ul2_amrc\">\r\n          <li><a href=\"#\"><i class=\"fab fa-twitter fleft padding-right\"></i>\r\n              <p>Facebook</p>\r\n            </a></li>\r\n          <li><a href=\"#\"><i class=\"fab fa-twitter fleft padding-right\"></i>\r\n              <p>Twiter</p>\r\n            </a></li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"col-sm-4 col-md col-6 col\">\r\n        <h5 class=\"headin5_amrc col_white_amrc pt-2 mb-4\">Tài khoản của tôi</h5>\r\n        <ul class=\"footer_ul_amrc\">\r\n          <li><a href=\"/auth/login\">Đăng nhập</a></li>\r\n          <li><a href=\"/auth/register\">Đăng kí</a></li>\r\n          <li><a href=\"/user/address\">Thay đổi địa chỉ</a></li>\r\n          <li><a href=\"/user/profile\">Chi tiết tài khoản</a></li>\r\n          <li><a href=\"/user/orders\">Lịch sử mua hàng</a></li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"container-fluid\">\r\n    <ul class=\"foote_bottom_ul_amrc\">\r\n      <li><a href=\"/\">Trang chủ</a></li>\r\n      <li><a href=\"/authors\">Tác giả</a></li>\r\n      <li><a href=\"/categories\">Danh mục</a></li>\r\n    </ul>\r\n    <p class=\"text-center\">Copyright WIBU@2020 | Designed With &lt;3</p>\r\n  </div>\r\n</footer>\r\n<style>\r\n  .col_white_amrc {\r\n    color: #fff;\r\n  }\r\n\r\n  footer {\r\n    width: 100%;\r\n    background-color: #263238;\r\n    min-height: 250px;\r\n    padding: 10px 0 25px 0;\r\n  }\r\n\r\n  footer p {\r\n    font-size: 13px;\r\n    color: #ccc;\r\n    padding-bottom: 0;\r\n    margin-bottom: 8px;\r\n  }\r\n\r\n  .mb10 {\r\n    padding-bottom: 15px;\r\n  }\r\n\r\n  .footer_ul_amrc {\r\n    margin: 0;\r\n    list-style-type: none;\r\n    font-size: 14px;\r\n    padding: 0 0 10px 0;\r\n  }\r\n\r\n  .footer_ul_amrc li {\r\n    padding: 0 0 5px 0;\r\n  }\r\n\r\n  .footer_ul_amrc li a {\r\n    color: #ccc;\r\n  }\r\n\r\n  .footer_ul_amrc li a:hover {\r\n    color: #fff;\r\n    text-decoration: none;\r\n  }\r\n\r\n  .fleft {\r\n    float: left;\r\n  }\r\n\r\n  .padding-right {\r\n    padding-right: 10px;\r\n  }\r\n\r\n  .footer_ul2_amrc {\r\n    margin: 0;\r\n    list-style-type: none;\r\n    padding: 0;\r\n  }\r\n\r\n  .footer_ul2_amrc li p {\r\n    display: table;\r\n  }\r\n\r\n  .footer_ul2_amrc li a:hover {\r\n    text-decoration: none;\r\n  }\r\n\r\n  .footer_ul2_amrc li i {\r\n    margin-top: 5px;\r\n  }\r\n\r\n  .bottom_border {\r\n    border-bottom: 1px solid #323f45;\r\n    padding-bottom: 20px;\r\n  }\r\n\r\n  .foote_bottom_ul_amrc {\r\n    list-style-type: none;\r\n    padding: 0;\r\n    display: table;\r\n    margin-top: 10px;\r\n    margin-right: auto;\r\n    margin-bottom: 10px;\r\n    margin-left: auto;\r\n  }\r\n\r\n  .foote_bottom_ul_amrc li {\r\n    display: inline;\r\n  }\r\n\r\n  .foote_bottom_ul_amrc li a {\r\n    color: #999;\r\n    margin: 0 12px;\r\n  }\r\n\r\n  .padding-0 {\r\n    padding-left: 0;\r\n    padding-right: 0;\r\n  }\r\n\r\n  .padding-2 {\r\n    margin-right: 2px;\r\n    margin-left: 2px;\r\n  }\r\n\r\n  .mt-10 {\r\n    margin-top: 10px;\r\n  }\r\n\r\n  footer ul {\r\n    list-style: none;\r\n    margin-bottom: 0;\r\n  }\r\n\r\n  </style>');
 
 -- ----------------------------
 -- Table structure for district
@@ -901,18 +916,23 @@ CREATE TABLE `orders`  (
   CONSTRAINT `fk_payment` FOREIGN KEY (`payment`) REFERENCES `payment` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_shipping` FOREIGN KEY (`shipping`) REFERENCES `shipping` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `tk_usersid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (000002, 000002, 'a', '2020-07-17 14:26:24', '00007', '34 Nguyễn Hữu Thắng', 43000, NULL, '', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000002, 000002, 'c', '2020-07-17 14:26:24', '00007', '34 Nguyễn Hữu Thắng', 43000, NULL, '', 'EXPRE', NULL);
 INSERT INTO `orders` VALUES (000003, 000002, 'e', '2020-07-17 14:26:53', '00006', '43 Công Nông', 12000, NULL, '', 'EXPRE', NULL);
 INSERT INTO `orders` VALUES (000005, 000002, 'r', '2020-07-17 14:28:26', '00001', '43 Công Nông', 56000, NULL, '', 'EXPRE', NULL);
 INSERT INTO `orders` VALUES (000006, 000002, 'e', '2020-07-17 14:29:09', '00004', '32 Thần', 12000, NULL, '', 'EXPRE', NULL);
 INSERT INTO `orders` VALUES (000007, 000002, 'c', '2020-07-17 14:30:26', '00006', 'heheh', 23000, NULL, '', 'EXPRE', NULL);
-INSERT INTO `orders` VALUES (000010, NULL, 'c', '2020-07-17 14:38:42', '00007', 'really', 0, 'Phạm Anh Tú', '091273512', 'EXPRE', NULL);
-INSERT INTO `orders` VALUES (000012, 000002, 'p', '2020-07-25 15:36:35', '03085', '34 Nguyễn Chí Thanh', 168000, 'Ho Hoai San', '0123456789', 'EXPRE', 'MOMO');
+INSERT INTO `orders` VALUES (000010, 000002, 'c', '2020-07-17 14:38:42', '00007', 'really', 0, 'Phạm Anh Tú', '091273512', 'EXPRE', NULL);
+INSERT INTO `orders` VALUES (000012, 000002, 'c', '2020-07-25 15:36:35', '03085', '34 Nguyễn Chí Thanh', 168000, 'Ho Hoai San', '0123456789', 'EXPRE', 'MOMO');
+INSERT INTO `orders` VALUES (000013, NULL, 'p', '2020-08-22 23:16:13', '00124', '23', 162000, 'Phạm Anh Tú', '+84935245367', 'EXPRE', 'BANK');
+INSERT INTO `orders` VALUES (000014, 000002, 'p', '2020-08-22 23:21:34', '11629', '34 Nguyễn Chí Thanh 8', 303000, 'Ho Hoai San 2', '0123456788', 'EXPRE', 'MOMO');
+INSERT INTO `orders` VALUES (000015, 000001, 'p', '2020-08-22 23:40:08', '03382', '28 Cao Thắng', 229000, 'Administator', '0397556211', 'NORMA', 'NORMAL');
+INSERT INTO `orders` VALUES (000016, 000001, 'p', '2020-08-23 02:44:24', '03382', '28 Cao Thắng', 148000, 'Administator', '0123456788', 'NORMA', 'NORMAL');
+INSERT INTO `orders` VALUES (000017, 000007, 'p', '2020-08-23 11:45:05', '02344', '23', 148000, 'Kuroshu Kanade', '0397556211', 'NORMA', 'NORMAL');
 
 -- ----------------------------
 -- Table structure for ordersdetails
@@ -935,8 +955,20 @@ CREATE TABLE `ordersdetails`  (
 -- ----------------------------
 INSERT INTO `ordersdetails` VALUES (2, 32000, 000010, 000004);
 INSERT INTO `ordersdetails` VALUES (23, 3423424, 000010, 000027);
+INSERT INTO `ordersdetails` VALUES (2, 32000, 000012, 000004);
 INSERT INTO `ordersdetails` VALUES (1, 79000, 000012, 000026);
 INSERT INTO `ordersdetails` VALUES (1, 39000, 000012, 000031);
+INSERT INTO `ordersdetails` VALUES (1, 92000, 000013, 000002);
+INSERT INTO `ordersdetails` VALUES (1, 20000, 000013, 000016);
+INSERT INTO `ordersdetails` VALUES (1, 19000, 000014, 000009);
+INSERT INTO `ordersdetails` VALUES (1, 39000, 000014, 000031);
+INSERT INTO `ordersdetails` VALUES (5, 195000, 000014, 000034);
+INSERT INTO `ordersdetails` VALUES (1, 120000, 000015, 000014);
+INSERT INTO `ordersdetails` VALUES (1, 79000, 000015, 000027);
+INSERT INTO `ordersdetails` VALUES (1, 79000, 000016, 000026);
+INSERT INTO `ordersdetails` VALUES (1, 39000, 000016, 000034);
+INSERT INTO `ordersdetails` VALUES (1, 79000, 000017, 000027);
+INSERT INTO `ordersdetails` VALUES (1, 39000, 000017, 000034);
 
 -- ----------------------------
 -- Table structure for payment
@@ -1040,7 +1072,7 @@ INSERT INTO `province` VALUES ('96', 'Tỉnh Cà Mau');
 DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating`  (
   `ratingid` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-  `timestamp` datetime(0) NOT NULL,
+  `timestamp` datetime(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `userid` int(6) UNSIGNED ZEROFILL NOT NULL,
   `bookid` int(6) UNSIGNED ZEROFILL NOT NULL,
@@ -1050,11 +1082,19 @@ CREATE TABLE `rating`  (
   INDEX `fkIdx_51`(`bookid`) USING BTREE,
   CONSTRAINT `FK_48` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_51` FOREIGN KEY (`bookid`) REFERENCES `books` (`bookid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rating
 -- ----------------------------
+INSERT INTO `rating` VALUES (000001, '2020-08-21 21:35:24', 'good', 000002, 000001, 5);
+INSERT INTO `rating` VALUES (000002, '2020-08-12 21:35:49', 'nice', 000002, 000002, 5);
+INSERT INTO `rating` VALUES (000003, '2020-08-21 21:36:20', 'nice', 000006, 000004, 5);
+INSERT INTO `rating` VALUES (000004, '0000-00-00 00:00:00', 'nice', 000007, 000004, 7);
+INSERT INTO `rating` VALUES (000005, '2020-08-21 21:38:28', 'nice', 000008, 000004, 5);
+INSERT INTO `rating` VALUES (000009, '2020-08-23 11:40:21', 'aa hay lắm banj', 000002, 000004, 4);
+INSERT INTO `rating` VALUES (000013, '2020-08-21 18:51:50', '', 000002, 000027, 5);
+INSERT INTO `rating` VALUES (000014, '2020-08-23 11:39:30', '123', 000002, 000026, 5);
 
 -- ----------------------------
 -- Table structure for shipping
@@ -1099,10 +1139,10 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (000001, 'c3284d0f94606de1fd2af172aba15bf3', 'admin', 1, 0, 'Administator', '', '', 1, NULL, NULL, NULL);
-INSERT INTO `users` VALUES (000002, 'b6655d22f76fd10eab7b3aced95b4c77', 'hoaisan', 0, 0, 'Ho Hoai San', '0123456789', 'hahaha@gmail.com', 1, '11629', '34 Nguyễn Chí Thanh 8', NULL);
+INSERT INTO `users` VALUES (000001, 'c3284d0f94606de1fd2af172aba15bf3', 'admin', 1, 0, 'Administator', '', '', 1, '03382', '28 Cao Thắng', NULL);
+INSERT INTO `users` VALUES (000002, 'b6655d22f76fd10eab7b3aced95b4c77', 'hoaisan', 0, 0, 'Ho Hoai San 2', '0123456787', 'hahaha@gmail.com', 1, '08638', '34 Nguyễn Chí Thanh 8', '2008-10-05');
 INSERT INTO `users` VALUES (000006, 'b6655d22f76fd10eab7b3aced95b4c77', 'hohoaisan', 0, 0, '', '', '', 1, NULL, NULL, NULL);
-INSERT INTO `users` VALUES (000007, '14e1b600b1fd579f47433b88e8d85291', 'kuroshukanade', 0, 0, 'Kuroshu Kanade', '0397556211', 'kuroshukanade@gmail.com', 1, NULL, NULL, '2003-06-12');
+INSERT INTO `users` VALUES (000007, 'b6655d22f76fd10eab7b3aced95b4c77', 'kuroshukanade', 0, 0, 'Kuroshu Kanade', '0397556211', 'kuroshukanade@gmail.com', 1, '04396', '3242424', '2003-06-12');
 INSERT INTO `users` VALUES (000008, '979066badd3e52803c7dd06e5c49993c', 'theminecraftdragon', 0, 0, 'theminecraftdragon', '+8493524536', 'theminecraftdragon@mc.com', 1, NULL, NULL, '2020-07-14');
 
 -- ----------------------------

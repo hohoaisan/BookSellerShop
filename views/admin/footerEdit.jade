@@ -1,0 +1,31 @@
+extends base
+append head
+  link(href='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css' rel='stylesheet')
+  script(src='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js')
+block vars
+  - var admin_list='editor';
+block content
+    h3.mt-4.mb-4 Chỉnh sửa website
+    ul.nav.nav-tabs.mb-4
+        li.nav-item
+            a.nav-link(href='/admin/editor/banner') Banner
+        li.nav-item
+            a.nav-link(href='/admin/editor/footer').active Footer
+    if (title)
+        h4.mt-4.mb-4= title
+
+    .mb-4
+        if (messages)
+            each message in messages
+                .alert.alert-success= message
+        if (errors)
+            each error in errors
+                .alert.alert-warning= error
+        form(action="", method="post")
+          textarea#editor(name="footercontent") 
+          button(type="submit").btn.btnsm.btn-block.mt-2.btn-success Lưu
+append external
+  script.
+    $(document).ready(function() {
+      $('#editor').summernote('code', `!{footer}`);
+    });

@@ -9,6 +9,7 @@ use CategoryModel\CategoryModel as CategoryModel;
 use BookModel\BookModel as BookModel;
 use OrderModel\OrderModel as OrderModel;
 use BannerModel\BannerModel as BannerModel;
+use Config\ConfigModel;
 use UserModel\UserModel as UserModel;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
@@ -752,7 +753,9 @@ class AdminController
     header('location: /admin/categories');
     exit();
   }
-
+  public static function editorindex() {
+    header('location: /admin/editor/banner');
+  }
   //For Banner
   public static function banners()
   {
@@ -825,7 +828,7 @@ class AdminController
     }
   }
 
-  public static function postBannerMoveFile($redirecturl = "/admin/banner/add")
+  public static function postBannerMoveFile($redirecturl = "/admin/editor/banner/add")
   {
     $finfo = new \finfo(FILEINFO_MIME_TYPE);
     $ext = array_search(
@@ -861,7 +864,7 @@ class AdminController
     } else {
       Status::addError("Lỗi, không thể thêm banner, hãy thử lại");
     }
-    header('location: /admin/banner/add');
+    header('location: /admin/editor/banner/add');
     exit();
   }
 
@@ -873,7 +876,39 @@ class AdminController
     } else {
       Status::addError("Có lỗi xảy ra, xin thử lại");
     }
-    header('location: /admin/banner');
+    header('location: /admin/editor/banner');
     exit();
+  }
+
+  public static function footerEdit() {
+    $errors = Status::getErrors();
+    $messages = Status::getMessages();
+    $footer = ConfigModel::getFooterConfig();
+    echo PugFacade::displayFile('../views/admin/footerEdit.jade', [
+      'errors' => $errors,
+      'messages' => $messages,
+      'footer' => $footer
+    ]);
+  }
+
+  public static function postFooterEdit() {
+    if (!isset($_POST['footercontent']) || $_POST['footercontent'] == "" || $_POST['footercontent'] == "<p><br></p>") {
+      Status::addError("Phải có nội dung cho Footer");
+      header('location: /admin/editor/footer');
+      exit();
+    }
+    else {
+      $content = $_POST['footercontent'];
+      $result = ConfigModel::setFooterConfig($content);
+      if ($result) {
+        Status::addMessage("Đã lưu");
+
+      }
+      else {
+        Status::addError("Có sự cố xảy ra trong khi lưu");
+      }
+      header('location: /admin/editor/footer');
+      exit();
+    }
   }
 }
