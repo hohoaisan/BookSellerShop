@@ -20,21 +20,21 @@ block content
         if (errors)
             each error in errors
                 .alert.alert-warning= error
-        table.table.table-sm
+        table.table
             thead
                 tr
-                    th Tên sách
-                    th Hình ảnh
-                    th Thao tác
+                    th(style="width: 20%;") Tên sách
+                    th(style="width: 45%;") Hình ảnh
+                    th(style="width: 35%;") Thao tác
             tbody
                 each val in banners
                     tr
-                        td
+                        td.font-weight-bold
                             a(href='/books/'+val.bookid)= val.bookname
                         td
-                            img(src='/assets/img/banner/'+val.customimage width='100px')
+                            img.img-fluid.mx-auto(src='/assets/img/banner/'+val.customimage, style="max-width: 600px; height: auto;")
                         td.tablecell-action
                             form(action="/admin/editor/banner/" + val.bookid + "/delete", method="POST")
-                                button(type="submit").btn.btn-sm.btn-danger Xoá         
+                                button(type="submit", style="width: 15rem;").btn.btn-sm.btn-danger.font-weight-bold Delete        
     append external
     
