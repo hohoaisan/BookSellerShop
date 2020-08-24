@@ -20,6 +20,21 @@ block content
           .modal-footer 
             button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
             button.btn.btn-primary(type='submit') Lưu
+            
+  #deleteModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteModal', aria-hidden='true')
+    form#deleteModalForm(method="POST")
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  h5.modal-title Xóa tác giả
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+              .modal-body
+                  p Xóa tác giả đồng nghĩa với xóa toàn bộ sách liên quan đến tác giả đấy.
+                  p Bạn có chắc không ?
+              .modal-footer
+                  button.btn.btn-primary(type='submit') Đồng ý
+                  button.btn.btn-secondary(type='button', data-dismiss='modal') Thoát
 
   h3.mt-4.mb-4 Quản lí tác giả
   .d-flex.justify-content-between.align-items-center.mb-2
@@ -57,8 +72,7 @@ block content
                       a.dropdown-item(href='/admin/books?author='+author.authorid) Xem sách của tác giả
                       button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#commonModal', data-id=author.authorid, data-name=author.authorname, data-description=author.authordescription) Xem và sửa thông tin chi tiết
                       .dropdown-divider 
-                      form(action="/admin/authors/"+author.authorid+"/delete", method="POST")
-                        button(type="submit").dropdown-item.text-danger Xoá tác giả
+                      button(type="submit", data-toggle="modal",data-target="#deleteModal", data-id= author.authorid).dropdown-item.text-danger Xoá tác giả
         ul.pagination
           each page in pagination
             li.page-item(class=(page.index==pagination_current_page)?"active":"")
@@ -85,4 +99,11 @@ append external
       modal.find('.modal-body textarea[name="description"]').val("");
       modal.find('#commonModalForm').attr('action', `/admin/authors/add`);
     }
-    })
+    });
+    $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    var modal = $(this);
+    if (id) 
+      modal.find('#deleteModalForm').attr('action', `/admin/authors/${id}/delete`);
+    });

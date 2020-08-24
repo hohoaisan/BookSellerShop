@@ -772,3 +772,13 @@ ul {
   width: 100%;
   height: auto;
 }
+
+/* Home page Title name */
+.web-title:link {
+  font-family: 'Dancing Script', cursive;
+  text-decoration: none;
+}
+
+.web-title:hover {
+  color: white;
+}

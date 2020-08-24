@@ -59,6 +59,7 @@ class CategoryModel
 
     public static function removeCategories($categoryid)
     {
+        
         $sql = "delete from categories where categoryid=?";
         try {
             $result = Database::queryExecute($sql, array($categoryid));

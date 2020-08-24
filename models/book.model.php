@@ -184,6 +184,26 @@ class BookModel
             return false;
         }
     }
+    public static function removeBookByCategoryID($categoryid)
+    {
+        $sql = "delete from books where categoryid=?";
+        try {
+            $result = Database::queryExecute($sql, array($categoryid));
+            return !!$result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public static function removeBookByAuthorID($authorid)
+    {
+        $sql = "delete from books where authorid=?";
+        try {
+            $result = Database::queryExecute($sql, array($authorid));
+            return !!$result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
     public static function editBookSimple($bookid, $quantity, $price)
     {
         $sql = "update books set quantity=?, price=? where bookid=?";

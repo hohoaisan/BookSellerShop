@@ -583,7 +583,7 @@ class AdminController
       $query = $_GET["query"];
       $title = 'Tìm kiếm tác giả';
     }
-    $itemperpage = 3;
+    $itemperpage = 5;
     try {
       $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
     } catch (\Exception $e) {
@@ -665,6 +665,7 @@ class AdminController
   }
   public static function authorDelete($authorid)
   {
+    $deleteBook = BookModel::removeBookByAuthorID($authorid);
     $result = AuthorModel::removeAuthor($authorid);
     if ($result) {
       Status::addMessage("Đã xoá tác giả có id " . $authorid . " khỏi cơ sở dữ liệu");
@@ -744,6 +745,7 @@ class AdminController
 
   public static function categoryDelete($categoryid)
   {
+    $deleteBook = BookModel::removeBookByCategoryID($categoryid);
     $result = CategoryModel::removeCategories($categoryid);
     if ($result) {
       Status::addMessage("Đã xoá danh mục ID: " . $categoryid . " khỏi cơ sở dữ liệu");

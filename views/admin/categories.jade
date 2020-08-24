@@ -18,6 +18,21 @@ block content
             button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
             button.btn.btn-primary(type='submit') Lưu
 
+  #deleteModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteModal', aria-hidden='true')
+    form#deleteModalForm(method="POST")
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  h5.modal-title Xóa danh mục
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+              .modal-body
+                  p Xóa danh mục đồng nghĩa với xóa toàn bộ sách liên quan đến danh mục đấy.
+                  p Bạn có chắc không ?
+              .modal-footer
+                  button.btn.btn-primary(type='submit') Đồng ý
+                  button.btn.btn-secondary(type='button', data-dismiss='modal') Thoát
+
   h3.mt-4.mb-4 Quản lí danh mục
   .d-flex.justify-content-between.align-items-center.mb-2
     button.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal') Thêm danh mục mới
@@ -47,8 +62,7 @@ block content
                   .dropdown-menu
                     button.dropdown-item.btn.btn-primary(type='button', data-toggle='modal', data-target='#categoryModal', data-id= category.categoryid, data-name= category.categoryname) Sửa danh mục
                     .dropdown-divider 
-                    form(action="/admin/categories/" + category.categoryid + "/delete", method="POST")
-                        button(type="submit").dropdown-item.text-danger Xoá danh mục
+                    button(type="button", data-toggle="modal",data-target="#deleteModal", data-id= category.categoryid).dropdown-item.text-danger Xoá danh mục
     else
       .alert.alert-warning Không có danh mục nào trong cơ sở dữ liệu
 append external
@@ -68,4 +82,11 @@ append external
       modal.find('.modal-body input').val("");
       modal.find('#categoryModalForm').attr('action', `/admin/categories/add`);
     }
-    })
+    });
+    $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id');
+    var modal = $(this);
+    if (id)
+      modal.find('#deleteModalForm').attr('action', `/admin/categories/${id}/delete`);
+    });

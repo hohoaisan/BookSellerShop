@@ -3,6 +3,7 @@
 namespace AuthorModel;
 
 use Database\Database as Database;
+use BookModel\BookModel as BookModel;
 use PDOException;
 
 class AuthorModel
