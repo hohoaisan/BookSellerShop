@@ -23,18 +23,16 @@ block content
         table.table
             thead
                 tr
-                    th(style="width: 20%;") Tên sách
-                    th(style="width: 45%;") Hình ảnh
-                    th(style="width: 35%;") Thao tác
+                    th(style="width: 30%;") Tên sách
+                    th(style="width: 70%;") Hình ảnh
             tbody
                 each val in banners
                     tr
-                        td.font-weight-bold
+                        td.font-weight-bold.tablecell-action
                             a(href='/books/'+val.bookid)= val.bookname
-                        td
-                            img.img-fluid.mx-auto(src='/assets/img/banner/'+val.customimage, style="max-width: 600px; height: auto;")
-                        td.tablecell-action
                             form(action="/admin/editor/banner/" + val.bookid + "/delete", method="POST")
-                                button(type="submit", style="width: 15rem;").btn.btn-sm.btn-danger.font-weight-bold Delete        
+                                button(type="submit", style="width: 15rem;").btn.btn-sm.btn-danger.font-weight-bold.mt-2 Delete 
+                        td
+                            img.img-fluid.mx-auto(src='/assets/img/banner/'+val.customimage, style="max-width: 600px; max-height: 330px; object-fit: cover")
     append external
     

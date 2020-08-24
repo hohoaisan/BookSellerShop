@@ -794,7 +794,7 @@ class AdminController
     ]);
   }
 
-  public static function postBannerMiddleware($redirecturl = "/admin/banner/add", $requireImage = true)
+  public static function postBannerMiddleware($redirecturl = "/admin/editor/banner/add", $requireImage = true)
   {
     $errors = [];
     if (!isset($_POST["bookid"]) || $_POST["bookid"] == "") {
@@ -849,7 +849,7 @@ class AdminController
     )) {
       return $newfile;
     } else {
-      Status::addError("Có sự cố trong việc xử lí ảnh");
+      Status::addErrors("Có sự cố trong việc xử lí ảnh");
       header('location: ' . $redirecturl);
       exit();
     }
@@ -864,7 +864,7 @@ class AdminController
     if ($result) {
       Status::addMessage("Đã thêm banner vào cơ sở dữ liệu");
     } else {
-      Status::addError("Lỗi, không thể thêm banner, hãy thử lại");
+      Status::addErrors("Lỗi, không thể thêm banner, hãy thử lại");
     }
     header('location: /admin/editor/banner/add');
     exit();
