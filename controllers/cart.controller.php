@@ -4,6 +4,7 @@ namespace Cart;
 use API\APIController;
 use User\UserController;
 use BookModel\BookModel as BookModel;
+use Exception;
 use Status\Status as Status;
 use Pug\Facade as PugFacade;
 use PaymentModel\PaymentModel as PaymentModel;
@@ -93,6 +94,15 @@ class CartController
     $_POST = json_decode(file_get_contents("php://input"), true);
     if (isset($_POST["bookid"]) && isset($_POST["quantity"])) {
       $condition = true; //Kiểm tra số lượng còn
+      try {
+        if (intval($_POST["quantity"]) <= 0) {
+          $condition = false;
+        }
+
+      }
+      catch (\Exception $e) {
+        $condition = false;
+      }
       if ($condition) {
         $bookid = $_POST["bookid"];
         $quantity = $_POST["quantity"];
@@ -125,6 +135,15 @@ class CartController
       $quantity = $_POST["quantity"];
       if (isset($_SESSION["cart"][$bookid])) {
         $condition = true;
+        try {
+          if (intval($_POST["quantity"]) <= 0) {
+            $condition = false;
+          }
+  
+        }
+        catch (\Exception $e) {
+          $condition = false;
+        }
         if ($condition) {
           $_SESSION["cart"][$bookid] = $quantity;
           $fetch = self::getItemsDetail($_SESSION["cart"]);
