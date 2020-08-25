@@ -786,6 +786,7 @@ ul {
 /* Back To Top Button */
 .back-to-top {
   position: fixed;
-  bottom: 25px;
+  border-radius: 100%;
+  bottom: 100px;
   right: 25px;
 }
