@@ -151,5 +151,14 @@ $(document).ready(function () {
   $('#cartPopup').popover({
     trigger: 'focus',
   });
+
+  //Back to Top btn
+  // scroll body to 0px on click
+  $('#back-to-top').click(function () {
+    $('body,html').animate({
+      scrollTop: 0
+    }, 400);
+    return false;
+  });
 });
 

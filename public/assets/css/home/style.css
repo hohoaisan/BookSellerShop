@@ -782,3 +782,10 @@ ul {
 .web-title:hover {
   color: white;
 }
+
+/* Back To Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+}
