@@ -61,7 +61,9 @@ CREATE TABLE `banner`  (
 -- Records of banner
 -- ----------------------------
 INSERT INTO `banner` VALUES (000008, '0205050257ec61af49d226d6cec3f50415a6298c.jpg');
-INSERT INTO `banner` VALUES (000009, 'b99644d77bf20369ecdce093ec2b26ffb52aa3f7.png');
+INSERT INTO `banner` VALUES (000009, 'b1.jpg');
+INSERT INTO `banner` VALUES (000010, 'b2.jpg');
+INSERT INTO `banner` VALUES (000011, 'b3.jpg');
 
 -- ----------------------------
 -- Table structure for books
@@ -1095,6 +1097,46 @@ INSERT INTO `rating` VALUES (000005, '2020-08-21 21:38:28', 'nice', 000008, 0000
 INSERT INTO `rating` VALUES (000009, '2020-08-23 11:40:21', 'aa hay lắm banj', 000002, 000004, 4);
 INSERT INTO `rating` VALUES (000013, '2020-08-21 18:51:50', '', 000002, 000027, 5);
 INSERT INTO `rating` VALUES (000014, '2020-08-23 11:39:30', '123', 000002, 000026, 5);
+INSERT INTO `rating` VALUES (000015,"2019-10-10","nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo tincidunt nibh. Phasellus nulla. Integer vulputate, risus a ultricies adipiscing,",12,17,2);
+INSERT INTO `rating` VALUES (000016,"2020-07-25","Duis sit amet diam eu dolor egestas rhoncus. Proin nisl sem, consequat nec, mollis vitae, posuere at, velit. Cras lorem lorem, luctus ut, pellentesque eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis.",8,24,3);
+INSERT INTO `rating` VALUES (000017,"2021-05-25","Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat, in consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque et nunc. Quisque ornare tortor at risus. Nunc ac sem",6,4,2);
+INSERT INTO `rating` VALUES (000018,"2020-12-15","consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum",10,1,1);
+INSERT INTO `rating` VALUES (000019,"2020-04-07","semper rutrum. Fusce dolor quam, elementum at,",12,7,2);
+INSERT INTO `rating` VALUES (000020,"2019-10-10","fermentum metus. Aenean sed pede nec ante",12,31,2);
+INSERT INTO `rating` VALUES (000021,"2021-08-16","malesuada vel, convallis in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo tincidunt nibh. Phasellus nulla. Integer vulputate,",11,9,2);
+INSERT INTO `rating` VALUES (000022,"2020-02-29","montes, nascetur ridiculus mus. Donec dignissim magna a tortor. Nunc commodo auctor velit. Aliquam nisl. Nulla eu neque pellentesque massa lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc",11,24,3);
+INSERT INTO `rating` VALUES (000023,"2021-05-22","elit fermentum risus, at fringilla purus mauris a nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat tellus lorem eu metus. In lorem. Donec elementum, lorem ut aliquam iaculis,",7,8,5);
+INSERT INTO `rating` VALUES (000024,"2020-06-10","molestie pharetra nibh. Aliquam ornare, libero at auctor ullamcorper, nisl arcu iaculis enim, sit amet ornare lectus justo eu arcu. Morbi sit amet massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices a, auctor non, feugiat nec, diam. Duis mi enim, condimentum eget, volutpat ornare, facilisis",6,7,4);
+INSERT INTO `rating` VALUES (000025,"2020-04-09","vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras dolor dolor, tempus non,",7,11,5);
+INSERT INTO `rating` VALUES (000026,"2019-09-16","sem mollis dui, in sodales elit erat vitae risus. Duis a mi",6,15,1);
+INSERT INTO `rating` VALUES (000027,"2020-08-24","quis, pede. Suspendisse dui. Fusce diam nunc, ullamcorper eu, euismod ac, fermentum vel, mauris. Integer sem elit, pharetra ut, pharetra sed, hendrerit a, arcu. Sed et libero. Proin mi.",10,15,5);
+INSERT INTO `rating` VALUES (000028,"2020-06-02","mattis ornare, lectus ante dictum mi, ac mattis velit justo nec ante. Maecenas mi felis, adipiscing fringilla, porttitor vulputate, posuere vulputate,",12,18,1);
+INSERT INTO `rating` VALUES (000029,"2019-08-26","est, congue a, aliquet vel, vulputate eu,",8,19,3);
+INSERT INTO `rating` VALUES (000030,"2021-07-30","Aliquam gravida mauris ut mi. Duis risus odio, auctor vitae, aliquet nec, imperdiet nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor",9,14,4);
+INSERT INTO `rating` VALUES (000031,"2020-10-03","Suspendisse commodo tincidunt nibh. Phasellus nulla. Integer vulputate, risus a ultricies adipiscing, enim mi tempor lorem, eget mollis lectus pede et risus. Quisque libero lacus, varius et, euismod",11,34,4);
+INSERT INTO `rating` VALUES (000032,"2020-04-29","adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna.",8,23,1);
+INSERT INTO `rating` VALUES (000033,"2019-08-28","suscipit,",11,20,2);
+INSERT INTO `rating` VALUES (000034,"2019-10-02","Mauris nulla. Integer",8,31,4);
+INSERT INTO `rating` VALUES (000035,"2019-11-13","augue ut lacus. Nulla tincidunt, neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin orci sem eget massa. Suspendisse eleifend.",10,5,3);
+INSERT INTO `rating` VALUES (000036,"2019-10-15","Aliquam vulputate ullamcorper magna. Sed eu eros. Nam",9,30,3);
+INSERT INTO `rating` VALUES (000037,"2020-05-28","auctor ullamcorper, nisl arcu iaculis enim, sit amet ornare lectus justo eu arcu. Morbi sit amet massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices a, auctor non, feugiat nec, diam. Duis mi enim, condimentum eget, volutpat ornare, facilisis eget, ipsum. Donec",12,10,3);
+INSERT INTO `rating` VALUES (000038,"2021-05-16","Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare,",10,12,2);
+INSERT INTO `rating` VALUES (000039,"2020-01-20","dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eget magna. Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum metus. Aenean sed pede nec ante blandit viverra. Donec tempus, lorem fringilla ornare placerat, orci lacus vestibulum lorem, sit amet",12,25,4);
+INSERT INTO `rating` VALUES (000040,"2020-02-12","sit amet lorem semper auctor. Mauris vel turpis. Aliquam adipiscing lobortis risus. In mi pede, nonummy ut, molestie in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed",6,16,4);
+INSERT INTO `rating` VALUES (000041,"2020-09-03","pretium neque. Morbi quis urna. Nunc quis arcu vel quam dignissim pharetra. Nam ac nulla. In tincidunt congue turpis. In condimentum. Donec at arcu.",9,26,5);
+INSERT INTO `rating` VALUES (000042,"2020-11-24","placerat velit. Quisque varius. Nam porttitor scelerisque neque. Nullam nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin orci sem",6,13,3);
+INSERT INTO `rating` VALUES (000043,"2020-08-02","ornare, elit elit fermentum risus, at fringilla purus mauris a nunc. In at pede.",7,13,4);
+INSERT INTO `rating` VALUES (000044,"2020-07-03","aliquet molestie tellus. Aenean egestas hendrerit neque.",6,21,2);
+INSERT INTO `rating` VALUES (000045,"2019-11-10","egestas, urna justo",9,4,4);
+INSERT INTO `rating` VALUES (000046,"2019-12-26","luctus, ipsum leo elementum sem, vitae aliquam eros turpis non enim. Mauris quis turpis vitae purus gravida sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id ante dictum cursus.",7,35,5);
+INSERT INTO `rating` VALUES (000047,"2019-09-17","dignissim pharetra. Nam ac nulla. In tincidunt congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices",8,14,5);
+INSERT INTO `rating` VALUES (000048,"2020-08-30","ligula tortor, dictum eu, placerat eget, venenatis a, magna. Lorem ipsum",7,10,1);
+INSERT INTO `rating` VALUES (000049,"2021-01-09","Cras interdum. Nunc sollicitudin commodo ipsum.",8,6,4);
+INSERT INTO `rating` VALUES (000050,"2021-05-08","Nullam lobortis quam a felis",12,5,2);
+INSERT INTO `rating` VALUES (000051,"2020-03-04","senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio. Nam interdum enim non nisi. Aenean eget metus. In nec orci. Donec nibh. Quisque nonummy ipsum non arcu.",10,25,1);
+INSERT INTO `rating` VALUES (000052,"2020-09-27","risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci",6,8,2);
+INSERT INTO `rating` VALUES (000053,"2020-01-20","diam at pretium aliquet, metus urna convallis erat, eget tincidunt dui augue eu tellus. Phasellus elit pede, malesuada vel, venenatis vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras dolor dolor, tempus non, lacinia at, iaculis quis, pede. Praesent eu dui.",7,20,1);
+INSERT INTO `rating` VALUES (000054,"2021-06-11","neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio. Nam interdum enim non nisi. Aenean eget metus. In nec orci. Donec nibh. Quisque",11,30,1);
 
 -- ----------------------------
 -- Table structure for shipping
@@ -1140,10 +1182,14 @@ CREATE TABLE `users`  (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (000001, 'c3284d0f94606de1fd2af172aba15bf3', 'admin', 1, 0, 'Administator', '', '', 1, '03382', '28 Cao Thắng', NULL);
-INSERT INTO `users` VALUES (000002, 'b6655d22f76fd10eab7b3aced95b4c77', 'hoaisan', 0, 0, 'Ho Hoai San 2', '0123456787', 'hahaha@gmail.com', 1, '08638', '34 Nguyễn Chí Thanh 8', '2008-10-05');
-INSERT INTO `users` VALUES (000006, 'b6655d22f76fd10eab7b3aced95b4c77', 'hohoaisan', 0, 0, '', '', '', 1, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (000002, 'b6655d22f76fd10eab7b3aced95b4c77', 'hoaisan', 0, 0, 'Sản The Sorn', '0123456787', 'hahaha@gmail.com', 1, '08638', '34 Nguyễn Chí Thanh 8', '2008-10-05');
+INSERT INTO `users` VALUES (000006, 'b6655d22f76fd10eab7b3aced95b4c77', 'hoanglong', 0, 0, 'Lord Accel', '', '', 1, NULL, NULL, NULL);
 INSERT INTO `users` VALUES (000007, 'b6655d22f76fd10eab7b3aced95b4c77', 'kuroshukanade', 0, 0, 'Kuroshu Kanade', '0397556211', 'kuroshukanade@gmail.com', 1, '04396', '3242424', '2003-06-12');
-INSERT INTO `users` VALUES (000008, '979066badd3e52803c7dd06e5c49993c', 'theminecraftdragon', 0, 0, 'theminecraftdragon', '+8493524536', 'theminecraftdragon@mc.com', 1, NULL, NULL, '2020-07-14');
+INSERT INTO `users` VALUES (000008, '63ee451939ed580ef3c4b6f0109d1fd0', 'anhtu', 0, 0, 'Tú Go Brrr Brrr', '+8493524536', 'hololive1@mc.com', 1, NULL, NULL, '2020-07-14');
+INSERT INTO `users` VALUES (000009, '63ee451939ed580ef3c4b6f0109d1fd0', 'nene', 0, 0, 'Momosuzu Nene', '+8493524536', 'hololive2@mc.com', 1, NULL, NULL, '2020-07-14');
+INSERT INTO `users` VALUES (000010, '63ee451939ed580ef3c4b6f0109d1fd0', 'haato', 0, 0, 'Akai Haato', '+8493524536', 'hololive3@mc.com', 1, NULL, NULL, '2020-07-14');
+INSERT INTO `users` VALUES (000011, '63ee451939ed580ef3c4b6f0109d1fd0', 'sora', 0, 0, 'Tokino Sora', '+8493524536', 'hololive4@mc.com', 1, NULL, NULL, '2020-07-14');
+INSERT INTO `users` VALUES (000012, '63ee451939ed580ef3c4b6f0109d1fd0', 'miko', 0, 0, 'Sakura Miko', '+8493524536', 'hololive5@mc.com', 1, NULL, NULL, '2020-07-14');
 
 -- ----------------------------
 -- Table structure for ward
