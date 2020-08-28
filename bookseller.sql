@@ -70,7 +70,7 @@ CREATE TABLE `banner`  (
 INSERT INTO `banner` VALUES (000075, 'b4.jpg');
 INSERT INTO `banner` VALUES (000074, 'b1.jpg');
 INSERT INTO `banner` VALUES (000076, 'b2.jpg');
-INSERT INTO `banner` VALUES (000077, 'b3.jpg');
+INSERT INTO `banner` VALUES (000098, 'b3.jpg');
 
 -- ----------------------------
 -- Table structure for books
