@@ -60,7 +60,7 @@ class AdminController
     } catch (\Exception $e) {
       $currentPage = 1;
     }
-    $itemperpage = 5;
+    $itemperpage = 10;
 
     $fetch = OrderModel::getOrders($filter, $query, $currentPage, $itemperpage);
     $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
@@ -177,7 +177,7 @@ class AdminController
     }
 
 
-    $itemperpage = 4;
+    $itemperpage = 10;
     $fetch = UserModel::getUsers($filter, $query, $currentPage, $itemperpage);
     //Khởi tạo session
     if ($fetch == false) {
@@ -293,7 +293,7 @@ class AdminController
       $title = 'Danh sách sách của tác giả';
     }
 
-    $itemperpage = 7;
+    $itemperpage = 10;
     try {
       $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
     } catch (\Exception $e) {
@@ -583,7 +583,7 @@ class AdminController
       $query = $_GET["query"];
       $title = 'Tìm kiếm tác giả';
     }
-    $itemperpage = 5;
+    $itemperpage = 10;
     try {
       $currentPage = intval(isset($_GET['page']) ? $_GET['page'] : 1);
     } catch (\Exception $e) {

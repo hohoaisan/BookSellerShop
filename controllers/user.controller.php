@@ -156,7 +156,7 @@ class UserController
     } catch (\Exception $e) {
       $currentPage = 1;
     }
-    $itemperpage = 4;
+    $itemperpage = 10;
 
     $fetch = OrderModel::getOrdersByUserId($userid, $currentPage, $itemperpage);
     if (!$fetch) {

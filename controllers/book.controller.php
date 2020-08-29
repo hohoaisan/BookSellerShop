@@ -16,7 +16,7 @@ class BookController {
         } catch (\Exception $e) {
             $currentPage = 1;
         }
-        $itemperpage = 12;
+        $itemperpage = 30;
     
         $fetch = BookModel::getBooks($query, "",  $currentPage, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
@@ -43,7 +43,7 @@ class BookController {
         } catch (\Exception $e) {
             $currentPage = 1;
         }
-        $itemperpage = 2;
+        $itemperpage = 5;
 
         $book = BookModel::getBookDetailAndIncreaseView($bookid);
         $related = BookModel::getBooksRelated($bookid);

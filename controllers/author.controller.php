@@ -11,7 +11,7 @@ class AuthorController {
         } catch (\Exception $e) {
             $currentPage = 1;
         }
-        $itemperpage = 6;
+        $itemperpage = 9;
     
         $fetch = AuthorModel::getAuthors(null, $currentPage, $itemperpage);
         $result = $fetch['result']; //Lấy kết quả trong 1 trang pagination
