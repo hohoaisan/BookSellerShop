@@ -103,12 +103,20 @@ class CartController
           throw new \Exception("Số lượng phải lớn hơn 0");
         }
         $book = BookModel::getBook($bookid);
+        $curr_quantity = isset($_SESSION["cart"][$bookid])?$_SESSION["cart"][$bookid]:0;
         $total_quantity = $quantity;
         if (isset($_SESSION["cart"][$bookid])) {
-          $total_quantity += $_SESSION["cart"][$bookid];
+          $total_quantity += $curr_quantity;
         }
         if ($book['quantity'] - $total_quantity < 0) {
-          throw new \Exception("Số lượng vượt quá số lượng còn trong hệ thống");
+
+          if ($book['quantity'] && $book['quantity']-$curr_quantity > 0) {
+            throw new \Exception("Số lượng vượt quá số lượng còn trong hệ thống, số lượng tối đa có thể thêm: ".($book['quantity']-$curr_quantity));
+          }
+          if ($book['quantity'] && $book['quantity']-$curr_quantity <= 0) {
+            throw new \Exception("Bạn đã thêm vào giỏ tất cả số lượng sản phẩm còn trong hệ thống");
+          }
+          throw new \Exception("Sản phẩm đã hết hàng");
         }
         if (isset($_SESSION["cart"][$bookid])) {
           $_SESSION["cart"][$bookid] += $quantity;
@@ -143,7 +151,12 @@ class CartController
           }
           $book = BookModel::getBook($bookid);
           if ($book['quantity'] - $quantity < 0) {
-            throw new \Exception("Số lượng vượt quá số lượng còn trong hệ thống");
+            if ($book['quantity']) {
+              throw new \Exception("Số lượng vượt quá số lượng còn trong hệ thống, số lượng tối đa có thể sửa: ".$book['quantity']);
+            }
+            else {
+              throw new \Exception("Sản phẩm đã hết hàng");
+            }
           }
           $_SESSION["cart"][$bookid] = $quantity;
           $fetch = self::getItemsDetail($_SESSION["cart"]);
