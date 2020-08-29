@@ -42,12 +42,13 @@ async function addItemToCart(event) {
     })
     .catch((err) => {
       alert('Có lỗi xảy ra trong quá trình thêm vào giỏ hàng');
+      console.log(err);
     });
   if (result.status) {
     // showMessage('Đã thêm vào giỏ hàng');
     alert(`Đã thêm ${quantity} sản phẩm vào giỏ hàng`);
   } else {
-    alert('Không thể thêm vào giỏ hàng');
+    alert(`${result.message}`);
   }
   updateCartIdentity();
 }
@@ -74,7 +75,7 @@ async function editItemQuantity(event) {
     showMessage('Đã sửa sách trong giỏ hàng');
     $('#totalMoney').text(result.totalMoney);
   } else {
-    showError(res.message);
+    showError(result.message);
   }
   updateCartIdentity();
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Cart;
+
 use API\APIController;
 use User\UserController;
 use BookModel\BookModel as BookModel;
@@ -91,39 +92,41 @@ class CartController
 
   public static function addItem()
   {
+    $message = "";
     $_POST = json_decode(file_get_contents("php://input"), true);
     if (isset($_POST["bookid"]) && isset($_POST["quantity"])) {
-      $condition = true; //Kiểm tra số lượng còn
-      try {
-        if (intval($_POST["quantity"]) <= 0) {
-          $condition = false;
-        }
 
-      }
-      catch (\Exception $e) {
-        $condition = false;
-      }
-      if ($condition) {
-        $bookid = $_POST["bookid"];
-        $quantity = $_POST["quantity"];
+      $bookid = $_POST["bookid"];
+      $quantity = $_POST["quantity"];
+      try {
+        if (intval($quantity) <= 0) {
+          throw new \Exception("Số lượng phải lớn hơn 0");
+        }
+        $book = BookModel::getBook($bookid);
+        $total_quantity = $quantity;
+        if (isset($_SESSION["cart"][$bookid])) {
+          $total_quantity += $_SESSION["cart"][$bookid];
+        }
+        if ($book['quantity'] - $total_quantity < 0) {
+          throw new \Exception("Số lượng vượt quá số lượng còn trong hệ thống");
+        }
         if (isset($_SESSION["cart"][$bookid])) {
           $_SESSION["cart"][$bookid] += $quantity;
         } else {
           $_SESSION["cart"][$bookid] = $quantity;
         }
-        http_response_code(201);
         echo json_encode(array('status' => true, 'bookid' => $bookid), JSON_UNESCAPED_UNICODE);
-        exit();
-      } else {
-        http_response_code(304);
+      } catch (\Exception $e) {
+        $message = $e->getMessage();
         echo json_encode(array(
           'status' => false,
-          'message' => "Không thể thêm vào giỏ hàng"
+          'message' => "Không thể thêm vào giỏ hàng: " . $message
         ), JSON_UNESCAPED_UNICODE);
-        exit();
       }
+    } else {
+      header('location: /cart/');
     }
-    header('location: /cart/');
+    exit();
   }
 
 
@@ -134,42 +137,36 @@ class CartController
       $bookid = $_POST["bookid"];
       $quantity = $_POST["quantity"];
       if (isset($_SESSION["cart"][$bookid])) {
-        $condition = true;
         try {
           if (intval($_POST["quantity"]) <= 0) {
-            $condition = false;
+            throw new \Exception("Số lượng phải lớn hơn 0");
           }
-  
-        }
-        catch (\Exception $e) {
-          $condition = false;
-        }
-        if ($condition) {
+          $book = BookModel::getBook($bookid);
+          if ($book['quantity'] - $quantity < 0) {
+            throw new \Exception("Số lượng vượt quá số lượng còn trong hệ thống");
+          }
           $_SESSION["cart"][$bookid] = $quantity;
           $fetch = self::getItemsDetail($_SESSION["cart"]);
           $totalMoney = $fetch["totalmoney"];
-          http_response_code(201);
           echo json_encode(array('status' => true, 'bookid' => $bookid, 'totalMoney' => $totalMoney), JSON_UNESCAPED_UNICODE);
-          exit();
-        } else {
-          http_response_code(304);
+        } catch (\Exception $e) {
+
           echo json_encode(array(
             'status' => false,
-            'message' => "Không thể sửa vào giỏ hàng"
+            'message' => "Không thể sửa vào giỏ hàng: " . $e->getMessage()
           ), JSON_UNESCAPED_UNICODE);
-          exit();
         }
       } else {
-        http_response_code(405);
         echo json_encode(array(
           'status' => false,
           'message' => "Giỏ hàng không tồn tại sản phẩm này"
         ), JSON_UNESCAPED_UNICODE);
-        exit();
       }
     }
-    echo "rejected";
-    header('location: /cart/');
+    else {
+      http_response_code(405);      
+    }
+    exit();
   }
 
   public static function getJSON()
