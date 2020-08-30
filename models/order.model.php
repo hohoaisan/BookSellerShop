@@ -133,9 +133,24 @@ class OrderModel
       return false;
     }
   }
+  public static function unPurchasOrderBook($orderid)
+  {
+    try {
+      $sql = "select bookid, qtyordered from ordersdetails where orderid  = ?";
+      $list = Database::queryResults($sql, [$orderid]);
+      foreach ($list as $book) {
+        BookModel::unpurchaseBook($book['bookid'], $book['qtyordered']);
+      }
+    } catch (PDOException $e) {
+      die($e->getMessage());
+      return false;
+    }
+  }
+
   public static function rejectOrder($orderid)
   {
     try {
+      self::unPurchasOrderBook($orderid);
       $sql = "update orders set orderstatus='r' where orderid = ?";
       $result = Database::queryExecute($sql, array($orderid));
       return !!$result;
@@ -166,6 +181,7 @@ class OrderModel
   public static function makeOrderError($orderid)
   {
     try {
+      self::unPurchasOrderBook($orderid);
       $sql = "update orders set orderstatus='e' where orderid = ?";
       $result = Database::queryExecute($sql, array($orderid));
       return !!$result;
