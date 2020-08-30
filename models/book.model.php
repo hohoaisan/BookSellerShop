@@ -4,6 +4,7 @@ namespace BookModel;
 
 use Database\Database as Database;
 use PDOException;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class BookModel
 {
@@ -283,5 +284,30 @@ class BookModel
             print_r($e->getMessage());
             return false;
         }
+    }
+
+    public static function purchaseBook($bookid, $orderedAmount) {
+        try {
+            $sql = "update books set quantity=quantity-".$orderedAmount.", purchasedcount=purchasedcount+1 where bookid = ?";
+            $result = Database::queryExecute($sql,[$bookid]);
+            return $result;
+        }
+        catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+
+    }
+    public static function unpurchaseBook($bookid, $orderedAmount) {
+        try {
+            $sql = "update books set quantity=quantity+".$orderedAmount.", purchasedcount=purchasedcount-1 where bookid = ?";
+            $result = Database::queryExecute($sql,[$bookid]);
+            return $result;
+        }
+        catch (PDOException $e) {
+            print_r($e->getMessage());
+            return false;
+        }
+
     }
 }

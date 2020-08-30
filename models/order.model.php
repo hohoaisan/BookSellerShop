@@ -4,6 +4,7 @@ namespace OrderModel;
 
 use Database\Database as Database;
 use PDOException;
+use BookModel\BookModel;
 
 class OrderModel
 {
@@ -206,7 +207,8 @@ class OrderModel
       foreach ($cart['books'] as $index => $value) {
         $bookid = $value['bookid'];
         $amount = $value['amount'];
-        $qtyordered = $value['quantity'];
+        $qtyordered = $value['sel_quantity'];
+        $de_result = BookModel::purchaseBook($bookid, $qtyordered);
         $result = Database::queryExecute($sql, array($orderid, $bookid, $qtyordered, $amount));
       }
       return true;
