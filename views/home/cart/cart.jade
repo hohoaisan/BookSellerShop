@@ -1,6 +1,12 @@
 extends ../base
 block content
   #messages
+  if (messages)
+    each message in messages
+      .alert.alert-success= message
+  if (errors)
+    each error in errors
+      .alert.alert-warning= error
   if (cartItems)
     .shopping-cart
       .pb-5
@@ -9,7 +15,8 @@ block content
           .row.bg-white.rounded.shadow-sm.mb-5
             .col-lg-8.col-md-7.col-12.p-2
               each item in cartItems
-                .card.mb-2
+                //- .card.mb-2(style=item.sel_quantity>item.quantity?"opacity: 0.6":"")
+                .card.mb-2(class=item.sel_quantity>item.quantity?"border border-danger":"")
                   .card-body.row
                     .col-3.col-md-3.col-lg-2
                       img.img-fluid.rounded.shadow-sm(src='/assets/img/books/' + item.bookimageurl, alt='' width='70')
@@ -24,9 +31,15 @@ block content
                           | Xoá
                       .col-12.col-md-7.col-sm-12.col-lg-4.mt-2
                         .input-group.input-group-sm.cartEditInputGroup(data-bookid=item.bookid)
-                          input.form-control.text-center(type='number' name="quantity" min=1 value=item.quantity)
+                          input.form-control.text-center(type='number' name="quantity" min=1 value=item.sel_quantity)
                           .input-group-append
                             button.btn.btn-outline-secondary(type='button').cartEditQuantity Cập nhật
+                        .input-group.mt-2
+                          p.w-100.card-subtitle.text-muted.text-center
+                            if (item.quantity)
+                              | Còn #{item.quantity} sản phẩm
+                            else
+                              | Sản phẩm đã hết hàng
               .col-12.m-2
                 .btn.btn-primary.text-light.float-right.cartRemoveAllItem.btn-sm Xoá toàn bộ giỏ hàng
             .col-lg-4.col-md-5.col-12.p-2
@@ -37,7 +50,7 @@ block content
                       .card-title Tổng tiền
                     .col
                       .lead.text-success#totalMoney= totalMoney + " đ"
-              a(href="/cart/purchase")        
-                .btn.btn-danger.btn-block Tiến hành đặt hàng
+              form(action="/cart/purchase" method="get")
+                button.btn.btn-block.btn-danger(type="submit") Tiến hành đặt hàng        
   else
     .alert.alert-warning Bạn không có sản phẩm nào trong giỏ hàng

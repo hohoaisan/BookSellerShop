@@ -22,8 +22,8 @@ class CartController
       $books = [];
       foreach ($cart as $bookid => $quantity) {
         $book = BookModel::getBook($bookid);
-        $book["quantity"] = $quantity;
-        $book["amount"] = $book["quantity"] * $book["price"];
+        $book["sel_quantity"] = $quantity;
+        $book["amount"] = $book["sel_quantity"] * $book["price"];
         $totalMoney += $book["amount"];
         // $book["price"] = number_format($book["price"], 0, ",", ".");
         array_push($books, $book);
@@ -40,15 +40,24 @@ class CartController
 
   public static function index()
   {
+    $errors = Status::getErrors();
+    $messages = Status::getMessages();
     $fetch = self::getItemsDetail($_SESSION["cart"]);
     $result = [];
     if ($fetch) {
       $result = $fetch["books"];
       $totalMoney = $fetch["totalmoney"];
     }
+    $isItemExceeded = self::isCartItemExceededRemainingQuantity($fetch);
+    if ($isItemExceeded) {
+      array_push($errors, "Giỏ hàng tồn tại sản phẩm đã hết hàng hoặc vượt quá số lượng có trong hệ thống, vui lòng chỉnh sửa lại giỏ hàng hoặc xoá bỏ sản phẩm khỏi giỏ hàng");
+    }
     echo PugFacade::displayFile('../views/home/cart/cart.jade', [
       'cartItems' => $result,
-      'totalMoney' => $totalMoney
+      'totalMoney' => $totalMoney,
+      'errors' => $errors,
+      'messages' => $messages,
+      'isItemExceeded' => $isItemExceeded
     ]);
   }
 
@@ -199,7 +208,7 @@ class CartController
 
   public static function checkCartIsReady()
   {
-    if (count($_SESSION["cart"]) == 0) {
+    if (count($_SESSION["cart"]) == 0 || self::isCartItemExceededRemainingQuantity()) {
       header('location: /cart/');
       exit();
     }
@@ -284,6 +293,7 @@ class CartController
   public static function purchaseProcessEdit()
   {
     $_POST = json_decode(file_get_contents("php://input"), true);
+    self::checkCartIsReady();
     if (isset($_POST['shippingid']) && $_POST['shippingid'] != "") {
       //Get price of new shipping method
       $shippingid = $_POST['shippingid'];
@@ -311,6 +321,7 @@ class CartController
 
   public static function purchaseComplete()
   {
+    self::checkCartIsReady();
     if (isset($_POST['confirm']) && isset($_SESSION['cart']) && count($_SESSION['cart']) && isset($_SESSION['orderInfo']) && count($_SESSION['orderInfo'])) {
       $userid = $_SESSION['orderInfo']['userid'];
       $receivername = $_SESSION['orderInfo']['receivername'];
@@ -337,5 +348,17 @@ class CartController
     }
     header('location: /cart/purchase');
     exit();
+  }
+
+  public static function isCartItemExceededRemainingQuantity($fetch = null) {
+    if (!$fetch) {
+      $fetch = self::getItemsDetail($_SESSION['cart']);
+    }
+    foreach ($fetch['books'] as $book) {
+      if ($book['sel_quantity'] > $book['quantity']) {
+        return true;
+      }
+    }
+    return false;
   }
 }
