@@ -44,11 +44,11 @@ class BookModel
             having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
             ";
 
-            $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price, bookimageurl
+            $sql = "select bookid, bookname, authorname, categoryname, `timestamp`, purchasedcount, viewcount, quantity, books.authorid, books.categoryid, price, bookimageurl, bookdescription
             from books,`authors`,categories
             WHERE books.authorid = `authors`.authorid
             and books.categoryid = categories.categoryid
-            having (bookid like :query or bookname like :query) and (books.authorid like :authorid)
+            having (bookid like :query or bookname like :query or bookdescription like :query or authorname like :query or categoryname like :query) and (books.authorid like :authorid)
             order by bookid asc
             limit $begin, $itemperpage
             ";
