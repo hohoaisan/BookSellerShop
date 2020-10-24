@@ -19,3 +19,8 @@ DocumentRoot "<repository_downloaded_path>/public"
 *Note: this setting is mandatory for making the project works fine*
 + Load the bookseller.sql into configured database
 + Turn on MySql and PhpMyAdmin and enjoy!
+
+## Libaries and modules used
+  - [Chirp's 2way encryption](https://www.the-art-of-web.com/php/two-way-encryption/)
+  - [Bramus Router](https://github.com/bramus/router/) for making routers
+  - [Phug (PugFacade)](https://phug-lang.com/) for rendering pug/jade views
